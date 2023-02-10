@@ -1,0 +1,55 @@
+tia:
+  port: 80
+  host: ${APP_HOST:localhost}
+  #"alg":"HS256","typ":"JWT"
+  token-key: ${APP_TOKEN_KEY:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9}
+  boss: 1
+  worker: 16
+
+aliyun:
+  oss:
+    access-key-id: ${APP_OSS_KEY:1}
+    access-key-secret: ${APP_OSS_SECRET:2}
+    bucket: ${APP_OSS_BUCKET:kikyou}
+    endpoint: ${APP_OSS_ENDPOINT:oss-cn-beijing.aliyuncs.com}
+
+spring:
+  data:
+    redis:
+      host: ${APP_REDIS_HOST:127.0.0.1}
+      #password: ${APP_REDIS_PASS:}
+      port: ${APP_REDIS_PORT:6379}
+      database: ${APP_REDIS_DATABASE:0}
+      redisson:
+        pool:
+          enabled: true
+          # 连接池最大连接数（使用负值表示没有限制）
+          maxactive: 64
+          # 连接池中的最大空闲连接
+          maxidle: 64
+          # 连接池最大阻塞等待时间（使用负值表示没有限制）
+          maxwait: -1
+          # 连接池中的最小空闲连接
+          minidle: 1
+  datasource:
+    #通用配置
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: root
+    username: root
+    url: jdbc:mysql://localhost:3306/tia?serverTimezone=Asia/Shanghai&useUnicode=true&charcterEncoding=UTF-8&useSSL=false
+    #数据源连接池配置
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 20
+      idle-timeout: 500000
+      max-lifetime: 540000
+      connection-timeout: 60000
+      connection-test-query: select 1
+
+
+
+cluster:
+  enabled: fasle
+jgroups:
+  cluster: ${JGROUPS_CLUSTER:tia-cluster}
+  config: ${JGROUPS_CONFIG:jgroups-config-tcp.xml}
