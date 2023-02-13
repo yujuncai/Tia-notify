@@ -20,10 +20,10 @@ public class ShutdownHook {
     private final  SocketIOServer socketIOServer;
 
     private final StoreService storeService;
-
+    //在停机时,需要清理本机的token
     @PreDestroy
     public void preDestroy() {
-        log.info("shutdown hook, pre destroy,del token");
+        log.info("shutdown hook, del token");
         socketIOServer.getAllClients()
                 .stream().parallel()
                 .forEach(socketIOClient -> {
