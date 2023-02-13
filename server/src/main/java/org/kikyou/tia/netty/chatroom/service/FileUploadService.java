@@ -32,7 +32,7 @@ public class FileUploadService {
         //调用方法实现上传
         ossClient.putObject(bucketName, fileName, file);
         //上传之后文件路径
-        // https://behappy-xiaowu-atguigu.oss-cn-beijing.aliyuncs.com/01.jpg
+        // https://xxxxxx.oss-cn-beijing.aliyuncs.com/01.jpg
         return "https://" + bucketName + "." + endpoint + "/" + fileName;
     }
 }

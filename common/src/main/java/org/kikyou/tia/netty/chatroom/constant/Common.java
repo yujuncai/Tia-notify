@@ -25,4 +25,7 @@ public interface Common {
     String GROUP_001_CHANNEL = "group_001";
 
     String SALT="TIA";
+
+
+    String ID_KEY="id_key_";
 }

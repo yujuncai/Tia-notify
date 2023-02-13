@@ -37,7 +37,7 @@ public class MessageHandler {
         // to:User(id=7713bc0f-8525-446e-8875-740d75c8e591, name=111, password=111, time=1676012352755, avatarUrl=11, ip=127.0.0.1, deviceType=pc, roomId=7713bc0f-8525-446e-8875-740d75c8e591, type=user)
         // content:[微笑]
         //  type:text
-        User user = (User) client.get(Common.USER_KEY);
+        User user =  client.get(Common.USER_KEY);
         if (UserType.USER.getName().equals(to.getType())) {
             // 向所属用户发消息
             SocketIOClient receiverClient = socketIOServer.getClient(UUID.fromString(to.getRoomId()));

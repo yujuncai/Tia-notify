@@ -26,6 +26,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.kikyou.tia.netty.chatroom.constant.Common.GROUP_001_MESSAGE;
+import static org.kikyou.tia.netty.chatroom.constant.Common.ID_KEY;
 
 
 /**
@@ -84,4 +85,18 @@ public class StoreService {
         }
         return BeanUtil.mapToBean(entries, User.class, true, CopyOptions.create());
     }
+
+
+    public void setIdKeyV(String id,User u){
+
+        redisTemplate.opsForValue().set( ID_KEY.concat(id), u);
+    }
+    public User getIdKeyV(String id){
+      return (User) redisTemplate.opsForValue().get(ID_KEY.concat(id));
+    }
+
+    public void delIdKeyV(String id){
+         redisTemplate.delete(ID_KEY.concat(id));
+    }
+
 }

@@ -24,10 +24,11 @@ public class RegisterService {
     private final DBStoreService dbstoreService;
 
     public void register(User user, SocketIOClient client) {
-        // 组织user properties
-        userService.organizeUser(user,client);
+
         // 判断用户是否已经存在
         User dbUser = userService.getUserByName(user.getName());
+        // 组织user properties
+        userService.organizeUser(dbUser,user,client);
         if (Objects.isNull(dbUser)) {
             // register user
             dbstoreService.saveOrUpdateUser(null,user, StatusType.REGISTER);

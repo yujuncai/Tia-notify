@@ -20,7 +20,6 @@ import static org.kikyou.tia.netty.chatroom.constant.Common.USER_KEY;
 
 
 /**
- *
  * @author yujuncai
  */
 @Slf4j
@@ -50,18 +49,17 @@ public class UserService {
 
     /**
      * 查询在线用户
-     *
      */
     public List<User> getOnlineUsers() {
         List<User> users = initDefaultUser();
         // Returns the matching socket instances
         socketIOServer.getAllClients().forEach(socketIOClient -> {
-            User user =  socketIOClient.get(USER_KEY);
+            User user = socketIOClient.get(USER_KEY);
             if (Objects.nonNull(user)) {
                 users.add(user);
             }
         });
-        log.debug("OnlineUsers: {}",users);
+        log.debug("OnlineUsers: {}", users);
         return users;
     }
 
@@ -71,28 +69,27 @@ public class UserService {
     }
 
 
-
     public Boolean exitActiveUser(User sc) {
-        // Returns the matching socket instances
-        return socketIOServer.getAllClients()
-                .stream()
-                .anyMatch(socketIOClient -> {
-                    User user = socketIOClient.get(USER_KEY);
-                    if (Objects.nonNull(user)) {
-                        return user.getName().equals(sc.getName());
-                    }
-                    return false;
-                });
+        User user = storeService.getIdKeyV(sc.getId());
+        if (Objects.nonNull(user)) {
+            return user.getName().equals(sc.getName());
+        }
+        return false;
     }
 
-    public void organizeUser(User user, SocketIOClient client){
+    public void organizeUser(User dbUser, User user, SocketIOClient client) {
         String ip = StrUtil.replace(client.getHandshakeData().getAddress().getHostString(), "::ffff:", "");
         HttpHeaders httpHeaders = client.getHandshakeData().getHttpHeaders();
         String realIp = httpHeaders.get("x-forwarded-for");
         String userAgent = httpHeaders.get("user-agent").toLowerCase();
         ip = StrUtil.isNotBlank(realIp) ? realIp : ip;
         String deviceType = IpUtils.getDeviceType(userAgent);
-        user.setId(client.getSessionId().toString());
+        if (dbUser == null) {
+            user.setId(client.getSessionId().toString());
+        } else {
+            user.setId(dbUser.getId());
+        }
+
         user.setIp(ip);
         user.setDeviceType(deviceType);
         user.setRoomId(client.getSessionId().toString());

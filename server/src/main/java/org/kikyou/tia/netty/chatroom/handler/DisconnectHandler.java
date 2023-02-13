@@ -6,11 +6,15 @@ import com.corundumstudio.socketio.annotation.OnDisconnect;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kikyou.tia.netty.chatroom.constant.Common;
+import org.kikyou.tia.netty.chatroom.models.User;
 import org.kikyou.tia.netty.chatroom.service.StoreService;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 /**
  * 监听连接断开事件
+ *
  * @author yujuncai
  */
 @Slf4j
@@ -31,6 +35,10 @@ public class DisconnectHandler {
     public void onDisconnect(SocketIOClient client) {
 
         log.debug("用户断开链接: {}", client.getSessionId().toString());
+        User user = client.get(Common.USER_KEY);
         client.del(Common.USER_KEY);
+        if (!Objects.isNull(user)) {
+            storeService.delIdKeyV(user.getId());
+        }
     }
 }

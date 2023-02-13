@@ -48,32 +48,31 @@ public class LoginService {
     private final DBStoreService dbstoreService;
 
     public void login(User user, SocketIOClient client, boolean isReconnect) {
-        userService.organizeUser(user,client);
+
         // 判断是否重复登录
-        if (userService.exitActiveUser(user)) {
+        User dbUser = userService.getUserByName(user.getName());
+        userService.organizeUser(dbUser,user,client);
+        if (!Objects.isNull(dbUser)&&userService.exitActiveUser(dbUser)) {
             client.sendEvent(EventNam.LOGIN_FAIL,"重复登录,请先退出!");
             return;
         }
         // 是否需要重新登录
-        if (isReconnect) {
-            loginSuccess(user, client);
-        } else {
+        if (!isReconnect) {
             // 判断用户是否存在
-            User dbUser = userService.getUserByName(user.getName());
             if (Objects.isNull(dbUser)) {
                 log.error("登录失败,账户'{}'不存在", user.getName());
-                client.sendEvent(EventNam.LOGIN_FAIL,"登录失败,账户不存在!");
+                client.sendEvent(EventNam.LOGIN_FAIL, "登录失败,账户不存在!");
                 return;
-            }else if (!dbUser.getPassword().equals(DigestUtil.md5Hex(user.getPassword().concat(Common.SALT)))){
+            } else if (!dbUser.getPassword().equals(DigestUtil.md5Hex(user.getPassword().concat(Common.SALT)))) {
                 log.error("登录失败,账户'{}'密码不正确", user.getName());
-                client.sendEvent(EventNam.LOGIN_FAIL,"登录失败,用户名/密码不正确!");
+                client.sendEvent(EventNam.LOGIN_FAIL, "登录失败,用户名/密码不正确!");
                 return;
             }
-
-            loginSuccess(user, client);
             // saveOrUpdate user
-            dbstoreService.saveOrUpdateUser(dbUser,user, StatusType.LOGIN);
+            dbstoreService.saveOrUpdateUser(dbUser, user, StatusType.LOGIN);
         }
+
+        loginSuccess(user, client);
     }
 
     private void loginSuccess(User user, SocketIOClient client) {
@@ -92,7 +91,7 @@ public class LoginService {
 
         data.setToken(JWTUtil.createToken(map, appConfiguration.getTokenKey().getBytes(StandardCharsets.UTF_8)));
 
-        // 通知有用户加入
+        // 通知有用户加入 todo 集群状态下需要广播
         socketIOServer.getBroadcastOperations().sendEvent(EventNam.SYSTEM,
                 /*排除自己*/
                 client,
@@ -102,6 +101,8 @@ public class LoginService {
         List<User> onlineUsers = userService.getOnlineUsers();
         // 为当前client赋值user
         client.set(USER_KEY, user);
+        //id-user 关系
+        storeService.setIdKeyV(user.getId(),user);
         // 发送login_success事件
         client.sendEvent(EventNam.LOGIN_SUCCESS, data, onlineUsers);
         // 群group1消息

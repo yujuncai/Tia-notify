@@ -28,7 +28,7 @@ public class LogoutHandler {
 
     private final SocketIOServer socketIOServer;
 
-
+    private final StoreService storeService;
 
 
     @OnEvent(EventNam.LOGOUT)
@@ -39,6 +39,9 @@ public class LogoutHandler {
         if (Objects.nonNull(user)) {
             log.debug("用户退出: {}", user.getName());
             client.del(Common.USER_KEY);
+            if (!Objects.isNull(user)) {
+                storeService.delIdKeyV(user.getId());
+            }
             if (StrUtil.isNotBlank(user.getId())) {
                 // 修改登录用户信息并通知所有在线用户
                 socketIOServer.getBroadcastOperations().sendEvent(EventNam.SYSTEM, user, SystemType.LOGOUT.getName());

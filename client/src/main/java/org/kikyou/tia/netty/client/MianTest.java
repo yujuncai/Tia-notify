@@ -20,15 +20,7 @@ public class MianTest {
 
         Socket connect = socket.connect();
 
-        User user = new User();
-        user.setName("111");
-        user.setPassword("111");
-        user.setAvatarUrl("11");
-        user.setTime(1L);
-        user.setType("2");
-        user.setIp("111");
-
-        socket.emit(EventNam.LOGIN, JSONUtil.parseObj(user));
+        initLogin(socket);
 
 
         socket.on(EventNam.HISTORY_MESSAGE, new Emitter.Listener() {
@@ -46,7 +38,9 @@ public class MianTest {
         socket.on(EventNam.REGISTER_SUCCESS, new Emitter.Listener() {
             @Override
             public void call(Object... args) {
+
                 System.out.println(EventNam.REGISTER_SUCCESS + " : " + args[0]);
+                initLogin(socket);
             }
         });
         socket.on(EventNam.LOGIN_FAIL, new Emitter.Listener() {
@@ -56,11 +50,9 @@ public class MianTest {
                 User user = new User();
                 user.setName("111");
                 user.setPassword("111");
-                user.setAvatarUrl("11");
+                user.setAvatarUrl("www.xxxx.com/static/img/avatar/20180414165815.jpg");
                 user.setTime(1L);
-                user.setType("2");
-                user.setIp("111");
-
+                user.setIp("127.0.0.1");
                 socket.emit(EventNam.REGISTER, JSONUtil.parseObj(user));
             }
         });
@@ -112,5 +104,15 @@ public class MianTest {
         });
 
         Thread.sleep(10000L);
+    }
+
+    private static void initLogin(Socket socket) {
+        User user = new User();
+        user.setName("111");
+        user.setPassword("111");
+        user.setAvatarUrl("www.xxxx.com/static/img/avatar/20180414165815.jpg");
+        user.setTime(1L);
+        user.setIp("127.0.0.1");
+        socket.emit(EventNam.LOGIN, JSONUtil.parseObj(user));
     }
 }
