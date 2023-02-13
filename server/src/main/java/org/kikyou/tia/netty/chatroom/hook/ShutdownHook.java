@@ -1,0 +1,37 @@
+package org.kikyou.tia.netty.chatroom.hook;
+
+import com.corundumstudio.socketio.SocketIOServer;
+import jakarta.annotation.PreDestroy;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.kikyou.tia.netty.chatroom.models.User;
+import org.kikyou.tia.netty.chatroom.service.StoreService;
+import org.springframework.stereotype.Component;
+
+import java.util.Objects;
+
+import static org.kikyou.tia.netty.chatroom.constant.Common.USER_KEY;
+
+@Component
+@Slf4j
+@RequiredArgsConstructor
+public class ShutdownHook {
+
+    private final  SocketIOServer socketIOServer;
+
+    private final StoreService storeService;
+
+    @PreDestroy
+    public void preDestroy() {
+        log.info("shutdown hook, pre destroy,del token");
+        socketIOServer.getAllClients()
+                .stream().parallel()
+                .forEach(socketIOClient -> {
+                    User user =  socketIOClient.get(USER_KEY);
+                    socketIOClient.del(USER_KEY);
+                    if (!Objects.isNull(user)) {
+                        storeService.delIdKeyV(user.getId());
+                    }
+                });
+    }
+}
