@@ -1,9 +1,12 @@
 # Tia
+
 高性能,可插拔,可集群的IM服务
 
 ##技术栈说明
 
+
 ###后端
+
 |技术栈	|版本|
 |  ----  | ----  |
 |socket.io-client(java-websocket客户端支持) |	1.0.2|
@@ -16,11 +19,13 @@
 
 ###前端(待补充)
 
+
 |技术栈	|版本|
 |  ----  | ----  |
 |socket.io-client(js-websocket客户端支持)	|2.5.0(目前netty-socketio仅支持2.x版本的socket.io-client)|
 
 ###文档
+
 
 1.为什么不用原生的websocket,而选用socketio
 
