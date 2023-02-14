@@ -20,8 +20,15 @@
 |  ----  | ----  |
 |socket.io-client(js-websocket客户端支持)	|2.5.0(目前netty-socketio仅支持2.x版本的socket.io-client)|
 
+###文档
 
+1.为什么不用原生的websocket,而选用socketio
 
+[为何选用Socket.io](https://github.com/pvdlg/conventional-changelog-metahub#commit-types)
+
+2.集群的思路
+
+[集群思路](https://github.com/pvdlg/conventional-changelog-metahub#commit-types)
 ***
 
 ##规范说明
