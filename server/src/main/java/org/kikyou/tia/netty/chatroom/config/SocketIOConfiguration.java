@@ -41,9 +41,9 @@ public class SocketIOConfiguration {
         config.setMaxHttpContentLength(1024 * 256);
         config.setAllowCustomRequests(true);
         config.setTransports(Transport.WEBSOCKET, Transport.POLLING);
-        //TODO 如何设置redissonClient写入的key有过期时间
         config.setStoreFactory(new RedissonStoreFactory(redissonClient));
         config.setAllowHeaders("*");
+        config.setOrigin("*");
         config.setBossThreads(appConfiguration.getBoss());
         config.setWorkerThreads(appConfiguration.getWorker());
         if (Epoll.isAvailable()) {//开启epoll
