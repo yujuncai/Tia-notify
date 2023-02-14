@@ -31,4 +31,6 @@ public interface EventNam {
     String LOGOUT = "logout";
 
     String REGISTER = "register";
+
+    String ACK = "ack";
 }

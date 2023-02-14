@@ -52,7 +52,7 @@ public class SocketIOConfiguration {
        /* 在给定的时间间隔（ pingInterval握手中发送的值），服务器发送一个 PING 数据包，客户端有几秒钟（该pingTimeout值）发送一个 PONG 数据包。
        如果服务器没有收到返回的 PONG 数据包，则认为连接已关闭。反之，如果客户端在 内没有收到 PING 包pingInterval + pingTimeout，则认为连接已关闭。
         */
-
+        config.setAckMode(AckMode.AUTO);//自动ack
         SocketConfig sockConfig = new SocketConfig();
         // 服务端ChannelOption.SO_REUSEADDR, 地址重用, 应对address is in use
         sockConfig.setReuseAddress(true);

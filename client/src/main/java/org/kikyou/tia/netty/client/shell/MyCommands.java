@@ -1,6 +1,7 @@
 package org.kikyou.tia.netty.client.shell;
 
 import cn.hutool.json.JSONUtil;
+import io.socket.client.Ack;
 import io.socket.client.Socket;
 import jakarta.annotation.Resource;
 import org.kikyou.tia.netty.chatroom.constant.EventNam;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.util.StringUtils;
+
+import java.util.Arrays;
 
 @ShellComponent
 public class MyCommands {
@@ -30,6 +33,13 @@ public class MyCommands {
         user.setTime(1L);
         user.setIp("127.0.0.1");
         socket.emit(EventNam.LOGIN, JSONUtil.parseObj(user));
+//ack
+       /* socket.emit(EventNam.LOGIN, new Object[]{JSONUtil.parseObj(user)},(ack)-> {
+            System.out.println(ack.length);
+            System.out.println(String.valueOf(ack));
+            System.out.println(Arrays.stream(ack).count());
+        });*/
+
     }
     @ShellMethod(value = "register")
     public void register(){
