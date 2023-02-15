@@ -17,14 +17,14 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @AllArgsConstructor
 @SpringBootApplication
 //@EnableScheduling
-public class KikyouNettyChatroomApplication implements CommandLineRunner {
+public class TiaNettyChatroomApplication implements CommandLineRunner {
 
     private final AppConfiguration appConfiguration;
 
     private final SocketIOServer socketIOServer;
 
     public static void main(String[] args) {
-        SpringApplication.run(KikyouNettyChatroomApplication.class, args);
+        SpringApplication.run(TiaNettyChatroomApplication.class, args);
     }
 
     @Override

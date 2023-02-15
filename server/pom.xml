@@ -55,7 +55,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
-                    <mainClass>org.kikyou.tia.netty.chatroom.KikyouNettyChatroomApplication</mainClass>
+                    <mainClass>org.kikyou.tia.netty.chatroom.TiaNettyChatroomApplication</mainClass>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>

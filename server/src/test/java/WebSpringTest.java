@@ -3,7 +3,7 @@ import jakarta.annotation.Resource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kikyou.tia.netty.chatroom.KikyouNettyChatroomApplication;
+import org.kikyou.tia.netty.chatroom.TiaNettyChatroomApplication;
 import org.kikyou.tia.netty.chatroom.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = KikyouNettyChatroomApplication.class)
+@SpringBootTest(classes = TiaNettyChatroomApplication.class)
 public class WebSpringTest {
 
     @Resource
