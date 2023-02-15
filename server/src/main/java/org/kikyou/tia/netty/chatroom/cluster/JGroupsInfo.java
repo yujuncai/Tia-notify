@@ -22,7 +22,7 @@ public class JGroupsInfo {
     @Value("${jgroups.config}")
     private String jGroupsConfig;
 
-    @Value("${jgroups.cluster}")
+    @Value("${jgroups.clustername}")
     private String clusterName;
 
     private JChannel channel;

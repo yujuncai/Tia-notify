@@ -51,5 +51,5 @@ spring:
 cluster:
   enabled: fasle
 jgroups:
-  cluster: ${JGROUPS_CLUSTER:tia-cluster}
+  clustername: ${JGROUPS_CLUSTER_NAME:tia-cluster}
   config: ${JGROUPS_CONFIG:jgroups-config-tcp.xml}
