@@ -19,7 +19,7 @@
     <artifactId>tia-im</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>tia-im</name>
-    <description>插拔式的聊天室</description>
+    <description>小巧,高性能,可插拔,可集群的IM客服</description>
     <inceptionYear>2023</inceptionYear>
 
 
