@@ -76,6 +76,7 @@ public class LoginService {
     }
 
     private void loginSuccess(User user, SocketIOClient client) {
+        user.setPassword(null);
         LoginSuccessData data = new LoginSuccessData();
         data.setUser(user);
 
