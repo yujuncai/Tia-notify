@@ -35,5 +35,5 @@ public class User implements Serializable {
 
     private String type;
 
-    private String mainBody;//属于某一个主体
+    private String nameSpace;//属于某一个命名空间,用于隔离多租户
 }

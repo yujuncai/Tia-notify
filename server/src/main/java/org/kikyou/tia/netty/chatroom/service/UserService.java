@@ -3,6 +3,7 @@ package org.kikyou.tia.netty.chatroom.service;
 import cn.hutool.core.util.StrUtil;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
+import io.micrometer.common.util.StringUtils;
 import io.netty.handler.codec.http.HttpHeaders;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,10 +51,10 @@ public class UserService {
     /**
      * 查询在线用户
      */
-    public List<User> getOnlineUsers() {
+    public List<User> getOnlineUsers(String namespace) {
         List<User> users = initDefaultUser();
         // Returns the matching socket instances
-        socketIOServer.getAllClients().forEach(socketIOClient -> {
+        socketIOServer.getNamespace(namespace).getAllClients().forEach(socketIOClient -> {
             User user = socketIOClient.get(USER_KEY);
             if (Objects.nonNull(user)) {
                 users.add(user);
@@ -70,7 +71,7 @@ public class UserService {
 
 
     public Boolean exitActiveUser(User sc) {
-        User user = storeService.getIdKeyV(sc.getId());
+        User user = storeService.getIdKeyV(sc.getId(),sc.getNameSpace());
         if (Objects.nonNull(user)) {
             return user.getName().equals(sc.getName());
         }
@@ -95,5 +96,6 @@ public class UserService {
         user.setCurrId(client.getSessionId().toString());
         user.setType(UserType.USER.getName());
         user.setTime(System.currentTimeMillis());
+        user.setNameSpace(client.getNamespace().getName());
     }
 }

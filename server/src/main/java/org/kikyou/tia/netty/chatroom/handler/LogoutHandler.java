@@ -40,7 +40,7 @@ public class LogoutHandler {
             log.debug("用户退出: {}", user.getName());
             client.del(Common.USER_KEY);
             if (!Objects.isNull(user)) {
-                storeService.delIdKeyV(user.getId());
+                storeService.delIdKeyV(user.getId(),user.getNameSpace());
             }
             if (StrUtil.isNotBlank(user.getId())) {
                 // 修改登录用户信息并通知所有在线用户

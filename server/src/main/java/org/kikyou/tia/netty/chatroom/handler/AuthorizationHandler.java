@@ -20,23 +20,22 @@ public class AuthorizationHandler implements AuthorizationListener {
     private final MainBodyService mainBodyService;
 
 
-
     @Override
     public boolean isAuthorized(HandshakeData handshakeData) {
         //signature 为通过AppSecret加密的 namespace
-        String  signature= handshakeData.getSingleUrlParam("signature");
-        String  appid= handshakeData.getSingleUrlParam("appid");
-        if (StrUtil.isNotBlank(signature)&&StrUtil.isNotBlank(appid)) {
+        String signature = handshakeData.getSingleUrlParam("signature");
+        String appid = handshakeData.getSingleUrlParam("appid");
+        if (StrUtil.isNotBlank(signature) && StrUtil.isNotBlank(appid)) {
 
-            log.info("appid-{}   signature-{}      url-{}",appid,signature,handshakeData.getUrl());
+            log.info("appid-{}   signature-{}      url-{}", appid, signature, handshakeData.getUrl());
             MainBody body = mainBodyService.getMainBodyByAppId(appid);
             String s = MySecureUtil.aesDecrypt(body.getAppSecret(), signature);
-            if(!body.getNameSpace().equals(s)){
-                log.error("{}  ----  {}",s,body.getNameSpace());
+            if (!body.getNameSpace().equals(s)) {
+                log.error("{}  ----  {}", s, body.getNameSpace());
                 return false;
             }
             return true;
-        }else {
+        } else {
             log.error("signature err...");
             return false;
         }

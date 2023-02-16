@@ -30,7 +30,7 @@ public class ShutdownHook {
                     User user =  socketIOClient.get(USER_KEY);
                     socketIOClient.del(USER_KEY);
                     if (!Objects.isNull(user)) {
-                        storeService.delIdKeyV(user.getId());
+                        storeService.delIdKeyV(user.getId(),user.getNameSpace());
                     }
                 });
     }

@@ -28,4 +28,6 @@ public interface Common {
 
 
     String ID_KEY="id_key_";
+
+    String DEFAULT="default";
 }

@@ -91,18 +91,18 @@ public class LoginService {
 
         data.setToken(JWTUtil.createToken(map, appConfiguration.getTokenKey().getBytes(StandardCharsets.UTF_8)));
 
-        // 通知有用户加入 todo 集群状态下需要广播
-        socketIOServer.getBroadcastOperations().sendEvent(EventNam.SYSTEM,
+        // 通知namespace下的用户加入 todo 集群状态下需要广播
+        socketIOServer.getNamespace(user.getNameSpace()).getBroadcastOperations().sendEvent(EventNam.SYSTEM,
                 /*排除自己*/
                 client,
                 user,
                 SystemType.JOIN.getName());
-
-        List<User> onlineUsers = userService.getOnlineUsers();
+        //当前namespace下的用户
+        List<User> onlineUsers = userService.getOnlineUsers(user.getNameSpace());
         // 为当前client赋值user
         client.set(USER_KEY, user);
         //id-user 关系
-        storeService.setIdKeyV(user.getId(),user);
+        storeService.setIdKeyV(user.getId(),user.getNameSpace(),user);
         // 发送login_success事件
         client.sendEvent(EventNam.LOGIN_SUCCESS, data, onlineUsers);
         // 群group1消息

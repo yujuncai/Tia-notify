@@ -38,7 +38,7 @@ public class DisconnectHandler {
         User user = client.get(Common.USER_KEY);
         client.del(Common.USER_KEY);
         if (!Objects.isNull(user)) {
-            storeService.delIdKeyV(user.getId());
+            storeService.delIdKeyV(user.getId(),user.getNameSpace());
         }
     }
 }

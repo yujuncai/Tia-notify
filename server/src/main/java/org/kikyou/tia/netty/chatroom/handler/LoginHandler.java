@@ -19,23 +19,21 @@ import static org.kikyou.tia.netty.chatroom.constant.Common.TOKEN;
 
 /**
  * 监听登录数据
+ *
  * @author yujuncai
  */
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class LoginHandler  {
+public class LoginHandler {
 
     private final LoginService loginService;
 
     @OnEvent(EventNam.LOGIN)
-    public void onData(SocketIOClient client, User data, AckRequest ackSender)  {
-
+    public void onData(SocketIOClient client, User data, AckRequest ackSender) {
         HttpHeaders httpHeaders = client.getHandshakeData().getHttpHeaders();
         String token = httpHeaders.get(TOKEN);
-
-        log.info("客户端：{} 已连接, token: {}, Namespace: {} ,url: {}", client.getSessionId(), token,client.getNamespace().getName(),client.getHandshakeData().getUrl());
-
+        log.info("客户端：{} 已连接, token: {}, Namespace: {} ,url: {}", client.getSessionId(), token, client.getNamespace().getName(), client.getHandshakeData().getUrl());
         log.debug("用户登录: {}", data.getName());
         loginService.login(data, client, false);
     }

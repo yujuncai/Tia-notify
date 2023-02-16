@@ -3,9 +3,11 @@ package org.kikyou.tia.netty.chatroom.service;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.kikyou.tia.netty.chatroom.constant.Common;
 import org.kikyou.tia.netty.chatroom.constant.MessageType;
 import org.kikyou.tia.netty.chatroom.constant.StatusType;
 import org.kikyou.tia.netty.chatroom.models.Message;
@@ -87,16 +89,25 @@ public class StoreService {
     }
 
 
-    public void setIdKeyV(String id,User u){
-
-        redisTemplate.opsForValue().set( ID_KEY.concat(id), u);
+    public void setIdKeyV(String id,String namespace,User u){
+        if(StrUtil.isBlank(namespace)){
+            namespace= Common.DEFAULT;
+        }
+        redisTemplate.opsForValue().set(namespace.concat("_").concat(ID_KEY).concat(id), u);
     }
-    public User getIdKeyV(String id){
-      return (User) redisTemplate.opsForValue().get(ID_KEY.concat(id));
+    public User getIdKeyV(String id,String namespace){
+        if(StrUtil.isBlank(namespace)){
+            namespace= Common.DEFAULT;
+        }
+        return (User) redisTemplate.opsForValue().get(namespace.concat("_").concat(ID_KEY).concat(id)
+        );
     }
 
-    public void delIdKeyV(String id){
-         redisTemplate.delete(ID_KEY.concat(id));
+    public void delIdKeyV(String id,String namespace){
+        if(StrUtil.isBlank(namespace)){
+            namespace= Common.DEFAULT;
+        }
+         redisTemplate.delete(namespace.concat("_").concat(ID_KEY).concat(id));
     }
 
 }
