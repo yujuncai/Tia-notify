@@ -11,11 +11,31 @@
  Target Server Version : 50725 (5.7.25-log)
  File Encoding         : 65001
 
- Date: 10/02/2023 18:09:52
+ Date: 16/02/2023 11:01:25
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for db_main_body
+-- ----------------------------
+DROP TABLE IF EXISTS `db_main_body`;
+CREATE TABLE `db_main_body`  (
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `nameSpace` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `appSecret` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `mainStatus` int(11) NULL DEFAULT NULL,
+  `appId` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `appid`(`appId`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of db_main_body
+-- ----------------------------
+INSERT INTO `db_main_body` VALUES ('11', 'tia-java测试', '/tia-java', 'jvZJhHtp3vOVmpool6QlMw==', 0, '987654321');
 
 -- ----------------------------
 -- Table structure for db_user
@@ -29,8 +49,9 @@ CREATE TABLE `db_user`  (
   `avatarUrl` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `deviceType` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `roomId` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `currId` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `mainBody` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `nameUni`(`name`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
@@ -38,6 +59,6 @@ CREATE TABLE `db_user`  (
 -- ----------------------------
 -- Records of db_user
 -- ----------------------------
-INSERT INTO `db_user` VALUES (0x36376464633737382D613434372D346264382D616533372D363833616336363433653961, '111', '698d51a19d8a121ce581499d7b701668', 1676017147544, '11', '127.0.0.1', 'pc', 'ca51822b-e41d-4824-af22-e4604b6c8e8a', 'user');
+INSERT INTO `db_user` VALUES (0x62363266666333652D626232332D343761322D613865392D663166343238633634643366, '111', 'cfdbaeb90a9b071fb4eed47355bb91a0', 1676516178571, 'www.xxxx.com/static/img/avatar/20180414165815.jpg', '127.0.0.1', 'pc', 'b62ffc3e-bb23-47a2-a8e9-f1f428c64d3f', 'user', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
