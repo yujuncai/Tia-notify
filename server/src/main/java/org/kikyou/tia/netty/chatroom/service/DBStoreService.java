@@ -47,11 +47,11 @@ public class DBStoreService {
             BeanUtil.copyProperties(user,dbuser,"id");
             MapSqlParameterSource param = new MapSqlParameterSource();
             initParam(dbuser, param);
-            namedParameterJdbcTemplate.update("Update db_user Set time=:time,avatarUrl=:avatarUrl,ip=:ip,deviceType=:deviceType,roomId=:roomId,type=:type Where id = :id", param);
+            namedParameterJdbcTemplate.update("Update db_user Set time=:time,avatarUrl=:avatarUrl,ip=:ip,deviceType=:deviceType,currId=:currId,type=:type Where id = :id", param);
         }else {
             MapSqlParameterSource param = new MapSqlParameterSource();
             initParam(user, param);
-            namedParameterJdbcTemplate.update("insert into db_user(id,name, password,time,avatarUrl,ip,deviceType,roomId,type) values (:id,:name, :password,:time,:avatarUrl,:ip,:deviceType,:roomId,:type)", param);
+            namedParameterJdbcTemplate.update("insert into db_user(id,name, password,time,avatarUrl,ip,deviceType,currId,type) values (:id,:name, :password,:time,:avatarUrl,:ip,:deviceType,:currId,:type)", param);
         }
 
 
@@ -65,7 +65,7 @@ public class DBStoreService {
         param.addValue("avatarUrl", u.getAvatarUrl());
         param.addValue("ip", u.getIp());
         param.addValue("deviceType", u.getDeviceType());
-        param.addValue("roomId", u.getRoomId());
+        param.addValue("currId", u.getCurrId());
         param.addValue("type", u.getType());
     }
 

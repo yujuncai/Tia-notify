@@ -6,6 +6,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import cn.hutool.jwt.JWTUtil;
 import cn.hutool.jwt.JWTValidator;
+import com.aliyun.oss.common.utils.StringUtils;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.annotation.OnConnect;
 import io.netty.handler.codec.http.HttpHeaders;
@@ -13,8 +14,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kikyou.tia.netty.chatroom.config.AppConfiguration;
 import org.kikyou.tia.netty.chatroom.constant.EventNam;
+import org.kikyou.tia.netty.chatroom.models.MainBody;
 import org.kikyou.tia.netty.chatroom.models.User;
 import org.kikyou.tia.netty.chatroom.service.LoginService;
+import org.kikyou.tia.netty.chatroom.service.MainBodyService;
+import org.kikyou.tia.netty.chatroom.utils.MySecureUtil;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -38,12 +42,16 @@ public class ConnectHandler {
 
     private final LoginService loginService;
 
+
+
     @OnConnect
     public void onConnect(SocketIOClient client) {
         Map<String, List<String>> urlParams = client.getHandshakeData().getUrlParams();
         HttpHeaders httpHeaders = client.getHandshakeData().getHttpHeaders();
         String token = httpHeaders.get(TOKEN);
-        log.info("客户端：{} 已连接, token: {}, urlParams:{}", client.getSessionId(), token, urlParams);
+
+        log.info("客户端：{} 已连接, token: {}, urlParams:{} ,Namespace: {} ,url: {}", client.getSessionId(), token, urlParams,client.getNamespace().getName(),client.getHandshakeData().getUrl());
+
 
 
         User user = null;
@@ -56,8 +64,8 @@ public class ConnectHandler {
                 }
             } catch (ValidateException e) {
                 // token失效, 需要用户回到登录页面重新登录
-                log.error("token失效, 需要用户回到登录页面重新登录...");
-                client.sendEvent(EventNam.SERVER_ERR,"请重新登录");
+                log.error("token失效, 重新认证...");
+                client.sendEvent(EventNam.SERVER_ERR,"请重新认证");
                 return;
             }
         }

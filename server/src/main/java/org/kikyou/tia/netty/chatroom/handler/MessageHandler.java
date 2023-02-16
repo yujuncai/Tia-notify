@@ -40,7 +40,7 @@ public class MessageHandler {
         User user =  client.get(Common.USER_KEY);
         if (UserType.USER.getName().equals(to.getType())) {
             // 向所属用户发消息
-            SocketIOClient receiverClient = socketIOServer.getClient(UUID.fromString(to.getRoomId()));
+            SocketIOClient receiverClient = socketIOServer.getClient(UUID.fromString(to.getCurrId()));
             if (receiverClient != null && receiverClient.isChannelOpen()) {//在线
                 receiverClient.sendEvent(EventNam.MESSAGE,
                         user,

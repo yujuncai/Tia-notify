@@ -31,8 +31,9 @@ public class User implements Serializable {
 
     private String deviceType;
 
-    private String roomId;
+    private String currId;
 
     private String type;
 
+    private String mainBody;//属于某一个主体
 }

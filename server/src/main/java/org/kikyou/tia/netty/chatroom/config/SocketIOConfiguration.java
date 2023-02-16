@@ -1,21 +1,22 @@
 package org.kikyou.tia.netty.chatroom.config;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import com.corundumstudio.socketio.*;
 import com.corundumstudio.socketio.annotation.SpringAnnotationScanner;
-import com.corundumstudio.socketio.listener.ConnectListener;
-import com.corundumstudio.socketio.listener.PingListener;
-import com.corundumstudio.socketio.store.MemoryStoreFactory;
 import com.corundumstudio.socketio.store.RedissonStoreFactory;
 import io.netty.channel.epoll.Epoll;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RedissonClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
 
 /**
  * SocketIo init
+ *
  * @author yujuncai
  */
 @Slf4j
@@ -27,6 +28,8 @@ public class SocketIOConfiguration {
 
     private final RedissonClient redissonClient;
 
+
+    @Order(1)
     @Bean
     public SocketIOServer socketIOServer() {
         Configuration config = new Configuration();
@@ -52,6 +55,9 @@ public class SocketIOConfiguration {
        /* 在给定的时间间隔（ pingInterval握手中发送的值），服务器发送一个 PING 数据包，客户端有几秒钟（该pingTimeout值）发送一个 PONG 数据包。
        如果服务器没有收到返回的 PONG 数据包，则认为连接已关闭。反之，如果客户端在 内没有收到 PING 包pingInterval + pingTimeout，则认为连接已关闭。
         */
+        //验证namespace
+        config.setAuthorizationListener(SpringUtil.getBean("authorizationHandler"));
+
         config.setAckMode(AckMode.AUTO);//自动ack
         SocketConfig sockConfig = new SocketConfig();
         // 服务端ChannelOption.SO_REUSEADDR, 地址重用, 应对address is in use
@@ -59,8 +65,12 @@ public class SocketIOConfiguration {
         sockConfig.setTcpKeepAlive(true);
 
         config.setSocketConfig(sockConfig);
-        SocketIOServer s= new SocketIOServer(config);
-        s.addPingListener(client -> log.debug("ping--------"+client.getSessionId()));
+
+
+        SocketIOServer s = new SocketIOServer(config);
+        s.addPingListener(client -> log.debug("ping--------" + client.getSessionId()));
+
+
         return s;
     }
 

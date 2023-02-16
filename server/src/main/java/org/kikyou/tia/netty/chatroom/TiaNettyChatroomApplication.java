@@ -16,7 +16,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Slf4j
 @AllArgsConstructor
 @SpringBootApplication
-//@EnableScheduling
+@EnableScheduling
 public class TiaNettyChatroomApplication implements CommandLineRunner {
 
     private final AppConfiguration appConfiguration;

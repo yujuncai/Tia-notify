@@ -92,7 +92,7 @@ public class UserService {
 
         user.setIp(ip);
         user.setDeviceType(deviceType);
-        user.setRoomId(client.getSessionId().toString());
+        user.setCurrId(client.getSessionId().toString());
         user.setType(UserType.USER.getName());
         user.setTime(System.currentTimeMillis());
     }

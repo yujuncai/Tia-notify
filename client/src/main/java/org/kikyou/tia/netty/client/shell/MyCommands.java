@@ -4,6 +4,7 @@ import cn.hutool.json.JSONUtil;
 import io.socket.client.Ack;
 import io.socket.client.Socket;
 import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
 import org.kikyou.tia.netty.chatroom.constant.EventNam;
 import org.kikyou.tia.netty.chatroom.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +15,14 @@ import org.springframework.util.StringUtils;
 import java.util.Arrays;
 
 @ShellComponent
+@RequiredArgsConstructor
 public class MyCommands {
-    @Autowired
-    Socket socket;
-    @ShellMethod(value = "connect")
-    public void connect(){
-        System.out.println("连接服务");
-        Socket connect = socket.connect();
+
+    private final Socket socket;
+    @ShellMethod(value = "check")
+    public void check(){
+       System.out.println("是否连接上 "+socket.connected());
+
     }
 
     @ShellMethod(value = "login")
@@ -32,13 +34,14 @@ public class MyCommands {
         user.setAvatarUrl("www.xxxx.com/static/img/avatar/20180414165815.jpg");
         user.setTime(1L);
         user.setIp("127.0.0.1");
-        socket.emit(EventNam.LOGIN, JSONUtil.parseObj(user));
+        //socket.emit(EventNam.LOGIN, JSONUtil.parseObj(user));
+
 //ack
-       /* socket.emit(EventNam.LOGIN, new Object[]{JSONUtil.parseObj(user)},(ack)-> {
+       socket.emit(EventNam.LOGIN, new Object[]{JSONUtil.parseObj(user)},(ack)-> {
             System.out.println(ack.length);
             System.out.println(String.valueOf(ack));
             System.out.println(Arrays.stream(ack).count());
-        });*/
+        });
 
     }
     @ShellMethod(value = "register")
@@ -65,9 +68,9 @@ public class MyCommands {
 
 
     @ShellMethod(value = "message2user")
-    public void message2user(String roomid){
+    public void message2user(String currid){
         System.out.println("发起message to user");
-        if(!StringUtils.hasText(roomid)){
+        if(!StringUtils.hasText(currid)){
             System.out.println("参数为空!");
         }
         User form = new User();
@@ -85,7 +88,7 @@ public class MyCommands {
         to.setTime(1L);
         to.setIp("127.0.0.1");
         to.setType("user");
-        to.setRoomId(roomid);
+        to.setCurrId(currid);
 
         socket.emit(EventNam.MESSAGE, JSONUtil.parseObj(form),JSONUtil.parseObj(to),"hello ~~~~user","text");
     }
@@ -126,7 +129,7 @@ public class MyCommands {
         System.out.println("获取在线所有用户");
        UserMap.map.forEach((k,v) -> {
            System.out.println("用户名:"+k);
-           System.out.println("用户roomid:"+v.getRoomId());
+           System.out.println("用户currid:"+v.getCurrId());
            System.out.println("用户:"+v);
            System.out.println("______________________________");
        });
