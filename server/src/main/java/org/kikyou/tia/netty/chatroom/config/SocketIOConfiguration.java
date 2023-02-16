@@ -46,7 +46,7 @@ public class SocketIOConfiguration {
         config.setTransports(Transport.WEBSOCKET, Transport.POLLING);
         config.setStoreFactory(new RedissonStoreFactory(redissonClient));
         config.setAllowHeaders("*");
-        config.setOrigin("*");
+        config.setOrigin(appConfiguration.getOrigin());
         config.setBossThreads(appConfiguration.getBoss());
         config.setWorkerThreads(appConfiguration.getWorker());
         if (Epoll.isAvailable()) {//开启epoll

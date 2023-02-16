@@ -23,4 +23,5 @@ public class AppConfiguration {
 
     private Integer worker;
 
+    private String origin;
 }

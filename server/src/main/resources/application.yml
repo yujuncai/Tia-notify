@@ -5,6 +5,7 @@ tia:
   token-key: ${APP_TOKEN_KEY:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9}
   boss: 1
   worker: 16
+  origin: http://localhost:8080
 
 aliyun:
   oss:
