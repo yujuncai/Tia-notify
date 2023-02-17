@@ -1,6 +1,28 @@
+
+var params=window.location.href;
 function initSocket() {
+ /* http://localhost?appid=987654321&signature=5QUVeOOjIWu4Ul/VqFBh1w==
+  http://localhost:8080/?appid=987654321&signature=5QUVeOOjIWu4Ul/VqFBh1w==&namespace=tia-java
+  */
+
+  var namespace = $.getUrlParam('namespace');
+  var appid= $.getUrlParam('appid');
+  var signature = $.getUrlParam('signature');
+
+
+
+
+  if (namespace == '' || appid == ''|| signature == ''|| namespace == undefined   ||appid == undefined   ||signature == undefined) {
+
+    alert('必要的参数为空!');
+    return;
+  }
+
+  var param= '/'+namespace+'?'+'appid='+appid+'&signature='+signature;
+  var url='http://localhost:80'+param;
+
   var token = sessionStorage.getItem("tia-token")
-  socket = io('http://localhost:80/tia-java?appid=987654321&signature=5QUVeOOjIWu4Ul/VqFBh1w==', {
+  socket = io(url, {
     transports: ['websocket', 'polling'],
     transportOptions: {
       polling: {
@@ -33,11 +55,12 @@ function initSocket() {
   socket.on('loginFail', function (data) {
     ShowFailure(data);
     console.log(data);
-    window.location.href = '/';
+
+    window.location.href =params ;
   });
   socket.on('serverErr', function (data) {
     ShowFailure(data);
-    window.location.href = '/';
+    window.location.href = params;
     console.log(data);
   });
   socket.on('loginSuccess', function (data) {
@@ -106,7 +129,7 @@ function register() {
 function logout() {
   socket.emit('logout', "");
   sessionStorage.clear();
-  window.location.href = '/';
+  window.location.href = params;
 }
 
 //发送房间消息
@@ -171,3 +194,10 @@ function initprofile() {
 
 
 }
+(function ($) {
+  $.getUrlParam = function (name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+  }
+})(jQuery);
