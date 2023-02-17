@@ -89,46 +89,11 @@ $$(document).on('page:init', '.page[data-name="messages"]', function (e) {
 
   // Dummy response
   var answers = [
-    'Yes!',
-    'No',
-    'Hm...',
-    'I am not sure',
-    'And what about you?',
-    'May be ;)',
-    'Lorem ipsum dolor sit amet, consectetur',
-    'What?',
-    'Are you sure?',
-    'Of course',
-    'Need to think about it',
-    'Amazing!!!'
+    'Yes!'
   ]
   var people = [{
       name: 'Oswald Cobblepot',
       avatar: 'img/00.jpg'
-    },
-    {
-      name: 'Fish Mooney',
-      avatar: 'img/00.jpg'
-    },
-    {
-      name: 'Barbara Kean',
-      avatar: 'img/2.jpg'
-    },
-    {
-      name: 'Edward Nygma',
-      avatar: 'img/230.jpg'
-    },
-    {
-      name: 'Selina Kyle',
-      avatar: 'img/11.jpg'
-    },
-    {
-      name: 'Harvey Bullock',
-      avatar: 'img/940.jpg'
-    },
-    {
-      name: 'Jim Gordon',
-      avatar: 'img/910.jpg'
     }
   ];
 
@@ -156,7 +121,7 @@ $$(document).on('page:init', '.page[data-name="messages"]', function (e) {
         // Hide typing indicator
         messages.hideTyping();
         responseInProgress = false;
-      }, 4000);
+      }, 3000);
     }, 1000);
   }
 });
@@ -183,3 +148,38 @@ $$(document).on('page:init', '.page[data-name="profile"]', function (e) {
 });
 
 
+$$(document).on('page:init', '.page[data-name="home"]', function (e) {
+      $.each(onlines,function (index,value)  {
+
+       /* <li className="swipeout">
+          <div className="swipeout-content">
+            <a href="/messages/" className="item-link item-content">
+              <div className="item-media">
+                <img className="user-avatar" src="img/230.jpg" width="44"/>
+                <span className="user-online-badge"></span>
+              </div>
+              <div className="item-inner">
+                <div className="item-title-row">
+                  <div className="item-title">Edward Nygma</div>
+                  <div className="item-after">Yesterday</div>
+                </div>
+                <div className="item-text">
+                  No body, no crime
+                </div>
+              </div>
+            </a>
+          </div>
+          <div className="swipeout-actions-left">
+          </div>
+          <div className="swipeout-actions-right">
+            <a href="#" data-confirm="Are you sure you want to delete this conversation?"
+               className="swipeout-delete swipeout-overswipe"><i className="mdi mdi-delete"></i>
+              <p>删除</p>
+            </a>
+          </div>
+        </li>*/
+       $("#messages-wrapper").append()
+
+  })
+
+});

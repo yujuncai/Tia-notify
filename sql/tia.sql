@@ -11,7 +11,7 @@
  Target Server Version : 50725 (5.7.25-log)
  File Encoding         : 65001
 
- Date: 16/02/2023 11:01:25
+ Date: 17/02/2023 18:00:16
 */
 
 SET NAMES utf8mb4;
@@ -51,7 +51,7 @@ CREATE TABLE `db_user`  (
   `deviceType` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `currId` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `mainBody` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `nameSpace` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `nameUni`(`name`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
@@ -59,6 +59,6 @@ CREATE TABLE `db_user`  (
 -- ----------------------------
 -- Records of db_user
 -- ----------------------------
-INSERT INTO `db_user` VALUES (0x62363266666333652D626232332D343761322D613865392D663166343238633634643366, '111', 'cfdbaeb90a9b071fb4eed47355bb91a0', 1676516178571, 'www.xxxx.com/static/img/avatar/20180414165815.jpg', '127.0.0.1', 'pc', 'b62ffc3e-bb23-47a2-a8e9-f1f428c64d3f', 'user', NULL);
+INSERT INTO `db_user` VALUES (0x32343732636438312D323338342D343433622D383233352D333435336662343737363730, '111', 'cfdbaeb90a9b071fb4eed47355bb91a0', 1676627331184, 'http://q.qlogo.cn/headimg_dl?dst_uin=705597001&spec=100', '127.0.0.1', 'phone', 'a7f93cc6-849e-4b42-acad-1880da823cad', 'user', '/tia-java');
 
 SET FOREIGN_KEY_CHECKS = 1;

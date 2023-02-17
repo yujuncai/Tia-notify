@@ -51,6 +51,7 @@ function initSocket() {
   socket.on('registerSuccess', function (data) {
 
     console.log(data);
+
   });
   socket.on('loginFail', function (data) {
     ShowFailure(data);
@@ -63,7 +64,7 @@ function initSocket() {
     window.location.href = params;
     console.log(data);
   });
-  socket.on('loginSuccess', function (data) {
+  socket.on('loginSuccess', function (data,onlineUsers) {
 
     token = data.token;
     user = data.user;
@@ -72,6 +73,8 @@ function initSocket() {
     $("#aid").attr("href", "/home/");
     $("#pid").trigger('click');
 
+    console.log(onlineUsers);
+    onlines=onlineUsers;
 
   });
   socket.on('message', function (data) {
@@ -84,6 +87,7 @@ function initSocket() {
   });
 }
 
+var onlines=[];
 var user = {
   name: '',
   password: '',
