@@ -174,6 +174,7 @@ $$(document).on('page:init', '.page[data-name="contact"]', function (e) {
     }
   });
 });
+<<<<<<< HEAD
 
 
 $$(document).on('page:init', '.page[data-name="profile"]', function (e) {
@@ -181,3 +182,5 @@ $$(document).on('page:init', '.page[data-name="profile"]', function (e) {
  initprofile();
 });
 
+=======
+>>>>>>> origin/main
