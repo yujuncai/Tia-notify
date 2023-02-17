@@ -107,7 +107,7 @@ function login() {
   }
   var name = $("#name").val();
   var password = $("#password").val()
-  if (name === '' || password === '') {
+  if (name == '' || password == '') {
     ShowFailure("用户名/密码不能为空！");
     return
   }
@@ -158,10 +158,10 @@ function ShowTip(tip, type) {
   var $tip = $('#tip');
   if ($tip.length == 0) {
     // 设置样式，也可以定义在css文件中
-    $tip = $('<span id="tip" style="position:fixed;top:50px;left: 50%;z-index:9999;height: 35px;padding: 0 20px;line-height: 35px;"></span>');
+    $tip = $('<span id="tip" style="position:fixed;top:50px;left: 50%;z-index:9999;height: 55px;padding: 0 30px;line-height: 45px;"></span>');
     $('body').append($tip);
   }
-  $tip.stop(true).prop('class', 'alert alert-' + type).text(tip).css('margin-left', -$tip.outerWidth() / 2).fadeIn(500).delay(2000).fadeOut(500);
+  $tip.stop(true).prop('class', 'alert alert-' + type).text(tip).css('margin-left', -$tip.outerWidth() / 2).fadeIn(500).delay(3000).fadeOut(2000);
 }
 
 function ShowMsg(msg) {
