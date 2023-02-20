@@ -38,7 +38,7 @@ public class MyCommands {
         User user = new User();
         user.setName("111");
         user.setPassword("111");
-        user.setAvatarUrl("www.xxxx.com/static/img/avatar/20180414165815.jpg");
+        user.setAvatarUrl("img/20180414165827.jpg");
         user.setTime(1L);
         user.setIp("127.0.0.1");
         //socket.emit(EventNam.LOGIN, JSONUtil.parseObj(user));
@@ -57,7 +57,7 @@ public class MyCommands {
         User user = new User();
         user.setName("111");
         user.setPassword("111");
-        user.setAvatarUrl("www.xxxx.com/static/img/avatar/20180414165815.jpg");
+        user.setAvatarUrl("img/20180414165827.jpg");
         user.setTime(1L);
         user.setIp("127.0.0.1");
 
@@ -159,7 +159,7 @@ public class MyCommands {
         User form = new User();
         form.setName("111");
         form.setPassword("111");
-        form.setAvatarUrl("www.xxxx.com/static/img/avatar/20180414165815.jpg");
+        form.setAvatarUrl("img/20180414165827.jpg");
         form.setTime(1L);
         form.setIp("127.0.0.1");
         form.setType("user");
@@ -167,7 +167,7 @@ public class MyCommands {
         User to = new User();
         to.setName("222");
         to.setPassword("222");
-        to.setAvatarUrl("www.xxxx.com/static/img/avatar/20180414165815.jpg");
+        to.setAvatarUrl("img/20180414165827.jpg");
         to.setTime(1L);
         to.setIp("127.0.0.1");
         to.setType("user");
@@ -181,7 +181,7 @@ public class MyCommands {
         User form = new User();
         form.setName("111");
         form.setPassword("111");
-        form.setAvatarUrl("www.xxxx.com/static/img/avatar/20180414165815.jpg");
+        form.setAvatarUrl("img/20180414165827.jpg");
         form.setTime(1L);
         form.setIp("127.0.0.1");
         form.setType("user");
@@ -190,7 +190,7 @@ public class MyCommands {
         User to = new User();
         to.setId("group_001");
         to.setName("222");
-        to.setAvatarUrl("www.xxxx.com/static/img/avatar/20180414165815.jpg");
+        to.setAvatarUrl("img/20180414165827.jpg");
         to.setTime(1L);
         to.setIp("127.0.0.1");
         to.setType("group");

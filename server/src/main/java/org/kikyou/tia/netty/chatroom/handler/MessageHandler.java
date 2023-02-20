@@ -40,7 +40,7 @@ public class MessageHandler {
         User user =  client.get(Common.USER_KEY);
         if (UserType.USER.getName().equals(to.getType())) {
             // 向所属用户发消息
-            SocketIOClient receiverClient = socketIOServer.getClient(UUID.fromString(to.getCurrId()));
+            SocketIOClient receiverClient = socketIOServer.getNamespace(user.getNameSpace()).getClient(UUID.fromString(to.getCurrId()));
             if (receiverClient != null && receiverClient.isChannelOpen()) {//在线
                 receiverClient.sendEvent(EventNam.MESSAGE,
                         user,
@@ -54,7 +54,7 @@ public class MessageHandler {
         }
         if (UserType.GROUP.getName().equals(to.getType())) {
             // 群发
-            socketIOServer.getBroadcastOperations().sendEvent(EventNam.MESSAGE,
+            socketIOServer.getNamespace(user.getNameSpace()).getBroadcastOperations().sendEvent(EventNam.MESSAGE,
                     /*排除自己*/
                     client,
                     user,

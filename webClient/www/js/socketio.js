@@ -39,8 +39,9 @@ function initSocket() {
     console.log('socket断开连接');
   });
 
-  socket.on('history-message', function (data) {
-    console.log("接收到消息:" + data);
+  socket.on('history-message', function (data,messages) {
+    grouphistory=messages;
+    console.log("接收到消息:" + data+" "+messages);
   });
   socket.on('registerFail', function (data) {
     ShowFailure(data);
@@ -77,9 +78,13 @@ function initSocket() {
     onlines=onlineUsers;
 
   });
-  socket.on('message', function (data) {
+  socket.on('message', function (v1,v2,v3,v4) {
 
-    console.log(data);
+    console.log(v1);
+    console.log(v2);
+    console.log(v3);
+    console.log(v4);
+    receiveMessage(v3,v1,v2,v4);
   });
   socket.on('system', function (var1,var2) {
 
@@ -97,7 +102,7 @@ function initSocket() {
 
   });
 }
-
+var grouphistory=[];
 var onlines=[];
 var user = {
   name: '',
@@ -141,16 +146,19 @@ function register() {
 }
 
 
+
+function messagesTo(u,t,c) {
+  socket.emit('message', u,t,c,"text");
+}
+
+
 function logout() {
   socket.emit('logout', "");
   sessionStorage.clear();
   window.location.href = params;
 }
 
-//发送房间消息
-function message() {
-  socket.emit('testRoom', "testRoomData");
-}
+
 
 function getDeviceType(userAgent) {
   userAgent = userAgent.toLowerCase();

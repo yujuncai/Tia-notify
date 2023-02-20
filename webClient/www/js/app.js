@@ -12,21 +12,17 @@ var mainView = app.views.create('.view-main', {
   url: '/'
 });
 
-
+var messages;
 $$(document).on('page:init', '.page[data-name="messages"]', function (e) {
   // Init Messages
-  var messages = app.messages.create({
+   messages = app.messages.create({
     el: '.messages',
 
     // First message rule
     firstMessageRule: function (message, previousMessage, nextMessage) {
       // Skip if title
       if (message.isTitle) return false;
-      /* if:
-        - there is no previous message
-        - or previous message type (send/received) is different
-        - or previous message sender name is different
-      */
+
       if (!previousMessage || previousMessage.type !== message.type || previousMessage.name !== message.name) return true;
       return false;
     },
@@ -34,11 +30,7 @@ $$(document).on('page:init', '.page[data-name="messages"]', function (e) {
     lastMessageRule: function (message, previousMessage, nextMessage) {
       // Skip if title
       if (message.isTitle) return false;
-      /* if:
-        - there is no next message
-        - or next message type (send/received) is different
-        - or next message sender name is different
-      */
+
       if (!nextMessage || nextMessage.type !== message.type || nextMessage.name !== message.name) return true;
       return false;
     },
@@ -46,15 +38,37 @@ $$(document).on('page:init', '.page[data-name="messages"]', function (e) {
     tailMessageRule: function (message, previousMessage, nextMessage) {
       // Skip if title
       if (message.isTitle) return false;
-      /* if (bascially same as lastMessageRule):
-      - there is no next message
-      - or next message type (send/received) is different
-      - or next message sender name is different
-    */
+
       if (!nextMessage || nextMessage.type !== message.type || nextMessage.name !== message.name) return true;
       return false;
     }
   });
+
+
+  $.each(grouphistory, function (index, obj) {
+    var from = obj.from;
+    var to = obj.to;
+    var time = obj.time;
+    var content = obj.content
+    var type = obj.type;
+
+    if (from.name == user.name) {
+      messages.addMessage({
+        text: content,
+        name: from.name,
+        type: 'sent',
+        avatar: from.avatarUrl
+      });
+    } else {
+      messages.addMessage({
+        text: content,
+        type: 'received',
+        name: from.name,
+        avatar: from.avatarUrl
+      });
+    }
+  });
+
 
   // Init Messagebar
   var messagebar = app.messagebar.create({
@@ -75,103 +89,107 @@ $$(document).on('page:init', '.page[data-name="messages"]', function (e) {
 
     // Return focus to area
     messagebar.focus();
-
+    console.log(user);
+    console.log(to);
+    messagesTo(user, to, text);
     // Add message to messages
     messages.addMessage({
       text: text,
-      avatar: 'img/890.jpg'
+      avatar: user.avatarUrl
     });
 
-    if (responseInProgress) return;
-    // Receive dummy message
-    receiveMessage();
+
   });
 
-  // Dummy response
-  var answers = [
-    'Yes!'
-  ]
-  var people = [{
-    name: 'Oswald Cobblepot',
-    avatar: 'img/00.jpg'
-  }
-  ];
 
-  function receiveMessage() {
-    responseInProgress = true;
-    setTimeout(function () {
-      // Get random answer and random person
-      var answer = answers[Math.floor(Math.random() * answers.length)];
-      var person = people[Math.floor(Math.random() * people.length)];
 
-      // Show typing indicator
-      messages.showTyping({
-        header: person.name + ' is typing',
-        avatar: person.avatar
-      });
-
-      setTimeout(function () {
-        // Add received dummy message
-        messages.addMessage({
-          text: answer,
-          type: 'received',
-          name: person.name,
-          avatar: person.avatar
-        });
-        // Hide typing indicator
-        messages.hideTyping();
-        responseInProgress = false;
-      }, 3000);
-    }, 1000);
-  }
 });
 
-$$(document).on('page:init', '.page[data-name="contact"]', function (e) {
-  // create searchbar
-  var searchbar = app.searchbar.create({
-    el: '.searchbar',
-    searchContainer: '.list',
-    searchIn: '.item-title',
-    on: {
-      search(sb, query, previousQuery) {
-        console.log(query, previousQuery);
+
+
+function receiveMessage(text, from, to, type) {
+  messages.addMessage({
+    text: text,
+    type: 'received',
+    name: from.name,
+    avatar: from.avatarUrl
+  });
+}
+
+
+  $$(document).on('page:init', '.page[data-name="contact"]', function (e) {
+    // create searchbar
+    var searchbar = app.searchbar.create({
+      el: '.searchbar',
+      searchContainer: '.list',
+      searchIn: '.item-title',
+      on: {
+        search(sb, query, previousQuery) {
+          console.log(query, previousQuery);
+        }
       }
-    }
+    });
   });
-});
 
 
-$$(document).on('page:init', '.page[data-name="profile"]', function (e) {
+  $$(document).on('page:init', '.page[data-name="profile"]', function (e) {
 
-  initprofile();
-});
-
-
-$$(document).on('page:init', '.page[data-name="home"]', function (e) {
-
-  var all = "";
-  $.each(onlines, function (index, obj) {
-    var s=addOnlineUser(obj);
-    all += s;
+    initprofile();
   });
-  $("#messages-wrapper").append(all);
+
+  var to = {
+    name: '',
+    password: '',
+    time: '',
+    avatarUrl: '',
+    ip: '',
+    deviceType: '',
+    type: '',
+    id: '',
+    nameSpace: '',
+    currId: ''
+  }
+  $$(document).on('page:init', '.page[data-name="home"]', function (e) {
+
+    var all = "";
+    $.each(onlines, function (index, obj) {
+
+      var dom = document.getElementById(obj.id);
+      if (!dom) {
+        var s = addOnlineUser(obj);
+        all += s;
+      }
+    });
+
+    $("#messages-wrapper").append(all);
 
 
-});
+  });
+
+  function touser(id) {
+    console.log("********" + id);
+    $.each(onlines, function (index, obj) {
+      if (obj.id == id) {
+        to = obj;
+        console.log(to);
+      }
+    });
 
 
-function  addOnlineUser (obj){
-    var userbar = "<li class=\"swipeout\" id=\""+obj.id+"\">\n" +
+  }
+
+  function addOnlineUser(obj) {
+    var userbar = "<li class=\"swipeout\" id=\"" + obj.id + "\">\n" +
       "          <div class=\"swipeout-content\">\n" +
-      "            <a href=\"/messages/\" class=\"item-link item-content\">\n" +
+      "            <a href=\"/messages/\" onclick=\"touser('" + obj.id + "')\" class=\"messageclick item-link item-content\">\n" +
       "              <div class=\"item-media\">\n" +
-      "                <img class=\"user-avatar\" src=\""+obj.avatarUrl+"\" width=\"44\" />\n" +
+      "                <img class=\"user-avatar\" src=\"" + obj.avatarUrl + "\" width=\"44\" />\n" +
       "                <span class=\"user-online-badge\"></span>\n" +
       "              </div>\n" +
       "              <div class=\"item-inner\">\n" +
       "                <div class=\"item-title-row\">\n" +
-      "                  <div class=\"item-title\">"+obj.name+"</div>\n" +
-      "                  <div class=\"item-after\">"+friendlyTime(obj.time)+"</div>\n" +
+      "                  <div class=\"item-title\">" + obj.name + "</div>\n" +
+      "                  <div class=\"item-after\">" + friendlyTime(obj.time) + "</div>\n" +
       "                </div>\n" +
       "                <div class=\"item-text\">\n" +
 
@@ -188,10 +206,18 @@ function  addOnlineUser (obj){
       "            </a>\n" +
       "          </div>\n" +
       "        </li>";
-      return userbar;
-}
+    return userbar;
+  }
 
-function  delOnlineUser (obj){
-   var ids=obj.id;
-   document.getElementById(ids).remove();
-}
+  function delOnlineUser(obj) {
+    var ids = obj.id;
+
+    if (ids) {
+      document.getElementById(ids).remove();
+    }
+  }
+
+
+
+
+
