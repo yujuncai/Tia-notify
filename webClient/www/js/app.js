@@ -92,9 +92,9 @@ $$(document).on('page:init', '.page[data-name="messages"]', function (e) {
     'Yes!'
   ]
   var people = [{
-      name: 'Oswald Cobblepot',
-      avatar: 'img/00.jpg'
-    }
+    name: 'Oswald Cobblepot',
+    avatar: 'img/00.jpg'
+  }
   ];
 
   function receiveMessage() {
@@ -141,45 +141,57 @@ $$(document).on('page:init', '.page[data-name="contact"]', function (e) {
 });
 
 
-
 $$(document).on('page:init', '.page[data-name="profile"]', function (e) {
 
- initprofile();
+  initprofile();
 });
 
 
 $$(document).on('page:init', '.page[data-name="home"]', function (e) {
-      $.each(onlines,function (index,value)  {
 
-       /* <li className="swipeout">
-          <div className="swipeout-content">
-            <a href="/messages/" className="item-link item-content">
-              <div className="item-media">
-                <img className="user-avatar" src="img/230.jpg" width="44"/>
-                <span className="user-online-badge"></span>
-              </div>
-              <div className="item-inner">
-                <div className="item-title-row">
-                  <div className="item-title">Edward Nygma</div>
-                  <div className="item-after">Yesterday</div>
-                </div>
-                <div className="item-text">
-                  No body, no crime
-                </div>
-              </div>
-            </a>
-          </div>
-          <div className="swipeout-actions-left">
-          </div>
-          <div className="swipeout-actions-right">
-            <a href="#" data-confirm="Are you sure you want to delete this conversation?"
-               className="swipeout-delete swipeout-overswipe"><i className="mdi mdi-delete"></i>
-              <p>删除</p>
-            </a>
-          </div>
-        </li>*/
-       $("#messages-wrapper").append()
+  var all = "";
+  $.each(onlines, function (index, obj) {
+    var s=addOnlineUser(obj);
+    all += s;
+  });
+  $("#messages-wrapper").append(all);
 
-  })
 
 });
+
+
+function  addOnlineUser (obj){
+    var userbar = "<li class=\"swipeout\" id=\""+obj.id+"\">\n" +
+      "          <div class=\"swipeout-content\">\n" +
+      "            <a href=\"/messages/\" class=\"item-link item-content\">\n" +
+      "              <div class=\"item-media\">\n" +
+      "                <img class=\"user-avatar\" src=\""+obj.avatarUrl+"\" width=\"44\" />\n" +
+      "                <span class=\"user-online-badge\"></span>\n" +
+      "              </div>\n" +
+      "              <div class=\"item-inner\">\n" +
+      "                <div class=\"item-title-row\">\n" +
+      "                  <div class=\"item-title\">"+obj.name+"</div>\n" +
+      "                  <div class=\"item-after\">"+friendlyTime(obj.time)+"</div>\n" +
+      "                </div>\n" +
+      "                <div class=\"item-text\">\n" +
+
+      "                </div>\n" +
+      "              </div>\n" +
+      "            </a>\n" +
+      "          </div>\n" +
+      "          <div class=\"swipeout-actions-left\">\n" +
+      "          </div>\n" +
+      "          <div class=\"swipeout-actions-right\">\n" +
+      "            <a href=\"#\" data-confirm=\"Are you sure you want to delete this conversation?\"\n" +
+      "               class=\"swipeout-delete swipeout-overswipe\"><i class=\"mdi mdi-delete\"></i>\n" +
+      "              <p>Delete</p>\n" +
+      "            </a>\n" +
+      "          </div>\n" +
+      "        </li>";
+      return userbar;
+}
+
+function  delOnlineUser (obj){
+   var ids=obj.id;
+   document.getElementById(ids).remove();
+}

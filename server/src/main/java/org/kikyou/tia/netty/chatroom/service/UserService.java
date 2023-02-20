@@ -41,7 +41,7 @@ public class UserService {
                 User defaultU = new User();
                 defaultU.setId(Common.GROUP_001_CHANNEL);
                 defaultU.setName("群聊天室");
-                defaultU.setAvatarUrl("static/img/avatar/group-icon.png");
+                defaultU.setAvatarUrl("img/group-icon.png");
                 defaultU.setType(UserType.GROUP.getName());
                 add(defaultU);
             }

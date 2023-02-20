@@ -81,8 +81,19 @@ function initSocket() {
 
     console.log(data);
   });
-  socket.on('system', function (data) {
-    console.log(data);
+  socket.on('system', function (var1,var2) {
+
+    console.log("------system------- "+var1+" "+var2+" "+ (var2=='join'));
+
+    if(var2=='join'){
+      var s=  addOnlineUser(var1);
+      $("#messages-wrapper").append(s);
+    }
+
+    if(var2=='logout'){
+     delOnlineUser(var1);
+    }
+
 
   });
 }
@@ -118,7 +129,7 @@ function login() {
   u.name = name;
   u.password = password;
   u.deviceType = getDeviceType(window.navigator.userAgent);
-  u.avatarUrl = "http://q.qlogo.cn/headimg_dl?dst_uin=705597001&spec=100";
+  u.avatarUrl = "img/20180414165827.jpg";
   socket.emit('login', u);
 
 

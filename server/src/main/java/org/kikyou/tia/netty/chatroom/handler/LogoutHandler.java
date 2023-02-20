@@ -17,6 +17,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
+import static org.kikyou.tia.netty.chatroom.constant.Common.USER_KEY;
+
 /**
  *
  * @author yujuncai
@@ -44,7 +46,18 @@ public class LogoutHandler {
             }
             if (StrUtil.isNotBlank(user.getId())) {
                 // 修改登录用户信息并通知所有在线用户
-                socketIOServer.getBroadcastOperations().sendEvent(EventNam.SYSTEM, user, SystemType.LOGOUT.getName());
+                // 通知namespace下的的用户(登录状态)加入 todo 集群状态下需要广播
+                socketIOServer.getNamespace(user.getNameSpace()).getAllClients().stream().forEach(s -> {
+                            User u = s.get(USER_KEY);
+
+                            if (!Objects.isNull(u) ) {
+                                log.info(u.getName());
+                                s.sendEvent(EventNam.SYSTEM, user, SystemType.LOGOUT.getName());
+                            }
+
+                        }
+                );
+              //  socketIOServer.getNamespace(user.getNameSpace()).getBroadcastOperations().sendEvent(EventNam.SYSTEM, user, SystemType.LOGOUT.getName());
                 //storeService.saveOrUpdateUser(user, StatusType.LOGOUT);
             }
         }

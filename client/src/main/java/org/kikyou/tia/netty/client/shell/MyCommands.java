@@ -56,10 +56,35 @@ public class MyCommands {
 
         socket.emit(EventNam.REGISTER, JSONUtil.parseObj(user));
     }
-    // form:User(id=cf54a807-b829-4cd6-a697-3ed11748b5b4, name=222, password=222, time=1676012342892, avatarUrl=./static/img/avatar/20180414165955.jpg, ip=127.0.0.1, deviceType=pc, roomId=cf54a807-b829-4cd6-a697-3ed11748b5b4, type=user)
-    // to:User(id=7713bc0f-8525-446e-8875-740d75c8e591, name=111, password=111, time=1676012352755, avatarUrl=11, ip=127.0.0.1, deviceType=pc, roomId=7713bc0f-8525-446e-8875-740d75c8e591, type=user)
-    // content:[微笑]
-    // type:text
+
+    @ShellMethod(value = "register50")
+    public void register50(){
+        for (int i = 0; i < 50; i++) {
+            System.out.println("发起register");
+            User user = new User();
+            user.setName(String.valueOf(i));
+            user.setPassword(String.valueOf(i));
+            user.setAvatarUrl("img/20180414165827.jpg");
+            user.setTime(1L);
+            user.setIp("127.0.0.1");
+            socket.emit(EventNam.REGISTER, JSONUtil.parseObj(user));
+        }
+
+    }
+    @ShellMethod(value = "login50")
+    public void login50() {
+
+        for (int i = 0; i < 50; i++) {
+            System.out.println("发起login");
+            User user = new User();
+            user.setName(String.valueOf(i));
+            user.setPassword(String.valueOf(i));
+            user.setAvatarUrl("img/20180414165827.jpg");
+            user.setTime(1L);
+            user.setIp("127.0.0.1");
+            socket.emit(EventNam.LOGIN, JSONUtil.parseObj(user));
+        }
+    }
 
 
 

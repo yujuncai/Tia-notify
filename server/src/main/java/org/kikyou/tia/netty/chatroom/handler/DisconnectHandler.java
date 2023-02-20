@@ -6,11 +6,15 @@ import com.corundumstudio.socketio.annotation.OnDisconnect;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kikyou.tia.netty.chatroom.constant.Common;
+import org.kikyou.tia.netty.chatroom.constant.EventNam;
+import org.kikyou.tia.netty.chatroom.constant.SystemType;
 import org.kikyou.tia.netty.chatroom.models.User;
 import org.kikyou.tia.netty.chatroom.service.StoreService;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
+
+import static org.kikyou.tia.netty.chatroom.constant.Common.USER_KEY;
 
 /**
  * 监听连接断开事件
@@ -39,6 +43,16 @@ public class DisconnectHandler {
         client.del(Common.USER_KEY);
         if (!Objects.isNull(user)) {
             storeService.delIdKeyV(user.getId(),user.getNameSpace());
+            socketIOServer.getNamespace(user.getNameSpace()).getAllClients().stream().forEach(s -> {
+                        User u = s.get(USER_KEY);
+
+                        if (!Objects.isNull(u) ) {
+                            log.info(u.getName());
+                            s.sendEvent(EventNam.SYSTEM, user, SystemType.LOGOUT.getName());
+                        }
+
+                    }
+            );
         }
     }
 }

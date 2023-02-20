@@ -21,15 +21,18 @@ import org.kikyou.tia.netty.chatroom.utils.MyBeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static org.kikyou.tia.netty.chatroom.constant.Common.USER_KEY;
 
 
 /**
  * 登录操作
+ *
  * @author yujuncai
  */
 @Service
@@ -51,9 +54,9 @@ public class LoginService {
 
         // 判断是否重复登录
         User dbUser = userService.getUserByName(user.getName());
-        userService.organizeUser(dbUser,user,client);
-        if (!Objects.isNull(dbUser)&&userService.exitActiveUser(dbUser)) {
-            client.sendEvent(EventNam.LOGIN_FAIL,"重复登录,请先退出!");
+        userService.organizeUser(dbUser, user, client);
+        if (!Objects.isNull(dbUser) && userService.exitActiveUser(dbUser)) {
+            client.sendEvent(EventNam.LOGIN_FAIL, "重复登录,请先退出!");
             return;
         }
         // 是否需要重新登录
@@ -92,22 +95,34 @@ public class LoginService {
 
         data.setToken(JWTUtil.createToken(map, appConfiguration.getTokenKey().getBytes(StandardCharsets.UTF_8)));
 
-        // 通知namespace下的用户加入 todo 集群状态下需要广播
-        socketIOServer.getNamespace(user.getNameSpace()).getBroadcastOperations().sendEvent(EventNam.SYSTEM,
-                /*排除自己*/
-                client,
-                user,
-                SystemType.JOIN.getName());
+        // 通知namespace下的的用户(登录状态)加入 todo 集群状态下需要广播
+        socketIOServer.getNamespace(user.getNameSpace()).getAllClients().stream().forEach(s -> {
+                    User u = s.get(USER_KEY);
+                    if (!Objects.isNull(u) ) {
+                        log.info(u.getName());
+                        s.sendEvent(EventNam.SYSTEM,
+                                //client,
+                                user,
+                                SystemType.JOIN.getName());
+                    }
+
+                }
+        );
         //当前namespace下的用户
         List<User> onlineUsers = userService.getOnlineUsers(user.getNameSpace());
         // 为当前client赋值user
         client.set(USER_KEY, user);
         //id-user 关系
-        storeService.setIdKeyV(user.getId(),user.getNameSpace(),user);
+        storeService.setIdKeyV(user.getId(), user.getNameSpace(), user);
         // 发送login_success事件
         client.sendEvent(EventNam.LOGIN_SUCCESS, data, onlineUsers);
         // 群group1消息
         List<Message> messages = storeService.getGroupMessages();
         client.sendEvent(EventNam.HISTORY_MESSAGE, Common.GROUP_001_CHANNEL, messages);
+
+
+
+
+
     }
 }
