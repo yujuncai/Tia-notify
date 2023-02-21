@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
 @Order(Integer.MAX_VALUE)
 @Slf4j
 @Component
@@ -40,14 +41,14 @@ public class ServerRunner implements CommandLineRunner {
 
                             SocketIONamespace socketIONamespace = socketIOServer.addNamespace(namesp);
                             //获取期待的类名
-                            List<String> classNames =  Arrays.asList("loginHandler","logoutHandler","messageHandler","registerHandler","historyHandler");
+                            List<String> classNames = Arrays.asList("loginHandler", "logoutHandler", "messageHandler", "registerHandler", "historyHandler");
                             try {
-                                classNames.stream().forEach(s ->{
+                                classNames.stream().forEach(s -> {
                                     Object bean = SpringUtil.getBean(s);
                                     Optional.ofNullable(bean).ifPresent(socketIONamespace::addListeners);
                                 });
                             } catch (Exception e) {
-                                        log.error("获取bean失败! {}",e);
+                                log.error("获取bean失败! {}", e);
                             }
                         }
                     }));

@@ -15,7 +15,7 @@ var mainView = app.views.create('.view-main', {
 var messages;
 $$(document).on('page:init', '.page[data-name="messages"]', function (e) {
   // Init Messages
-  history(to);
+
    messages = app.messages.create({
     el: '.messages',
 
@@ -48,33 +48,7 @@ $$(document).on('page:init', '.page[data-name="messages"]', function (e) {
 
 
 
-
-  $.each(grouphistory, function (index, obj) {
-    var from = obj.from;
-    var objto = obj.to;
-    var time = obj.time;
-    var content = obj.content
-    var type = obj.type;
-    console.log("to.id "+to.id);
-    console.log("objto.id "+objto.id);
-    if(to.id==objto.id) {
-      if (from.name == user.name) {
-        messages.addMessage({
-          text: content,
-          name: from.name,
-          type: 'sent',
-          avatar: from.avatarUrl
-        });
-      } else {
-        messages.addMessage({
-          text: content,
-          type: 'received',
-          name: from.name,
-          avatar: from.avatarUrl
-        });
-      }
-    }
-  });
+  //===========
 
 
   // Init Messagebar
@@ -114,17 +88,43 @@ $$(document).on('page:init', '.page[data-name="messages"]', function (e) {
 
 
 
+function initMessage(ackmessage) {
+
+  console.log("当前消息长度 " + ackmessage.length);
+  $.each(grouphistory, function (index, obj) {
+    var from = obj.from;
+    var objto = obj.to;
+    var time = obj.time;
+    var content = obj.content
+    var type = obj.type;
+    console.log("当前点进来的用户id " + to.id);
+    console.log("当前点进来的用户name " + to.name);
+    console.log("当前这条消息要发给" + objto.id + "  " + objto.name);
+    if (to.id == objto.id) {
+      if (from.name == user.name) {
+        messages.addMessage({
+          text: content,
+          name: from.name,
+          type: 'sent',
+          avatar: from.avatarUrl
+        });
+      } else {
+        messages.addMessage({
+          text: content,
+          type: 'received',
+          name: from.name,
+          avatar: from.avatarUrl
+        });
+      }
+    }
+  });
+}
+
+
+
+
 function receiveMessage(text, from, t, type) {
-  console.log("---------------------");
-  console.log(to.id);
-  console.log(from.id);
-  console.log(t.id);
-
-
   if(t.type=='group'){
-
-
-
     if (to.id == t.id) {
       messages.addMessage({
         text: text,
@@ -133,8 +133,6 @@ function receiveMessage(text, from, t, type) {
         avatar: from.avatarUrl
       });
     }
-
-
   }else {
     if (to.id == from.id) {
       messages.addMessage({
@@ -203,16 +201,14 @@ function receiveMessage(text, from, t, type) {
 
   function touser(id) {
 
-
     $.each(onlines, function (index, obj) {
-      console.log("********" + obj.id +" " +obj.name);
-      console.log("********" + obj.id +" " +id);
+
+
       if (obj.id == id) {
+        console.log("********找到点击的用户 " + obj.id +" " +obj.name);
         to = obj;
-
-
-
-      var a = "messages_a_"+id;
+        history(to,true);
+       var a = "messages_a_"+id;
        var div= "messages_div_"+id;
 
         document.getElementById(a).setAttribute("href","/messages/");

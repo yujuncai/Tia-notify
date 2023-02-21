@@ -62,7 +62,7 @@ function initSocket() {
 
   });
   socket.on('loginFail', function (data) {
-    ShowFailure(data);
+    alert(data);
     console.log(data);
 
     window.location.href =params ;
@@ -159,8 +159,19 @@ function register() {
   socket.emit('register', "begin");
 }
 
-function history(t) {
-  socket.emit('history', t);
+function history(t,f) {
+  if(f){
+    socket.emit('history', t, ack =>{
+
+      console.log( "ack----"+ack+"  ");
+      grouphistory=ack;
+      initMessage(ack);
+      }
+    );
+  }else {
+
+    socket.emit('history', t);
+  }
 }
 
 function messagesTo(u,t,c) {
