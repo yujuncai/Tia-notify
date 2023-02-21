@@ -116,9 +116,7 @@ public class LoginService {
         storeService.setIdKeyV(user.getId(), user.getNameSpace(), user);
         // 发送login_success事件
         client.sendEvent(EventNam.LOGIN_SUCCESS, data, onlineUsers);
-        // 群group1消息
-        List<Message> messages = storeService.getGroupMessages();
-        client.sendEvent(EventNam.HISTORY_MESSAGE, Common.GROUP_001_CHANNEL, messages);
+
 
 
 

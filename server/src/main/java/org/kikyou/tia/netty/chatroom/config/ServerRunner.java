@@ -40,7 +40,7 @@ public class ServerRunner implements CommandLineRunner {
 
                             SocketIONamespace socketIONamespace = socketIOServer.addNamespace(namesp);
                             //获取期待的类名
-                            List<String> classNames =  Arrays.asList("loginHandler","logoutHandler","messageHandler","registerHandler");
+                            List<String> classNames =  Arrays.asList("loginHandler","logoutHandler","messageHandler","registerHandler","historyHandler");
                             try {
                                 classNames.stream().forEach(s ->{
                                     Object bean = SpringUtil.getBean(s);

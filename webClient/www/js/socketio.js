@@ -39,10 +39,17 @@ function initSocket() {
     console.log('socket断开连接');
   });
 
+
+
   socket.on('history-message', function (data,messages) {
+    mid=data;
     grouphistory=messages;
     console.log("接收到消息:" + data+" "+messages);
   });
+
+
+
+
   socket.on('registerFail', function (data) {
     ShowFailure(data);
     console.log(data);
@@ -93,15 +100,22 @@ function initSocket() {
     if(var2=='join'){
       var s=  addOnlineUser(var1);
       $("#messages-wrapper").append(s);
+      onlines.push(var1);
     }
 
     if(var2=='logout'){
      delOnlineUser(var1);
+      $.each(onlines, function (index, obj) {
+        if (var1.id == obj.id) {
+          onlines.splice(index,1);
+        }
+      });
     }
 
 
   });
 }
+var mid='';
 var grouphistory=[];
 var onlines=[];
 var user = {
@@ -145,7 +159,9 @@ function register() {
   socket.emit('register', "begin");
 }
 
-
+function history(t) {
+  socket.emit('history', t);
+}
 
 function messagesTo(u,t,c) {
   socket.emit('message', u,t,c,"text");

@@ -15,6 +15,7 @@ var mainView = app.views.create('.view-main', {
 var messages;
 $$(document).on('page:init', '.page[data-name="messages"]', function (e) {
   // Init Messages
+  history(to);
    messages = app.messages.create({
     el: '.messages',
 
@@ -45,27 +46,33 @@ $$(document).on('page:init', '.page[data-name="messages"]', function (e) {
   });
 
 
+
+
+
   $.each(grouphistory, function (index, obj) {
     var from = obj.from;
-    var to = obj.to;
+    var objto = obj.to;
     var time = obj.time;
     var content = obj.content
     var type = obj.type;
-
-    if (from.name == user.name) {
-      messages.addMessage({
-        text: content,
-        name: from.name,
-        type: 'sent',
-        avatar: from.avatarUrl
-      });
-    } else {
-      messages.addMessage({
-        text: content,
-        type: 'received',
-        name: from.name,
-        avatar: from.avatarUrl
-      });
+    console.log("to.id "+to.id);
+    console.log("objto.id "+objto.id);
+    if(to.id==objto.id) {
+      if (from.name == user.name) {
+        messages.addMessage({
+          text: content,
+          name: from.name,
+          type: 'sent',
+          avatar: from.avatarUrl
+        });
+      } else {
+        messages.addMessage({
+          text: content,
+          type: 'received',
+          name: from.name,
+          avatar: from.avatarUrl
+        });
+      }
     }
   });
 
@@ -107,13 +114,41 @@ $$(document).on('page:init', '.page[data-name="messages"]', function (e) {
 
 
 
-function receiveMessage(text, from, to, type) {
-  messages.addMessage({
-    text: text,
-    type: 'received',
-    name: from.name,
-    avatar: from.avatarUrl
-  });
+function receiveMessage(text, from, t, type) {
+  console.log("---------------------");
+  console.log(to.id);
+  console.log(from.id);
+  console.log(t.id);
+
+
+  if(t.type=='group'){
+
+
+
+    if (to.id == t.id) {
+      messages.addMessage({
+        text: text,
+        type: 'received',
+        name: from.name,
+        avatar: from.avatarUrl
+      });
+    }
+
+
+  }else {
+    if (to.id == from.id) {
+      messages.addMessage({
+        text: text,
+        type: 'received',
+        name: from.name,
+        avatar: from.avatarUrl
+      });
+    }
+
+  }
+
+
+
 }
 
 
@@ -167,12 +202,25 @@ function receiveMessage(text, from, to, type) {
   });
 
   function touser(id) {
-    console.log("********" + id);
+
+
     $.each(onlines, function (index, obj) {
+      console.log("********" + obj.id +" " +obj.name);
+      console.log("********" + obj.id +" " +id);
       if (obj.id == id) {
         to = obj;
-        console.log(to);
+
+
+
+      var a = "messages_a_"+id;
+       var div= "messages_div_"+id;
+
+        document.getElementById(a).setAttribute("href","/messages/");
+        document.getElementById(div).click();
+        document.getElementById(a).setAttribute("href","#");
+        return;
       }
+
     });
 
 
@@ -181,8 +229,8 @@ function receiveMessage(text, from, to, type) {
   function addOnlineUser(obj) {
     var userbar = "<li class=\"swipeout\" id=\"" + obj.id + "\">\n" +
       "          <div class=\"swipeout-content\">\n" +
-      "            <a href=\"/messages/\" onclick=\"touser('" + obj.id + "')\" class=\"messageclick item-link item-content\">\n" +
-      "              <div class=\"item-media\">\n" +
+      "            <a href=\"#\" id=\"messages_a_"+obj.id+"\" onclick=\"touser('" + obj.id + "')\" class=\"messageclick item-link item-content\">\n" +
+      "              <div id=\"messages_div_"+obj.id+"\" class=\"item-media\">\n" +
       "                <img class=\"user-avatar\" src=\"" + obj.avatarUrl + "\" width=\"44\" />\n" +
       "                <span class=\"user-online-badge\"></span>\n" +
       "              </div>\n" +

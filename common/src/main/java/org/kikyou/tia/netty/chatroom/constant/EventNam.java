@@ -8,6 +8,8 @@ public interface EventNam {
 
     String HISTORY_MESSAGE = "history-message";
 
+    String HISTORY = "history";
+
     String REGISTER_FAIL = "registerFail";
 
     String REGISTER_SUCCESS = "registerSuccess";
