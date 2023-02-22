@@ -3,7 +3,7 @@ var $$ = Dom7;
 var app = new Framework7({
   root: '#app',
   id: 'io.johndavemanuel.heyu',
-  name: 'HeyU',
+  name: 'TIA',
   theme: 'md',
   routes: routes,
 });
