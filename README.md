@@ -35,6 +35,11 @@
 
 [系统调优](https://github.com/yujuncai/Tia-im/blob/main/docs/%E7%B3%BB%E7%BB%9F%E8%B0%83%E4%BC%98.md)
 
+4.EIO协议说明
+
+[eio协议官方说明](https://socket.io/zh-CN/docs/v4/engine-io-protocol/#protocol)
+
+
 ---
 
 ## 规范说明
