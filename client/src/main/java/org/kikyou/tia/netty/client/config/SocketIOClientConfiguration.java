@@ -29,20 +29,13 @@ public class SocketIOClientConfiguration {
         IO.Options options = new IO.Options();
 ///socket.io/?a=a&b=b&EIO=3&c=c&transport=polling
         //signature 为通过AppSecret加密的 namespace
-
+//"{
+// "time" : "12132434344",
+// "name":"/tia-java"
+// }"
         String signature = MySecureUtil.aesEncrypt("jvZJhHtp3vOVmpool6QlMw==", "/tia-java");
-
-
         String s="http://localhost".concat("?").concat("appid=987654321").concat("&").concat("signature="+signature);
-       // s=s.concat("/");
-      //  s=s.concat("tia-java");//添加namespace
-      //  s=s.concat("?");
-      //  s=s.concat("appid=987654321");//appid
-      //  s=s.concat("&");
-      //  s=s.concat("signature="+signature);//signature
         log.info("完整的路径 {} ",s);
-
-
         Manager m=new Manager(new URI(s));
         Socket  socket=m.socket("/tia-java");
        // Socket socket = IO.socket(URI.create(s), options); //

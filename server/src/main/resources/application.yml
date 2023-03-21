@@ -1,3 +1,8 @@
+
+server:
+  port: 8099
+
+
 tia:
   port: 80
   host: ${APP_HOST:localhost}
@@ -46,7 +51,13 @@ spring:
       max-lifetime: 540000
       connection-timeout: 60000
       connection-test-query: select 1
-
+  thymeleaf:
+    prefix: classpath:/templates
+    suffix: .html
+    mode: HTML
+    encoding: utf-8
+    servlet.content-type: text/html
+    cache: false
 
 
 cluster:
@@ -54,3 +65,7 @@ cluster:
 jgroups:
   clustername: ${JGROUPS_CLUSTER_NAME:tia-cluster}
   config: ${JGROUPS_CONFIG:jgroups-config-tcp.xml}
+
+
+
+

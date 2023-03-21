@@ -26,7 +26,7 @@ public class AuthorizationHandler implements AuthorizationListener {
         String signature = handshakeData.getSingleUrlParam("signature");
         String appid = handshakeData.getSingleUrlParam("appid");
         if (StrUtil.isNotBlank(signature) && StrUtil.isNotBlank(appid)) {
-
+            //todo 加入时间限制
             log.info("appid-{}   signature-{}      url-{}", appid, signature, handshakeData.getUrl());
             MainBody body = mainBodyService.getMainBodyByAppId(appid);
             String s = MySecureUtil.aesDecrypt(body.getAppSecret(), signature);

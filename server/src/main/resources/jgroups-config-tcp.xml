@@ -6,7 +6,7 @@
          external_addr="${jgroups.external_addr}"
          external_port="${jgroups.external_port}"
          thread_pool.min_threads="0"
-         thread_pool.max_threads="200"
+         thread_pool.max_threads="50"
          thread_pool.keep_alive_time="30000"/>
     <RED/>
 
