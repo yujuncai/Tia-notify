@@ -85,7 +85,7 @@ public class LoginController implements ErrorController {
 
                 User u=new User();
                 u.setName(username);
-                redisTemplate.opsForValue().set("WEB_ONLINE_".concat(online_token), u, 300, TimeUnit.SECONDS);
+                redisTemplate.opsForValue().set("WEB_ONLINE_".concat(online_token), u, 3000, TimeUnit.SECONDS);
             }else{
 
                 return  ResultVoUtil.error("账号密码错误!");

@@ -1,12 +1,17 @@
-import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.json.JSON;
+import cn.hutool.json.JSONUtil;
 import jakarta.annotation.Resource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kikyou.tia.netty.chatroom.TiaNettyChatroomApplication;
+import org.kikyou.tia.netty.chatroom.cluster.Keeping;
 import org.kikyou.tia.netty.chatroom.models.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.kikyou.tia.netty.chatroom.web.vo.NameSpaceVo;
+import org.kikyou.tia.netty.chatroom.web.vo.SystemVo;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -14,11 +19,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.awt.print.Book;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TiaNettyChatroomApplication.class)
@@ -26,9 +28,9 @@ public class WebSpringTest {
 
     @Resource
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
-
-    @Test
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
+   // @Test
     public void testAddUser() {
 
 
@@ -56,7 +58,28 @@ public class WebSpringTest {
         }
 
 
+    }
 
+
+
+    @Test
+    public void testredis() {
+
+        Set<Object> namespaceKey = stringRedisTemplate.opsForHash().keys(Keeping.NAMESPACE_KEY);
+        Set<Object> monitorKey = stringRedisTemplate.opsForHash().keys(Keeping.MONITOR_KEY);
+
+        namespaceKey.stream().forEach(s ->{
+            String value= (String) stringRedisTemplate.opsForHash().get(Keeping.NAMESPACE_KEY,s);
+            List<NameSpaceVo>  list= JSONUtil.toList(value,NameSpaceVo.class);
+            System.out.println(list);
+        });
+
+        monitorKey.stream().forEach(s ->{
+            String value= (String)  stringRedisTemplate.opsForHash().get(Keeping.MONITOR_KEY,s);
+            SystemVo vo=(JSONUtil.toBean(value, SystemVo.class));
+            System.out.println(vo);
+        });
 
     }
+
 }

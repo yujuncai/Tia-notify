@@ -21,7 +21,6 @@ import java.util.Optional;
 
 @Aspect
 @Component
-@Slf4j
 public class LoginAspect {
     @Resource
     private RedisTemplate<String,Object> redisTemplate;
@@ -32,7 +31,7 @@ public class LoginAspect {
 
     @Before("access()")
     public void before() {
-        log.info("开始验证用户是否登录...");
+
     }
 
     @Around("@annotation(auth)")

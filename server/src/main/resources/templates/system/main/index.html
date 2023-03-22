@@ -70,31 +70,138 @@
     </style>
 </head>
 <body class="timo-layout-page">
-<div class="layui-row layui-col-space15">
+<div class="layui-row layui-col-space15" th:each="m:${monitor}">
     <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
         <div class="widget-small widget-user">
             <i class="icon fa fa-users fa-3x"></i>
             <div class="widget-small-info">
-                <h4>用户</h4>
-                <span>12</span>
+                <h4>操作系统</h4>
+                <span th:text="${m.os}"></span>
             </div>
         </div>
     </div>
+
     <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
         <div class="widget-small widget-visit">
             <i class="icon fa fa-line-chart fa-3x"></i>
             <div class="widget-small-info">
-                <h4>访问</h4>
-                <span>1,200</span>
+                <h4>系统架构</h4>
+                <span th:text="${m.osArch}"></span>
             </div>
         </div>
     </div>
+
     <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
         <div class="widget-small widget-message">
             <i class="icon fa fa-comments-o fa-3x"></i>
             <div class="widget-small-info">
-                <h4>信息</h4>
-                <span>41</span>
+                <h4>java版本</h4>
+                <span th:text="${m.javaVersion}"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+        <div class="widget-small widget-like">
+            <i class="icon fa fa-star fa-3x"></i>
+            <div class="widget-small-info">
+                <h4>工作目录</h4>
+                <span th:text="${m.userDir}"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+        <div class="widget-small widget-like">
+            <i class="icon fa fa-star fa-3x"></i>
+            <div class="widget-small-info">
+                <h4>cpu核心数</h4>
+                <span th:text="${m.cpuCount}"></span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+        <div class="widget-small widget-like">
+            <i class="icon fa fa-star fa-3x"></i>
+            <div class="widget-small-info">
+                <h4>host</h4>
+                <span th:text="${m.host}"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+        <div class="widget-small widget-like">
+            <i class="icon fa fa-star fa-3x"></i>
+            <div class="widget-small-info">
+                <h4>hostName</h4>
+                <span th:text="${m.hostName}"></span>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+        <div class="widget-small widget-like">
+            <i class="icon fa fa-star fa-3x"></i>
+            <div class="widget-small-info">
+                <h4>运行时间</h4>
+                <span th:text="${m.runTime}"></span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+        <div class="widget-small widget-user">
+            <i class="icon fa fa-users fa-3x"></i>
+            <div class="widget-small-info">
+                <h4>cpu使用率</h4>
+                <span th:text="${m.cpuUsage}"></span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+        <div class="widget-small widget-user">
+            <i class="icon fa fa-users fa-3x"></i>
+            <div class="widget-small-info">
+                <h4>cpu基准速度</h4>
+                <span th:text="${m.cpuMaxFreq}"></span>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+        <div class="widget-small widget-user">
+            <i class="icon fa fa-users fa-3x"></i>
+            <div class="widget-small-info">
+                <h4>cpu当前速度</h4>
+                <span th:text="${m.cpuCurrentFreq}"></span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+        <div class="widget-small widget-like">
+            <i class="icon fa fa-star fa-3x"></i>
+            <div class="widget-small-info">
+                <h4>总内存</h4>
+                <span th:text="${m.totalMemory}"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+        <div class="widget-small widget-like">
+            <i class="icon fa fa-star fa-3x"></i>
+            <div class="widget-small-info">
+                <h4>内存使用量</h4>
+                <span th:text="${m.usedMemory}"></span>
             </div>
         </div>
     </div>
@@ -102,19 +209,79 @@
         <div class="widget-small widget-like">
             <i class="icon fa fa-star fa-3x"></i>
             <div class="widget-small-info">
-                <h4>收藏</h4>
-                <span>306</span>
+                <h4>内存使用率</h4>
+                <span th:text="${m.usage}"></span>
             </div>
         </div>
     </div>
+
+
+
+    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+        <div class="widget-small widget-like">
+            <i class="icon fa fa-star fa-3x"></i>
+            <div class="widget-small-info">
+                <h4>总虚拟内存</h4>
+                <span th:text="${m.swapTotalMemory}"></span>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+        <div class="widget-small widget-like">
+            <i class="icon fa fa-star fa-3x"></i>
+            <div class="widget-small-info">
+                <h4>使用的虚拟内存</h4>
+                <span th:text="${m.swapUsed}"></span>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+        <div class="widget-small widget-like">
+            <i class="icon fa fa-star fa-3x"></i>
+            <div class="widget-small-info">
+                <h4>磁盘读取</h4>
+                <span th:text="${m.diskReadRate}"></span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+        <div class="widget-small widget-like">
+            <i class="icon fa fa-star fa-3x"></i>
+            <div class="widget-small-info">
+                <h4>磁盘写入</h4>
+                <span th:text="${m.diskWriteRate}"></span>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
 </div>
+
+
+
+
+
+
+
+
 <div class="layui-row layui-col-space15">
     <div class="layui-col-md8">
         <div class="layui-card">
             <div class="layui-card-header">项目介绍</div>
             <div class="layui-card-body project-introduce">
                 <blockquote class="layui-elem-quote layui-quote-nm">
-                    小巧,高性能,可插拔,可集群的多租户长连接平台
+                    小巧,高性能,可插拔,可集群的多租户客服
                     <div>开源协议：Apache License 2.0</div>
                     <div>开源地址：<a href="https://github.com/yujuncai/Tia-im">https://github.com/yujuncai/Tia-im</a></div>
                 </blockquote>
@@ -159,24 +326,14 @@
     </div>
     <div class="layui-col-md4">
         <div class="layui-card">
-            <div class="layui-card-header">更新日志</div>
-            <div class="layui-card-body">
-                <ul class="layui-timeline">
-                    <li class="layui-timeline-item">
+            <div class="layui-card-header">系统信息</div>
+            <div class="layui-card-body" th:each="n:${namespace}">
+                <ul class="layui-timeline"  th:each="n1:${n}">
+                    <li class="layui-timeline-item" >
                         <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
-                        <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">v2.0.3</h3>
-                            <p>
-                                1.文本消息 (完成)
-                                2.图片消息 (完成)
-                                3.消息回执 (未完成)
-                                4.离线消息 (未完成)
-                                5.文档输出 (未完成)
-                                6.前端IM页面插件实现(待招募)
-                                7.集群实现(jgroups) (未完成)
-                                8.管理后台 (待招募)
-                                8.多渠道接入 (未完成)
-                                9.多租户 (完成中)
+                        <div class="layui-timeline-content layui-text" >
+                            <h3 class="layui-timeline-title" th:text="|当前命名空间 ${n1.namespace} 有 ${n1.counts} 个链接|"  ></h3>
+                            <p >
                             </p>
                         </div>
                     </li>
