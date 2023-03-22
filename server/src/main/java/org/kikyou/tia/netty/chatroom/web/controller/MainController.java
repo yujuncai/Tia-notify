@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.kikyou.tia.netty.chatroom.models.User;
+import org.kikyou.tia.netty.chatroom.web.config.Auth;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -28,13 +29,13 @@ public class MainController{
 
 
     private final RedisTemplate<String,Object> redisTemplate;
-
+    @Auth
     @GetMapping("/index")
     public String index(Model model){
         return "/system/main/index";
     }
 
-
+    @Auth
     @GetMapping("/main")
     public String main(HttpServletRequest request, HttpServletResponse response, Model model){
         Optional<Cookie> code_cookie=  Arrays.stream(request.getCookies()).filter(p -> p.getName().equals("online_token") ).findFirst();;

@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.kikyou.tia.netty.chatroom.models.User;
+import org.kikyou.tia.netty.chatroom.web.config.Auth;
 import org.kikyou.tia.netty.chatroom.web.enums.ResultEnum;
 import org.kikyou.tia.netty.chatroom.web.utils.CaptchaUtil;
 import org.kikyou.tia.netty.chatroom.web.utils.ResultVoUtil;
@@ -114,6 +115,7 @@ public class LoginController implements ErrorController {
     /**
      * 退出登录
      */
+    @Auth
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
         Optional<Cookie> cookie=  Arrays.stream(request.getCookies()).filter(p -> p.getName().equals("online_token") ).findFirst();;

@@ -1,6 +1,8 @@
 
 server:
   port: 8099
+  servlet:
+    context-path: /web
 
 
 tia:

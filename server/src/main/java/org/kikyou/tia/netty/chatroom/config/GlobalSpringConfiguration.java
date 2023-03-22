@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Import;
 
 /**
  * 在工具化的应用场景下，想要动态获取bean,使用SpringUtil
- * @author xiaowu
  */
 @Configuration
 @ComponentScan(basePackages = {"org.kikyou.tia"})
