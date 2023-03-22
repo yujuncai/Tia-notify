@@ -1,11 +1,13 @@
 package org.kikyou.tia.netty.chatroom.web.controller;
 
 
+import cn.hutool.core.util.StrUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.kikyou.tia.netty.chatroom.models.User;
+import org.kikyou.tia.netty.chatroom.web.config.AdminConfiguration;
 import org.kikyou.tia.netty.chatroom.web.config.Auth;
 import org.kikyou.tia.netty.chatroom.web.enums.ResultEnum;
 import org.kikyou.tia.netty.chatroom.web.utils.CaptchaUtil;
@@ -40,6 +42,8 @@ public class LoginController implements ErrorController {
 
     private final RedisTemplate<String,Object> redisTemplate;
 
+    private final AdminConfiguration adminConfiguration;
+
     /**
      * 跳转到登录页面
      */
@@ -57,7 +61,7 @@ public class LoginController implements ErrorController {
     @ResponseBody
     public ResultVo login(String username, String password, String captcha, String rememberMe,HttpServletRequest request,HttpServletResponse response) throws MalformedURLException {
         // 判断账号密码是否为空
-        if (!StringUtils.hasLength(username) || !StringUtils.hasLength(password)) {
+        if (!StringUtils.hasLength(username) || !StringUtils.hasLength(password)||!StringUtils.hasLength(captcha)) {
             return  ResultVoUtil.error("输入数据为空");
         }
       Optional<Cookie> code_cookie=  Arrays.stream(request.getCookies()).filter(p -> p.getName().equals("code_token") ).findFirst();;
@@ -67,12 +71,12 @@ public class LoginController implements ErrorController {
 
 
 
-            if (  !captcha.toUpperCase().equals(code.toUpperCase())) {
+            if (StrUtil.isEmpty(code) || !captcha.toUpperCase().equals(code.toUpperCase())) {
                 return  ResultVoUtil.error("验证码错误");
             }
             redisTemplate.delete("IMGCODE_".concat(name));
 
-            if(username.equals("admin")&&password.equals("admin")) {
+            if(username.equals(adminConfiguration.getUsername())&&password.equals(adminConfiguration.getPassword())) {
 
                 String online_token = UUID.randomUUID().toString();
                 Cookie online_cookie = new Cookie("online_token", online_token);
@@ -131,13 +135,7 @@ public class LoginController implements ErrorController {
         return "/system/main/noAuth";
     }
 
-    /**
-     * 自定义错误页面
-     */
 
-    public String getErrorPath() {
-        return "/error";
-    }
 
 
 }

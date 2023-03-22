@@ -24,10 +24,10 @@
             <input class="layui-input" type="text" name="captcha" autocomplete="off" placeholder="验证码">
             <img class="captcha-img" th:src="@{/captcha}" />
         </div>
-        <div class="layui-form-item">
+       <!-- <div class="layui-form-item">
             <input type="checkbox" name="rememberMe" title="记住我" lay-skin="primary">
             <a class="layui-layout-right forget-password" href="javascript:alert('请联系超级管理员！')">忘记密码?</a>
-        </div>
+        </div>-->
         <button type="submit" class="layui-btn layui-btn-fluid ajax-login"><i class="fa fa-sign-in fa-lg fa-fw"></i> 登录</button>
     </form>
     <div class="layui-layer-loading login-page-loading"><div class="layui-layer-content"></div></div>

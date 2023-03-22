@@ -4,6 +4,9 @@ server:
   servlet:
     context-path: /web
 
+manager:
+  username : tia
+  password : tia
 
 tia:
   port: 80

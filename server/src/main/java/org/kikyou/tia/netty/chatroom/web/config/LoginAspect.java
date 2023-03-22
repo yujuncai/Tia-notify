@@ -49,7 +49,7 @@ public class LoginAspect {
             User u= (User) redisTemplate.opsForValue().get("WEB_ONLINE_".concat(vale));
 
             if(u==null){
-                  return "redirect:/login";
+                  return "redirect:/noAuth";
             }
             return pj.proceed();
 
