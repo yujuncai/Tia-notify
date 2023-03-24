@@ -113,7 +113,7 @@ layui.use(['element', 'form', 'layer', 'upload'], function () {
     /*  漂浮消息 */
     $.fn.Messager = function (result) {
         if (result.code === 200) {
-            layer.msg(result.msg, {offset: '15px', time: 3000, icon: 1});
+            layer.msg(result.msg, {offset: '15px', time: 2000, icon: 1});
             setTimeout(function () {
                 if (result.data === 'submit[refresh]') {
                     parent.location.reload();
@@ -124,9 +124,9 @@ layui.use(['element', 'form', 'layer', 'upload'], function () {
                 } else {
                     window.location.reload();
                 }
-            }, 2000);
+            }, 1000);
         } else {
-            layer.msg(result.msg, {offset: '15px', time: 3000, icon: 2});
+            layer.msg(result.msg, {offset: '15px', time: 2000, icon: 2});
         }
     };
 

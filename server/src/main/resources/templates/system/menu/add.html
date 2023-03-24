@@ -6,7 +6,7 @@
 </head>
 <body>
 <div class="layui-form timo-compile">
-    <form th:action="@{/system/menu/save}">
+    <form th:action="@{/menu/save}">
         <input type="hidden" name="id" th:if="${menu}" th:value="${menu.id}"/>
         <div class="layui-form-item">
             <label class="layui-form-label required">标题</label>
@@ -21,15 +21,6 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label required">权限标识</label>
-            <div class="layui-input-inline">
-                <input class="layui-input perms-input" type="text" name="perms"  placeholder="请输入权限标识" th:value="${menu?.perms}">
-            </div>
-            <button class="layui-btn layui-btn-primary layui-btn-xs perms-refresh" style="margin-top: 8px">
-                <i class="layui-icon layui-icon-refresh" style="margin-right: 0"></i>
-            </button>
-        </div>
-        <div class="layui-form-item">
             <label class="layui-form-label">菜单图标</label>
             <div class="layui-input-inline">
                 <input class="layui-input icon-input" type="text" name="icon"  placeholder="请输入菜单图标" th:value="${menu?.icon}">
@@ -39,22 +30,21 @@
         <div class="layui-form-item">
             <label class="layui-form-label required">父级菜单</label>
             <div class="layui-input-inline">
-                <input class="layui-input select-tree" th:attr="data-url=@{/system/menu/list}, data-value=${pMenu?.id}" type="text" name="pid"  placeholder="请输入父级菜单" th:value="${pMenu?.title}">
+                <input class="layui-input select-tree" th:attr="data-url=@{/menu/list}, data-value=${pMenu?.id}" type="text" name="pid"  placeholder="请输入父级菜单" th:value="${pMenu?.title}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label required">菜单类型</label>
             <div class="layui-input-inline">
-                <select name="type" mo:dict="MENU_TYPE" mo-selected="${menu?.type}" mo-empty="" lay-verify="type"></select>
+                <input class="layui-input icon-input" type="text" name="type"  placeholder="1目录 2菜单 3按钮" th:value="${menu?.type}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">排序</label>
+
             <div class="layui-input-inline">
-                <select class="select-sort" name="sort"
-                        th:attr="data-url=@{/system/menu/sortList}, data-id=${menu?.id}, data-sort=${menu?.sort}" lay-verify="sort"></select>
+            <input class="layui-input icon-input" type="text" name="sort"  placeholder="排序" th:value="${menu?.sort}">
             </div>
-            <div class="layui-input-info">（之后）</div>
         </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">备注</label>
@@ -124,14 +114,7 @@
         }
     });
 
-    // 更新权限标识
-    $(".perms-refresh").on("click", function (e) {
-        e.preventDefault();
-        var $perms = $(".perms-input");
-        var url = $(".url-input").val().substr(1);
-        var perms = url.replace(new RegExp( '/' , "g" ), ':');
-        $perms.val(perms);
-    })
+
 
 </script>
 </body>

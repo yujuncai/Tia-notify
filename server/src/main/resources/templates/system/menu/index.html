@@ -6,7 +6,7 @@
         <link rel="stylesheet" th:href="@{/lib/zTree_v3/css/zTreeStyle/zTreeStyle.css}" type="text/css">
     </head>
     <body class="timo-layout-page">
-        <div class="layui-card timo-tree" th:attr="data-url=@{'/system/menu/list?'+${search}}">
+        <div class="layui-card timo-tree" th:attr="data-url=@{'/menu/list?'+${search}}">
             <div class="layui-card-header timo-card-header">
                 <span>
                     <i class="fa fa-bars"></i>
@@ -26,55 +26,17 @@
                 <div class="layui-col-lg10 layui-col-sm9">
                     <div class="layui-row timo-card-screen">
                         <div class="pull-left layui-form-pane timo-search-box">
-                            <div class="layui-inline">
-                                <label class="layui-form-label">状态</label>
-                                <div class="layui-input-block timo-search-status">
-                                    <select class="timo-search-select" name="status" mo:dict="SEARCH_STATUS"
-                                            mo-selected="${param.status}"></select>
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">名称</label>
-                                <div class="layui-input-block">
-                                    <input type="text" name="title" th:value="${param.title}" placeholder="请输入菜单名称"
-                                           autocomplete="off" class="layui-input">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">URL地址</label>
-                                <div class="layui-input-block">
-                                    <input type="text" name="url" th:value="${param.url}" placeholder="请输入菜单URL地址"
-                                           autocomplete="off" class="layui-input">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <button class="layui-btn timo-search-btn">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
+
+
+
                         </div>
                         <div class="pull-right screen-btn-group">
                             <button class="layui-btn open-popup popup-add" data-title="添加菜单"
-                                    th:attr="data-url=@{/system/menu/add}" shiro:hasPermission="system:menu:add">
+                                    th:attr="data-url=@{/menu/add}" >
                                 <i class="fa fa-plus"></i>
                                 添加
                             </button>
-                            <div class="btn-group" shiro:hasPermission="system:menu:status">
-                                <button class="layui-btn">操作
-                                    <span class="caret"></span>
-                                </button>
-                                <dl class="layui-nav-child layui-anim layui-anim-upbit">
-                                    <dd>
-                                        <a class="ajax-status" th:href="@{/system/menu/status/ok}">启用</a>
-                                    </dd>
-                                    <dd>
-                                        <a class="ajax-status" th:href="@{/system/menu/status/freezed}">冻结</a>
-                                    </dd>
-                                    <dd>
-                                        <a class="ajax-status" th:href="@{/system/menu/status/delete}">删除</a>
-                                    </dd>
-                                </dl>
-                            </div>
+
                         </div>
                     </div>
                     <div class="timo-table-wrap">
@@ -89,7 +51,7 @@
                                     </th>
                                     <th>名称</th>
                                     <th>URL地址</th>
-                                    <th>权限标识</th>
+
                                     <th>菜单类型</th>
                                     <th>状态</th>
                                     <th>操作</th>
@@ -105,21 +67,18 @@
                                     </td>
                                     <td>{{title}}</td>
                                     <td>{{url}}</td>
-                                    <td>{{perms}}</td>
+
                                     <td>{{remark}}</td>
                                     <td>正常</td>
                                     <td>
                                         <a class="open-popup popup-edit" data-title="编辑菜单"
-                                           th:attr="data-url=@{'/system/menu/edit/{{id}}'}"
-                                           shiro:hasPermission="system:menu:edit" href="#">编辑
+                                           th:attr="data-url=@{'/menu/edit?id={{id}}'}"
+                                            href="#">编辑
                                         </a>
-                                        <a class="open-popup" data-title="详细信息"
-                                           th:attr="data-url=@{'/system/menu/detail/{{id}}'}"
-                                           shiro:hasPermission="system:menu:detail" data-size="800,600" href="#">详细
-                                        </a>
+
                                         <a class="ajax-get popup-delete" th:attr="data-msg='您是否确定删除'"
-                                           th:href="@{'/system/menu/status/delete?ids={{id}}'}"
-                                           shiro:hasPermission="system:menu:status">删除
+                                           th:href="@{'/menu/status/delete?ids={{id}}'}"
+                                          >删除
                                         </a>
                                     </td>
                                 </tr>
@@ -127,6 +86,7 @@
                         </table>
                     </div>
                 </div>
+               <!-- <div th:replace="/common/fragment :: page"></div>-->
             </div>
         </div>
         <script th:replace="/common/template :: script"></script>

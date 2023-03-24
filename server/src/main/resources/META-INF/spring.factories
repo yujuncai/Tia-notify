@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.kikyou.tia.netty.chatroom.web.template.ThymeleafAutoConfig
