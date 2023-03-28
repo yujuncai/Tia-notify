@@ -45,7 +45,7 @@ public class MenuController {
     public ResultVo list(Menu menu) {
 
 
-        List<Menu> list = menuService.getListBySortOk();
+        List<Menu> list = menuService.getMenuListBySortOk();
 
         list.forEach(editMenu -> {
             String type = String.valueOf(editMenu.getType());
@@ -81,8 +81,8 @@ public class MenuController {
     @Auth
     @GetMapping({"/menu/edit"})
     public String toEdit( Menu menu, Model model) {
-        Menu pMenu = menuService.getById(menu.getPid());
-        menu = menuService.getById(menu.getId());
+        Menu pMenu = menuService.getMenuById(menu.getPid());
+        menu = menuService.getMenuById(menu.getId());
         model.addAttribute("menu", menu);
         model.addAttribute("pMenu", pMenu);
         return "/system/menu/add";
@@ -96,7 +96,7 @@ public class MenuController {
       List<Menu> list=  new ArrayList<>();
         // 编辑
         if (menu.getId() != null) {
-            Menu beMenu = menuService.getById(menu.getId());
+            Menu beMenu = menuService.getMenuById(menu.getId());
             EntityBeanUtil.copyProperties(beMenu, menu);
             list.add(menu);
 

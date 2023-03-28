@@ -22,8 +22,7 @@
 <dialect
         xmlns="http://www.thymeleaf.org/extras/dialect"
         prefix="mo"
-        namespace-uri="https://gitee.com/aun/Timo"
-        class="com.linln.component.thymeleaf.TimoDialect">
+        class="org.kikyou.tia.netty.chatroom.web.template.TiaDialect">
 
 
     <!-- 自定义对象工具 -->

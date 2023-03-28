@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      >
+<head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
+    <link rel="stylesheet" th:href="@{/lib/zTree_v3/css/zTreeStyle/zTreeStyle.css}" type="text/css">
+</head>
+<body>
+<div class="layui-form timo-compile">
+    <form th:action="@{/namespace/save}">
+        <input type="hidden" name="id" th:if="${mainBody}" th:value="${mainBody.id}"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">用户名</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" name="name"  placeholder="空间名" th:value="${mainBody?.name}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">nameSpace</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" name="nameSpace" placeholder="请输入nameSpace" th:value="${mainBody?.nameSpace}">
+            </div>
+        </div>
+        <div class="layui-form-item" th:if="${mainBody}">
+            <label class="layui-form-label">秘钥</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" name="appSecret" placeholder="请输入电话号码" th:value="${mainBody?.appSecret}">
+            </div>
+        </div>
+
+        <div class="layui-form-item" th:if="${mainBody}">
+            <label class="layui-form-label required">状态</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" name="mainStatus" placeholder="状态" th:value="${mainBody?.mainStatus}">
+            </div>
+        </div>
+        <div class="layui-form-item" th:if="${mainBody}">
+            <label class="layui-form-label required">appID</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" name="appId" placeholder="appId" th:value="${mainBody?.appId}">
+            </div>
+        </div>
+
+
+
+        <div class="layui-form-item timo-finally">
+            <button class="layui-btn ajax-submit"><i class="fa fa-check-circle"></i> 保存</button>
+            <button class="layui-btn btn-secondary close-popup"><i class="fa fa-times-circle"></i> 关闭</button>
+        </div>
+    </form>
+</div>
+<script th:replace="/common/template :: script"></script>
+<script type="text/javascript" th:src="@{/js/plugins/jquery-2.2.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/zTree_v3/js/jquery.ztree.core.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/timoTree.js}"></script>
+<script type="text/javascript">
+    // 树形菜单
+    $.fn.selectTree();
+</script>
+</body>
+</html>

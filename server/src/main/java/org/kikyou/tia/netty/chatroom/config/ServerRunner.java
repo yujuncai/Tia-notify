@@ -23,10 +23,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ServerRunner implements CommandLineRunner {
 
-    private final SocketIOServer socketIOServer;
+
 
     private final MainBodyService mainBodyService;
-
+    private final SocketIOServer socketIOServer;
     @Override
     public void run(String... args) throws Exception {
         if (socketIOServer != null) {
@@ -35,24 +35,9 @@ public class ServerRunner implements CommandLineRunner {
 
             Optional.ofNullable(allMainBody).ifPresent(nss ->
                     nss.stream().forEach(ns -> {
-                        String namesp = ns.getNameSpace();
-                        if (!namesp.isEmpty() && namesp.startsWith("/") && namesp.length() < 50) {
-                            log.info("{} 主体的-------   {}  加入namespace--------", ns.getName(), namesp);
-
-                            SocketIONamespace socketIONamespace = socketIOServer.addNamespace(namesp);
-                            //获取期待的类名
-                            List<String> classNames = Arrays.asList("loginHandler", "logoutHandler", "messageHandler", "registerHandler", "historyHandler");
-                            try {
-                                classNames.stream().forEach(s -> {
-                                    Object bean = SpringUtil.getBean(s);
-                                    Optional.ofNullable(bean).ifPresent(socketIONamespace::addListeners);
-                                });
-                            } catch (Exception e) {
-                                log.error("获取bean失败! {}", e);
-                            }
-                        }
+                        mainBodyService.addNameSpaceHandler(ns.getNameSpace());
                     }));
-//            socketIOServer.getNamespace("/chat").addListeners(messageEventHandler);
+
 
         }
     }

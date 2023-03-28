@@ -11,17 +11,14 @@ import org.thymeleaf.templatemode.TemplateMode;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-/**
- * @author 小懒虫
- * @date 2018/8/14
- */
-public class TimoDialect extends AbstractProcessorDialect implements IExpressionObjectDialect {
+
+public class TiaDialect extends AbstractProcessorDialect implements IExpressionObjectDialect {
 
     private static final String NAME = "TimoDialect";
     private static final String PREFIX = "mo";
     private IExpressionObjectFactory expressionObjectFactory = null;
 
-    public TimoDialect() {
+    public TiaDialect() {
         super(NAME, PREFIX, StandardDialect.PROCESSOR_PRECEDENCE);
     }
 

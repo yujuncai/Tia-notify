@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:mo="https://gitee.com/aun/Timo"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 >
 <head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
     <link rel="stylesheet" th:href="@{/lib/zTree_v3/css/zTreeStyle/zTreeStyle.css}" type="text/css">
@@ -14,9 +15,9 @@
 
 
                 <div class="layui-inline">
-                    <label class="layui-form-label">用户名</label>
+                    <label class="layui-form-label">空间名</label>
                     <div class="layui-input-block">
-                        <input type="text" name="username" th:value="${param.username}" placeholder="请输入用户名"
+                        <input type="text" name="username" th:value="${param.username}" placeholder="请输入名字"
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -29,6 +30,18 @@
             </div>
 
         </div>
+
+            <div class="layui-row timo-card-screen">
+                <div class="pull-left layui-form-pane timo-search-box">
+                </div>
+                <div class="pull-right screen-btn-group">
+                    <button class="layui-btn open-popup popup-add" data-title="添加菜单"
+                            th:attr="data-url=@{/namespace/add}" >
+                        <i class="fa fa-plus"></i>
+                        添加
+                    </button>
+                </div>
+            </div>
         <div class="timo-table-wrap">
             <table class="layui-table timo-table">
                 <thead>
@@ -37,13 +50,12 @@
                         <label class="timo-checkbox"><input type="checkbox">
                             <i class="layui-icon layui-icon-ok"></i></label>
                     </th>
-                    <th class="sortable" data-field="username">用户名</th>
-                    <th class="sortable" data-field="nickname">时间</th>
-                    <th class="sortable" data-field="dept">头像</th>
-                    <th class="sortable" data-field="sex">IP</th>
-                    <th class="sortable" data-field="phone">设备类型</th>
-                    <th class="sortable" data-field="email">当前channel</th>
-                    <th class="sortable" data-field="createDate">命名空间</th>
+                    <th class="sortable" data-field="username">空间名</th>
+                    <th class="sortable" data-field="nickname">namespace</th>
+                    <th class="sortable" data-field="dept">秘钥</th>
+                    <th class="sortable" data-field="sex">状态</th>
+                    <th class="sortable" data-field="phone">appID</th>
+
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -52,27 +64,27 @@
                     <td><label class="timo-checkbox"><input type="checkbox" th:value="${item.id}">
                         <i class="layui-icon layui-icon-ok"></i></label></td>
                     <td th:text="${item.name}">用户名</td>
-                    <td th:text="${item.time}"></td>
-
-                    <td th:text="${item.avatarUrl}"></td>
-                    <td th:text="${item.ip}"></td>
-                    <td th:text="${item.deviceType}"></td>
-                    <td th:text="${item.currId}"></td>
                     <td th:text="${item.nameSpace}"></td>
-
-
+                    <td th:text="${item.appSecret}"></td>
+                    <td th:text="${item.mainStatus}"></td>
+                    <td th:text="${item.appId}"></td>
                   <!--  <td th:text="${#dates.format(item.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
 
                     <td>
 
+                        <a class="open-popup" data-title="编辑"   th:attr="data-url=@{'/namespace/edit?id='+${item.id}}"
+                           data-size="600,570" href="#">编辑</a>
+
+
                         <a class="ajax-get" th:attr="data-msg='您是否删除'+${item.name}"
-                           th:href="@{/user/status/delete(ids=${item.id})}"
+                           th:href="@{/namespace/status/delete(ids=${item.id})}"
                            >删除</a>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
+
  <div th:replace="/common/fragment :: page"></div>
     </div>
 </div>

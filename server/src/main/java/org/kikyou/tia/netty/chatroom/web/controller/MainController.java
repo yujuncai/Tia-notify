@@ -72,7 +72,7 @@ public class MainController{
 
         // 菜单键值对(ID->菜单)
         Map<Long, Menu> keyMenu = new HashMap<>(16);
-        List<Menu> menus = menuService.getListBySortOk();
+        List<Menu> menus = menuService.getMenuListBySortOk();
         menus.forEach(menu -> keyMenu.put(menu.getId(), menu));
 
         // 封装菜单树形数据
