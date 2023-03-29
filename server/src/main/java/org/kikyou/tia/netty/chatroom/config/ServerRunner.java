@@ -35,10 +35,34 @@ public class ServerRunner implements CommandLineRunner {
 
             Optional.ofNullable(allMainBody).ifPresent(nss ->
                     nss.stream().forEach(ns -> {
-                        mainBodyService.addNameSpaceHandler(ns.getNameSpace());
+                        addNameSpaceHandler(ns.getNameSpace());
                     }));
 
 
         }
     }
+
+
+    public void addNameSpaceHandler(String namesp){
+
+            log.info("  {}  加入namespace--------",  namesp);
+            SocketIONamespace socketIONamespace = socketIOServer.addNamespace(namesp);
+            //获取期待的类名
+            List<String> classNames = Arrays.asList("loginHandler", "logoutHandler", "messageHandler", "registerHandler", "historyHandler");
+            try {
+                classNames.stream().forEach(s -> {
+                    Object bean = SpringUtil.getBean(s);
+                    Optional.ofNullable(bean).ifPresent(socketIONamespace::addListeners);
+                });
+            } catch (Exception e) {
+                log.error("获取bean失败! {}", e);
+            }
+
+    }
+    public void RemoveNameSpaceHandler(String namesp){
+        log.info("  {}  移除namespace--------",  namesp);
+        socketIOServer.removeNamespace(namesp);
+    }
+
+
 }

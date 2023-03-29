@@ -5,6 +5,7 @@ import cn.hutool.core.util.IdUtil;
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.kikyou.tia.netty.chatroom.config.ServerRunner;
 import org.kikyou.tia.netty.chatroom.models.MainBody;
 import org.kikyou.tia.netty.chatroom.models.User;
 import org.kikyou.tia.netty.chatroom.service.MainBodyService;
@@ -32,7 +33,7 @@ public class WebService {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    private final MainBodyService mainBodyService;
+    private final ServerRunner serverRunner;
 
 
     public List<Menu> getMenuListBySortOk() {
@@ -193,7 +194,7 @@ public class WebService {
         list.stream().forEach(s -> {
 
            MainBody b= this.getNameSpaceById(s);
-            mainBodyService.RemoveNameSpaceHandler(b.getNameSpace());
+            serverRunner.RemoveNameSpaceHandler(b.getNameSpace());
 
             MapSqlParameterSource param = new MapSqlParameterSource();
             param.addValue("id",s);
@@ -218,7 +219,7 @@ public class WebService {
     }
 
     @Transactional
-    public void   updateNameSapce ( List<MainBody> list){
+    public void   updateNameSapce ( List<MainBody> list) {
 
         list.stream().forEach(s -> {
             MapSqlParameterSource param = new MapSqlParameterSource();
@@ -226,17 +227,17 @@ public class WebService {
             param.addValue("name",s.getName());
             param.addValue("nameSpace",s.getNameSpace());
             param.addValue("mainStatus",s.getMainStatus());
+            if (!s.getNameSpace().isEmpty() && s.getNameSpace().startsWith("/") && s.getNameSpace().length() < 50) {
+                serverRunner.RemoveNameSpaceHandler(s.getNameSpace());
+                serverRunner.addNameSpaceHandler(s.getNameSpace());
+                namedParameterJdbcTemplate.update("update  db_main_body set name=:name, nameSpace=:nameSpace,mainStatus=:mainStatus where id=:id", param);
+            }
 
-            mainBodyService.RemoveNameSpaceHandler(s.getNameSpace());
-            mainBodyService.addNameSpaceHandler(s.getNameSpace());
-
-            namedParameterJdbcTemplate.update("update  db_main_body set name=:name, nameSpace=:nameSpace,mainStatus=:mainStatus where id=:id", param);
         });
-
     }
 
     @Transactional
-    public void   saveNameSapce ( List<MainBody> list){
+    public void   saveNameSapce ( List<MainBody> list) {
 
         list.stream().forEach(s -> {
             MapSqlParameterSource param = new MapSqlParameterSource();
@@ -246,9 +247,10 @@ public class WebService {
             param.addValue("appSecret", MySecureUtil.generateAesKey());
             param.addValue("mainStatus",0);
             param.addValue("appId",IdUtil.fastUUID());
-            namedParameterJdbcTemplate.update("insert into db_main_body(id,name, nameSpace,appSecret,mainStatus,appId) values (:id,:name, :nameSpace,:appSecret,:mainStatus,:appId)", param);
-            mainBodyService.addNameSpaceHandler(s.getNameSpace());
+            if (!s.getNameSpace().isEmpty() && s.getNameSpace().startsWith("/") && s.getNameSpace().length() < 50) {
+                namedParameterJdbcTemplate.update("insert into db_main_body(id,name, nameSpace,appSecret,mainStatus,appId) values (:id,:name, :nameSpace,:appSecret,:mainStatus,:appId)", param);
+                serverRunner.addNameSpaceHandler(s.getNameSpace());
+            }
         });
-
     }
 }
