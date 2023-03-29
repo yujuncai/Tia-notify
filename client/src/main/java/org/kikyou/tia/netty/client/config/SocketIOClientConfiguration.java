@@ -29,7 +29,7 @@ public class SocketIOClientConfiguration {
         IO.Options options = new IO.Options();
 ///socket.io/?a=a&b=b&EIO=3&c=c&transport=polling
         //signature 为通过AppSecret加密的 namespace
-//"{
+//todo "{
 // "time" : "12132434344",
 // "name":"/tia-java"
 // }"
