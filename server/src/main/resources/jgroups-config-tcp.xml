@@ -1,21 +1,22 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="urn:org:jgroups"
         xsi:schemaLocation="urn:org:jgroups http://www.jgroups.org/schema/jgroups.xsd">
-    <TCP bind_addr="${jgroups.bind_addr:localhost}"
+    <TCP bind_addr="${jgroups.bind_addr:192.168.5.1}"
          bind_port="${jgroups.bind_port:7800}"
          external_addr="${jgroups.external_addr}"
          external_port="${jgroups.external_port}"
          thread_pool.min_threads="0"
          thread_pool.max_threads="50"
-         thread_pool.keep_alive_time="30000"/>
+         thread_pool.keep_alive_time="30000"
+          />
     <RED/>
 
     <TCPPING async_discovery="true"
-             initial_hosts="${jgroups.tcpping.initial_hosts:localhost[7800],localhost[7801]}"
+             initial_hosts="${jgroups.tcpping.initial_hosts:192.168.5.1[7800],192.168.5.129[7800]}"
              return_entire_cache="${jgroups.tcpping.return_entire_cache:false}"
              port_range="${jgroups.tcp.port_range:2}"/>
-    <MERGE3  min_interval="10000"
-             max_interval="30000"/>
+    <MERGE3  min_interval="5000"
+             max_interval="15000"/>
     <FD_SOCK2/>
     <FD_ALL3 timeout="40000" interval="5000" />
     <VERIFY_SUSPECT2 timeout="1500"  />

@@ -3,6 +3,7 @@ package org.kikyou.tia.netty.chatroom.cluster;
 
 
 import cn.hutool.extra.spring.SpringUtil;
+import cn.hutool.json.JSONUtil;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,8 @@ import org.jgroups.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @Slf4j
@@ -54,21 +57,28 @@ public class JGroupsInfo {
         boolean isLeader = false;
         Address address = channel.getView().getMembers().get(0);
         String state = channel.getState();
+
+
         if (address.equals(channel.getAddress())) {
-            log.info("I'm ({}) the leader,state {}", channel.getAddress(),state);
+            log.info("I'm ({}-----{}) the leader,state {}", address,channel.getAddress(),state);
             isLeader = true;
         }
         else {
-            log.info("I'm ({}) the leader,state {}", channel.getAddress(),state);
+            log.info("I'm (({}-----{})) the follower,state {}",address, channel.getAddress(),state);
         }
         return isLeader;
     }
+    public void allMembers() {
+        List<Address> address = channel.getView().getMembers();
+        address.stream().forEach(s -> {
+            log.info("address is {}", s);
+        });
+    }
 
 
+    public void sendMessage( ) throws Exception {
 
-    public void sendMessage() throws Exception {
-
-        Message msg=new ObjectMessage(null, "Hello");
+        Message msg=new ObjectMessage(null,"Hello,我是宿主机");
         channel.send(msg);
     }
 
