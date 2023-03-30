@@ -7,6 +7,7 @@ import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.unit.DataUnit;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
@@ -236,12 +237,12 @@ public class SystemInfoUtil {
         //磁盘信息
         osRuntimeInfo.setDisksList(getDisksList());
         //磁盘读取速率
-        Map<String, Double> diskIo = getDiskIo();
-        double diskReadRate = diskIo.get("diskReadRate");
-        osRuntimeInfo.setDiskReadRate(diskReadRate);
+     //   Map<String, Double> diskIo = getDiskIo();
+       // double diskReadRate = diskIo.get("diskReadRate");
+      //  osRuntimeInfo.setDiskReadRate(diskReadRate);
         //磁盘写入速率
-        double diskWriteRate = diskIo.get("diskWriteRate");
-        osRuntimeInfo.setDiskWriteRate(diskWriteRate);
+      //  double diskWriteRate = diskIo.get("diskWriteRate");
+      //  osRuntimeInfo.setDiskWriteRate(diskWriteRate);
         //网卡信息
         osRuntimeInfo.setNetworkList(getNetworkInfo());
         return osRuntimeInfo;
@@ -443,6 +444,7 @@ public class SystemInfoUtil {
                 return map;
             }
             String[] data = info.split("\n");
+            System.out.println("windows "+JSONUtil.toJsonStr(data));
             for (int i = 7; i < data.length; i++) {
                 String[] numdata = data[i].split(" +");
                 String devName = numdata[0];

@@ -106,9 +106,9 @@ public class Keeping {
         //3.磁盘信息
        // System.out.println("------磁盘信息------");
        // System.out.println("磁盘读取速度：" + osRuntimeInfo.getDiskReadRate() + "Kb/s");
-        vo.setDiskReadRate(String.valueOf(osRuntimeInfo.getDiskReadRate()));
+      //  vo.setDiskReadRate(String.valueOf(osRuntimeInfo.getDiskReadRate()));
       //  System.out.println("磁盘写入速度：" + osRuntimeInfo.getDiskWriteRate() + "Kb/s");
-        vo.setDiskWriteRate(String.valueOf(osRuntimeInfo.getDiskWriteRate()));
+      //  vo.setDiskWriteRate(String.valueOf(osRuntimeInfo.getDiskWriteRate()));
 
         List<DisksInfo> disksList = osRuntimeInfo.getDisksList();
         List<DisksInfoVo> diskvo=new ArrayList<>();
