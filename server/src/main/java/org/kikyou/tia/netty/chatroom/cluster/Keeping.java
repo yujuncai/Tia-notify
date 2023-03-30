@@ -30,6 +30,10 @@ public class Keeping {
 
     private final SocketIOServer socketIOServer;
     private final StringRedisTemplate stringRedisTemplate;
+
+
+    private final JGroupsInfo jGroupsInfo;
+
     public static  final String NAMESPACE_KEY="namespace_all";
     public static  final String MONITOR_KEY="monitor_all";
     @Scheduled(fixedDelay = 60_000)
@@ -162,4 +166,15 @@ public class Keeping {
         stringRedisTemplate.opsForHash().put(MONITOR_KEY,osInfo.getHost(), JSONUtil.toJsonStr(vo));
 
     }
+
+
+
+
+    @Scheduled(fixedDelay = 10_000)
+    public void cluster() throws Exception {
+
+        jGroupsInfo.isLeader();
+        jGroupsInfo.sendMessage();
+    }
+
 }
