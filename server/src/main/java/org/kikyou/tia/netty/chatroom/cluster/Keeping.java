@@ -170,7 +170,7 @@ public class Keeping {
 
 
 
-    @Scheduled(fixedDelay = 10_000)
+    @Scheduled(fixedDelay = 100_000, initialDelay = 10000)
     public void cluster() throws Exception {
 
         jGroupsInfo.isLeader();
