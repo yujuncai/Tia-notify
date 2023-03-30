@@ -29,6 +29,10 @@ public class AuthorizationHandler implements AuthorizationListener {
             //todo 加入时间限制
             log.info("appid-{}   signature-{}      url-{}", appid, signature, handshakeData.getUrl());
             MainBody body = mainBodyService.getMainBodyByAppId(appid);
+            if(body==null){
+                log.error("MainBody is null");
+                return false;
+            }
             String s = MySecureUtil.aesDecrypt(body.getAppSecret(), signature);
             if (!body.getNameSpace().equals(s)) {
                 log.error("{}  ----  {}", s, body.getNameSpace());

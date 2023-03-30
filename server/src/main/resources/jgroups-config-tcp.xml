@@ -1,7 +1,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="urn:org:jgroups"
         xsi:schemaLocation="urn:org:jgroups http://www.jgroups.org/schema/jgroups.xsd">
-    <TCP bind_addr="${jgroups.bind_addr:site_local}"
+    <TCP bind_addr="${jgroups.bind_addr:localhost}"
          bind_port="${jgroups.bind_port:7800}"
          external_addr="${jgroups.external_addr}"
          external_port="${jgroups.external_port}"

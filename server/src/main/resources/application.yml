@@ -27,7 +27,7 @@ aliyun:
 spring:
   data:
     redis:
-      host: ${APP_REDIS_HOST:127.0.0.1}
+      host: ${APP_REDIS_HOST:192.168.5.1}
       #password: ${APP_REDIS_PASS:}
       port: ${APP_REDIS_PORT:6379}
       database: ${APP_REDIS_DATABASE:0}
@@ -47,7 +47,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: root
     username: root
-    url: jdbc:mysql://localhost:3306/tia?serverTimezone=Asia/Shanghai&useUnicode=true&charcterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://192.168.5.1:3306/tia?serverTimezone=Asia/Shanghai&useUnicode=true&charcterEncoding=UTF-8&useSSL=false
     #数据源连接池配置
     hikari:
       minimum-idle: 10
@@ -66,10 +66,10 @@ spring:
 
 
 cluster:
-  enabled: fasle
+  enabled: true
 jgroups:
   clustername: ${JGROUPS_CLUSTER_NAME:tia-cluster}
-  config: ${JGROUPS_CONFIG:jgroups-config-tcp.xml}
+  config: ${JGROUPS_CONFIG:jgroups-config-udp.xml}
 
 
 
