@@ -4,10 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.jgroups.Message;
 import org.jgroups.Receiver;
 import org.jgroups.blocks.cs.ReceiverAdapter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
+@ConditionalOnBean(JGroupsCluster.class)
 public class ClusterReceiver implements Receiver {
 
     //接收到消息后会调用此函数

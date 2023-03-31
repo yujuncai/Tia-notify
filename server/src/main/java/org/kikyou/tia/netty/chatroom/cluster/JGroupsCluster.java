@@ -78,8 +78,8 @@ public class JGroupsCluster implements  TiaCluster{
     }
 
     public void sendMessage( ) throws Exception {
-
-        Message msg=new ObjectMessage(null,"Hello,我是宿主机");
+        ClusterMessageVo v=new ClusterMessageVo();
+        Message msg=new ObjectMessage(null,v);
         channel.send(msg);
     }
 
