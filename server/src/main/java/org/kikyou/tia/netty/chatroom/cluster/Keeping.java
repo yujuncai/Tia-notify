@@ -4,9 +4,11 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONUtil;
 import com.corundumstudio.socketio.SocketIONamespace;
 import com.corundumstudio.socketio.SocketIOServer;
+import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kikyou.tia.netty.chatroom.utils.monitor.*;
@@ -14,6 +16,8 @@ import org.kikyou.tia.netty.chatroom.web.vo.DisksInfoVo;
 import org.kikyou.tia.netty.chatroom.web.vo.NameSpaceVo;
 import org.kikyou.tia.netty.chatroom.web.vo.NetworkInfoVo;
 import org.kikyou.tia.netty.chatroom.web.vo.SystemVo;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -31,8 +35,8 @@ public class Keeping {
     private final SocketIOServer socketIOServer;
     private final StringRedisTemplate stringRedisTemplate;
 
+    private final TiaCluster tiaCluster;
 
-    private final JGroupsInfo jGroupsInfo;
 
     public static  final String NAMESPACE_KEY="namespace_all";
     public static  final String MONITOR_KEY="monitor_all";
@@ -172,9 +176,11 @@ public class Keeping {
 
     @Scheduled(fixedDelay = 60_000, initialDelay = 10000)
     public void cluster() throws Exception {
-        jGroupsInfo.allMembers();
-        jGroupsInfo.isLeader();
-        jGroupsInfo.sendMessage();
+
+        if(tiaCluster.isCluster()){
+            tiaCluster.allMembers();
+            tiaCluster.isLeader();
+            tiaCluster.sendMessage();}
     }
 
 }

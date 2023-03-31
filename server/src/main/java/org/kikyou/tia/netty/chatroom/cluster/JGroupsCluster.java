@@ -3,7 +3,6 @@ package org.kikyou.tia.netty.chatroom.cluster;
 
 
 import cn.hutool.extra.spring.SpringUtil;
-import cn.hutool.json.JSONUtil;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
@@ -16,10 +15,8 @@ import java.util.List;
 
 @Component
 @Slf4j
-@ConditionalOnProperty(prefix = "cluster" ,name="enabled",havingValue = "true")
-public class JGroupsInfo {
-
-
+@ConditionalOnProperty(prefix = "cluster" ,name="model",havingValue = "jgroups")
+public class JGroupsCluster implements  TiaCluster{
 
 
     @Value("${jgroups.config}")
@@ -53,6 +50,11 @@ public class JGroupsInfo {
         }
     }
 
+    @Override
+    public boolean isCluster() {
+        return true;
+    }
+
     public boolean isLeader() {
         boolean isLeader = false;
         Address address = channel.getView().getMembers().get(0);
@@ -74,7 +76,6 @@ public class JGroupsInfo {
             log.info("address is {}", s);
         });
     }
-
 
     public void sendMessage( ) throws Exception {
 

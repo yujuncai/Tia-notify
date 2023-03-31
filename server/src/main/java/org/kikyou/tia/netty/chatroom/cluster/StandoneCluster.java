@@ -1,0 +1,28 @@
+package org.kikyou.tia.netty.chatroom.cluster;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Component;
+@Component
+@Slf4j
+@ConditionalOnProperty(prefix = "cluster" ,name="model",havingValue = "standone")
+public class StandoneCluster implements  TiaCluster{
+    @Override
+    public boolean isLeader() {
+        return false;
+    }
+
+    @Override
+    public void allMembers() {
+        log.info("Standone model");
+    }
+
+    @Override
+    public void sendMessage() throws Exception {
+        log.info("Standone model");
+    }
+    @Override
+    public boolean isCluster() {
+        return false;
+    }
+}
