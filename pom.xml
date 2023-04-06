@@ -16,10 +16,10 @@
         <relativePath/>
     </parent>
     <groupId>org.kikyou</groupId>
-    <artifactId>tia-im</artifactId>
+    <artifactId>tia-notify</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>tia-im</name>
-    <description>小巧,高性能,可插拔,可集群的IM客服</description>
+    <name>tia-notify</name>
+    <description>小巧,高性能,可插拔,可集群的推送组件</description>
     <inceptionYear>2023</inceptionYear>
 
 
