@@ -1,6 +1,6 @@
 
 server:
-  port: 8099
+  port: 80
   servlet:
     context-path: /web
 
@@ -9,7 +9,7 @@ manager:
   password : tia
 
 tia:
-  port: 80
+  port: 8080
   host: ${APP_HOST:localhost}
   #"alg":"HS256","typ":"JWT"
   token-key: ${APP_TOKEN_KEY:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9}
@@ -27,9 +27,9 @@ aliyun:
 spring:
   data:
     redis:
-      host: ${APP_REDIS_HOST:192.168.5.1}
-      #password: ${APP_REDIS_PASS:}
-      port: ${APP_REDIS_PORT:6379}
+      host: ${APP_REDIS_HOST:localhost}
+      password: ${APP_REDIS_PASS:redispw}
+      port: ${APP_REDIS_PORT:32769}
       database: ${APP_REDIS_DATABASE:0}
       lettuce:
         pool:
@@ -47,7 +47,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: root
     username: root
-    url: jdbc:mysql://192.168.5.1:3306/tia?serverTimezone=Asia/Shanghai&useUnicode=true&charcterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://localhost:33060/tia?serverTimezone=Asia/Shanghai&useUnicode=true&charcterEncoding=UTF-8&useSSL=false
     #数据源连接池配置
     hikari:
       minimum-idle: 10
