@@ -66,7 +66,7 @@ spring:
 
 
 cluster:
-  model: standone
+  model: jgroups
 jgroups:
   clustername: ${JGROUPS_CLUSTER_NAME:tia-cluster}
   config: ${JGROUPS_CONFIG:jgroups-config-udp.xml}

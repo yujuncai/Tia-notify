@@ -17,8 +17,8 @@ public class ClusterReceiver implements Receiver {
         if(msg.getSrc().equals(msg.getDest())){
             return;
         }
-        String line = msg.getSrc() + ": " + msg.getObject();
-        System.out.println(line);
+        ClusterMessageVo vo= msg.getObject();
+
 
     }
 }
