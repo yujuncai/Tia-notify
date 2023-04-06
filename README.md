@@ -25,15 +25,15 @@
 
 1.为什么不用原生的websocket,而选用socketio
 
-[为何选用Socket.io](https://github.com/yujuncai/Tia-im/blob/main/docs/%E4%B8%BA%E4%BD%95%E9%80%89%E7%94%A8%E7%9A%84%E6%98%AFSocket.io.md)
+[为何选用Socket.io](https://github.com/yujuncai/Tia-notify/blob/main/docs/%E4%B8%BA%E4%BD%95%E9%80%89%E7%94%A8%E7%9A%84%E6%98%AFSocket.io.md)
 
 2.集群的思路
 
-[集群思路](https://github.com/yujuncai/Tia-im/blob/main/docs/%E9%9B%86%E7%BE%A4%E6%80%9D%E8%B7%AF.md)
+[集群思路](https://github.com/yujuncai/Tia-notify/blob/main/docs/%E9%9B%86%E7%BE%A4%E6%80%9D%E8%B7%AF.md)
 
 3.系统调优
 
-[系统调优](https://github.com/yujuncai/Tia-im/blob/main/docs/%E7%B3%BB%E7%BB%9F%E8%B0%83%E4%BC%98.md)
+[系统调优](https://github.com/yujuncai/Tia-notify/blob/main/docs/%E7%B3%BB%E7%BB%9F%E8%B0%83%E4%BC%98.md)
 
 4.EIO协议说明
 
