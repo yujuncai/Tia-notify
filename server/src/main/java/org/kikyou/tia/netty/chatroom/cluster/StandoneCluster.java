@@ -14,12 +14,12 @@ public class StandoneCluster implements  TiaCluster{
 
     @Override
     public void allMembers() {
-        log.info("Standone model");
+        log.debug("Standone model");
     }
 
     @Override
-    public void sendMessage() throws Exception {
-        log.info("Standone model");
+    public void SyncNameSpaceMessage(String namespace) throws Exception {
+        log.debug("Standone model");
     }
     @Override
     public boolean isCluster() {

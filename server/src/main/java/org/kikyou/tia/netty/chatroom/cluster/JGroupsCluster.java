@@ -5,8 +5,11 @@ package org.kikyou.tia.netty.chatroom.cluster;
 import cn.hutool.extra.spring.SpringUtil;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jgroups.*;
+import org.kikyou.tia.netty.chatroom.config.ServerRunner;
+import org.kikyou.tia.netty.chatroom.constant.ClusterMessageType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -16,6 +19,7 @@ import java.util.List;
 @Component
 @Slf4j
 @ConditionalOnProperty(prefix = "cluster" ,name="model",havingValue = "jgroups")
+@RequiredArgsConstructor
 public class JGroupsCluster implements  TiaCluster{
 
 
@@ -27,6 +31,7 @@ public class JGroupsCluster implements  TiaCluster{
 
     private JChannel channel;
 
+    
     @PostConstruct
     public void init() {
         log.info("init");
@@ -77,8 +82,10 @@ public class JGroupsCluster implements  TiaCluster{
         });
     }
 
-    public void sendMessage( ) throws Exception {
+    public void SyncNameSpaceMessage(String namespace ) throws Exception {
         ClusterMessageVo v=new ClusterMessageVo();
+        v.setMsgType( ClusterMessageType.SYNC_NAMESPACE.getName());
+        v.setData(namespace);
         Message msg=new ObjectMessage(null,v);
         channel.send(msg);
     }

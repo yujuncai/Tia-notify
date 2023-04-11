@@ -40,6 +40,7 @@ public class Keeping {
 
     public static  final String NAMESPACE_KEY="namespace_all";
     public static  final String MONITOR_KEY="monitor_all";
+    public static  String HOST=null;
     @Scheduled(fixedDelay = 60_000)
     public void keeping() throws InterruptedException {
         List<NameSpaceVo> spacevos=new ArrayList<>();
@@ -165,7 +166,7 @@ public class Keeping {
         }
         vo.setNetworkInfos(netvos);
 
-
+        HOST=osInfo.getHost();
         stringRedisTemplate.opsForHash().put(NAMESPACE_KEY,osInfo.getHost(), JSONUtil.toJsonStr(spacevos));
         stringRedisTemplate.opsForHash().put(MONITOR_KEY,osInfo.getHost(), JSONUtil.toJsonStr(vo));
 
@@ -180,7 +181,7 @@ public class Keeping {
         if(tiaCluster.isCluster()){
             tiaCluster.allMembers();
             tiaCluster.isLeader();
-            tiaCluster.sendMessage();}
+           }
     }
 
 }

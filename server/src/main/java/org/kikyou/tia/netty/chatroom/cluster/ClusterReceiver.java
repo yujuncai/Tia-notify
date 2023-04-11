@@ -14,6 +14,7 @@ public class ClusterReceiver implements Receiver {
 
     //接收到消息后会调用此函数
     public void receive(Message msg) {
+        log.info("收到 {} 的消息 {} ",msg.getSrc(),msg.getObject());
         if(msg.getSrc().equals(msg.getDest())){
             return;
         }

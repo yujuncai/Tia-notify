@@ -5,6 +5,7 @@ import cn.hutool.core.util.IdUtil;
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.kikyou.tia.netty.chatroom.cluster.TiaCluster;
 import org.kikyou.tia.netty.chatroom.config.ServerRunner;
 import org.kikyou.tia.netty.chatroom.models.MainBody;
 import org.kikyou.tia.netty.chatroom.models.User;
@@ -33,7 +34,7 @@ public class WebService {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    private final ServerRunner serverRunner;
+    private final TiaCluster tiaCluster;
 
 
     public List<Menu> getMenuListBySortOk() {
@@ -194,8 +195,7 @@ public class WebService {
         list.stream().forEach(s -> {
 
            MainBody b= this.getNameSpaceById(s);
-            serverRunner.RemoveNameSpaceHandler(b.getNameSpace());
-
+            tiaCluster.RemoveNamespace(b.getNameSpace());
             MapSqlParameterSource param = new MapSqlParameterSource();
             param.addValue("id",s);
             namedParameterJdbcTemplate.update("  delete from db_main_body where id=:id ", param);
@@ -228,8 +228,7 @@ public class WebService {
             param.addValue("nameSpace",s.getNameSpace());
             param.addValue("mainStatus",s.getMainStatus());
             if (!s.getNameSpace().isEmpty() && s.getNameSpace().startsWith("/") && s.getNameSpace().length() < 50) {
-                serverRunner.RemoveNameSpaceHandler(s.getNameSpace());
-                serverRunner.addNameSpaceHandler(s.getNameSpace());
+                tiaCluster.UpdateNamespace(s.getNameSpace());
                 namedParameterJdbcTemplate.update("update  db_main_body set name=:name, nameSpace=:nameSpace,mainStatus=:mainStatus where id=:id", param);
             }
 
@@ -249,7 +248,7 @@ public class WebService {
             param.addValue("appId",IdUtil.fastUUID());
             if (!s.getNameSpace().isEmpty() && s.getNameSpace().startsWith("/") && s.getNameSpace().length() < 50) {
                 namedParameterJdbcTemplate.update("insert into db_main_body(id,name, nameSpace,appSecret,mainStatus,appId) values (:id,:name, :nameSpace,:appSecret,:mainStatus,:appId)", param);
-                serverRunner.addNameSpaceHandler(s.getNameSpace());
+                tiaCluster.addNamespace(s.getNameSpace());
             }
         });
     }
