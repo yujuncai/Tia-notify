@@ -11,47 +11,38 @@ import java.util.Map;
 public interface TiaCluster {
 
     default void addNamespace(String namespace) {
-        ServerRunner sr= SpringUtil.getBean("serverRunner");
+        ServerRunner sr = SpringUtil.getBean("serverRunner");
         sr.addNameSpaceHandler(namespace);
-        try {
-            SyncNameSpaceMessage(ClusterMessageType.SYNC_NAMESPACE_ADD.getName(),namespace);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        SyncNameSpaceMessage(ClusterMessageType.SYNC_NAMESPACE_ADD.getName(), namespace);
 
     }
 
 
     default void RemoveNamespace(String namespace) {
-        ServerRunner sr= SpringUtil.getBean("serverRunner");
+        ServerRunner sr = SpringUtil.getBean("serverRunner");
         sr.RemoveNameSpaceHandler(namespace);
-        try {
-            SyncNameSpaceMessage(ClusterMessageType.SYNC_NAMESPACE_REMOVE.getName(), namespace);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        SyncNameSpaceMessage(ClusterMessageType.SYNC_NAMESPACE_REMOVE.getName(), namespace);
     }
 
 
-    default void UpdateNamespace(String oldnamespace,String namespace) {
-        ServerRunner sr= SpringUtil.getBean("serverRunner");
+    default void UpdateNamespace(String oldnamespace, String namespace) {
+        ServerRunner sr = SpringUtil.getBean("serverRunner");
         sr.RemoveNameSpaceHandler(oldnamespace);
         sr.addNameSpaceHandler(namespace);
-        try {
-            Map<String,String> map= MapUtil.newHashMap();
-            map.put("old",oldnamespace);
-            map.put("new",namespace);
-            SyncNameSpaceMessage(ClusterMessageType.SYNC_NAMESPACE_UPDATE.getName(), map);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Map<String, String> map = MapUtil.newHashMap();
+        map.put("old", oldnamespace);
+        map.put("new", namespace);
+        SyncNameSpaceMessage(ClusterMessageType.SYNC_NAMESPACE_UPDATE.getName(), map);
     }
 
 
-    public boolean isCluster();
-    public boolean isLeader();
-    public void allMembers();
-    public void SyncNameSpaceMessage(String type,Object o )throws Exception;
+     boolean isCluster();
 
+     boolean isLeader();
 
+     void allMembers();
+
+     void SyncNameSpaceMessage(String type, Object o);
+
+     void SyncUserMessage(String type, Object o);
 }

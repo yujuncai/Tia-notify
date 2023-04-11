@@ -18,10 +18,14 @@ public class StandoneCluster implements  TiaCluster{
     }
 
     @Override
-    public void SyncNameSpaceMessage(String type,Object o) throws Exception {
+    public void SyncNameSpaceMessage(String type,Object o)  {
         log.debug("Standone model");
     }
 
+    @Override
+    public void SyncUserMessage(String type, Object o)  {
+        log.debug("Standone model");
+    }
 
 
     @Override

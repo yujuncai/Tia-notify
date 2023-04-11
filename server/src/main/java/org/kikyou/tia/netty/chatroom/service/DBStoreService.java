@@ -3,11 +3,13 @@ package org.kikyou.tia.netty.chatroom.service;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kikyou.tia.netty.chatroom.constant.Common;
 import org.kikyou.tia.netty.chatroom.constant.StatusType;
+import org.kikyou.tia.netty.chatroom.models.Message;
 import org.kikyou.tia.netty.chatroom.models.User;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -16,6 +18,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @Slf4j
@@ -38,7 +41,7 @@ public class DBStoreService {
 
     }
 
-    @Async
+    @Async("asyncExecutor")
     public void saveOrUpdateUser(User dbuser,User user, StatusType status) {
         log.debug("保存/更新user: {}, StatusType: {}", user, status);
 
@@ -52,7 +55,9 @@ public class DBStoreService {
         }else {
             MapSqlParameterSource param = new MapSqlParameterSource();
             initParam(user, param);
-            namedParameterJdbcTemplate.update("insert into db_user(id,name, password,time,avatarUrl,ip,deviceType,currId,type,nameSpace) values (:id,:name, :password,:time,:avatarUrl,:ip,:deviceType,:currId,:type,:nameSpace)", param);
+            namedParameterJdbcTemplate.update("insert into db_user(id,name, password,time,avatarUrl,ip,deviceType,currId,type,nameSpace) " +
+                    "values " +
+                    "(:id,:name, :password,:time,:avatarUrl,:ip,:deviceType,:currId,:type,:nameSpace)", param);
         }
 
 
@@ -71,4 +76,31 @@ public class DBStoreService {
         param.addValue("nameSpace", u.getNameSpace());
     }
 
+
+    @Async("asyncExecutor")
+    public void saveMessage(Message m) {
+        MapSqlParameterSource param = new MapSqlParameterSource();
+
+        param.addValue("id", m.getId());
+        param.addValue("from_user", m.getFrom().getId());
+        param.addValue("to_user", m.getTo().getId());
+        param.addValue("contents", m.getContent());
+        param.addValue("message_type", m.getType());
+        param.addValue("read_flag", 0);
+        param.addValue("times", DateUtil.date());
+
+        namedParameterJdbcTemplate.update("insert into db_message(id,from_user, to_user,contents,message_type,read_flag,times) " +
+                "values " +
+                "(:id,:from_user, :to_user,:contents,:message_type,:read_flag,:times)", param);
+
+    }
+
+    @Async("asyncExecutor")
+    public void updateMessage(Message m) {
+        MapSqlParameterSource param = new MapSqlParameterSource();
+        param.addValue("id", m.getId());
+        param.addValue("read_flag", 1);
+        namedParameterJdbcTemplate.update("Update db_message Set read_flag=:read_flag Where id = :id", param);
+
+    }
 }

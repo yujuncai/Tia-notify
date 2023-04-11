@@ -15,6 +15,7 @@ import org.kikyou.tia.netty.chatroom.utils.MyFileUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -23,6 +24,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 import static org.kikyou.tia.netty.chatroom.constant.Common.GROUP_001_MESSAGE;
@@ -51,8 +54,8 @@ public class StoreService {
         redisTemplate.opsForHash().putAll(user.getName(), map);
     }*/
 
-    @Async
-    public void saveGroupMessage(User from, User to, String message/*当是图片的时候,这里传的是base64*/, MessageType type) throws Exception {
+    @Async("asyncExecutor")
+    public CompletableFuture<Message> saveGroupMessage(User from, User to, String message/*当是图片的时候,这里传的是base64*/, MessageType type) throws Exception {
         if (MessageType.IMAGE.equals(type)) {
             File file = MyFileUtils.base64ToFile(message);
             message = fileUploadService.upload(file);
@@ -63,9 +66,9 @@ public class StoreService {
         storeMsg.setType(type.getName());
         storeMsg.setTime(System.currentTimeMillis());
         storeMsg.setContent(message);
-
         // 之后按时间排序获取
         stringRedisTemplate.opsForZSet().add(GROUP_001_MESSAGE, JSONUtil.toJsonStr(storeMsg), storeMsg.getTime());
+        return  CompletableFuture.completedFuture(storeMsg);
     }
 
     public List<Message> getGroupMessages() {
@@ -100,7 +103,7 @@ public class StoreService {
         return (User) redisTemplate.opsForValue().get(namespace.concat("_").concat(ID_KEY).concat(id)
         );
     }
-
+    @Async("asyncExecutor")
     public void delIdKeyV(String id,String namespace){
         if(StrUtil.isBlank(namespace)){
             namespace= Common.DEFAULT;

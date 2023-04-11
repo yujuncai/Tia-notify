@@ -23,4 +23,5 @@ public class Message implements Serializable {
 
     private Long time;
 
+    private String id;
 }
