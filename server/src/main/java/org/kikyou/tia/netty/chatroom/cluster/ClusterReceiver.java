@@ -3,23 +3,51 @@ package org.kikyou.tia.netty.chatroom.cluster;
 import lombok.extern.slf4j.Slf4j;
 import org.jgroups.Message;
 import org.jgroups.Receiver;
-import org.jgroups.blocks.cs.ReceiverAdapter;
+import org.kikyou.tia.netty.chatroom.cluster.handler.BaseHandler;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 @Slf4j
 @ConditionalOnBean(JGroupsCluster.class)
 public class ClusterReceiver implements Receiver {
 
+
+    /**
+     * 策略
+     * KEY为业务编码
+     * VALUE为具体实现类
+     */
+    private final ConcurrentHashMap<String, BaseHandler> strategy = new ConcurrentHashMap<>();
+
+
+    public ClusterReceiver(List<BaseHandler> handlerList) {
+        handlerList.forEach(handler -> {
+            strategy.put(handler.getProviderName(), handler);
+        });
+        log.info("注入策略完毕");
+    }
+
+
     //接收到消息后会调用此函数
     public void receive(Message msg) {
-        log.info("收到 {} 的消息 {} ",msg.getSrc(),msg.getObject());
-        if(msg.getSrc().equals(msg.getDest())){
+        log.info("收到 {} 的消息 {} 目标为 {}", msg.getSrc(), msg.getObject(),msg.getDest());
+
+        if (msg.getSrc().equals(JGroupsCluster.localAddress)) {
+            log.info("本地消息,丢弃!");
             return;
         }
-        ClusterMessageVo vo= msg.getObject();
 
+        ClusterMessageVo vo = msg.getObject();
+        BaseHandler h = strategy.get(vo.getMsgType());
+        if (h != null) {
+            h.doHandler((Object) vo.getData());
+        }else {
+            log.error("没有对应的策略");
+        }
 
     }
 }

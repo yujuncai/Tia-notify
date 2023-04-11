@@ -218,7 +218,6 @@ public class WebService {
 
     }
 
-    @Transactional
     public void   updateNameSapce ( List<MainBody> list) {
 
         list.stream().forEach(s -> {
@@ -227,15 +226,17 @@ public class WebService {
             param.addValue("name",s.getName());
             param.addValue("nameSpace",s.getNameSpace());
             param.addValue("mainStatus",s.getMainStatus());
+
+            MainBody oldNameSpace = getNameSpaceById(s.getId());
+
             if (!s.getNameSpace().isEmpty() && s.getNameSpace().startsWith("/") && s.getNameSpace().length() < 50) {
-                tiaCluster.UpdateNamespace(s.getNameSpace());
+                tiaCluster.UpdateNamespace(oldNameSpace.getNameSpace(),s.getNameSpace());
                 namedParameterJdbcTemplate.update("update  db_main_body set name=:name, nameSpace=:nameSpace,mainStatus=:mainStatus where id=:id", param);
             }
 
         });
     }
 
-    @Transactional
     public void   saveNameSapce ( List<MainBody> list) {
 
         list.stream().forEach(s -> {

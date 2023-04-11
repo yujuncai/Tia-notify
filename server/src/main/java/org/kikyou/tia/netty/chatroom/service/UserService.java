@@ -3,7 +3,6 @@ package org.kikyou.tia.netty.chatroom.service;
 import cn.hutool.core.util.StrUtil;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
-import io.micrometer.common.util.StringUtils;
 import io.netty.handler.codec.http.HttpHeaders;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

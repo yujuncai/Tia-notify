@@ -3,7 +3,6 @@ package org.kikyou.tia.netty.chatroom.handler;
 import com.corundumstudio.socketio.AckRequest;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.annotation.OnEvent;
-import com.corundumstudio.socketio.listener.DataListener;
 import io.netty.handler.codec.http.HttpHeaders;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,8 +11,6 @@ import org.kikyou.tia.netty.chatroom.models.User;
 import org.kikyou.tia.netty.chatroom.service.LoginService;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Map;
 
 import static org.kikyou.tia.netty.chatroom.constant.Common.TOKEN;
 

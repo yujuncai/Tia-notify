@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kikyou.tia.netty.chatroom.constant.Common;
 import org.kikyou.tia.netty.chatroom.constant.EventNam;
-import org.kikyou.tia.netty.chatroom.constant.StatusType;
 import org.kikyou.tia.netty.chatroom.constant.SystemType;
 import org.kikyou.tia.netty.chatroom.models.User;
 import org.kikyou.tia.netty.chatroom.service.StoreService;

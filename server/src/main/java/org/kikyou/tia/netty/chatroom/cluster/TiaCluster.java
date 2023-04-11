@@ -1,8 +1,12 @@
 package org.kikyou.tia.netty.chatroom.cluster;
 
 
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import org.kikyou.tia.netty.chatroom.config.ServerRunner;
+import org.kikyou.tia.netty.chatroom.constant.ClusterMessageType;
+
+import java.util.Map;
 
 public interface TiaCluster {
 
@@ -10,7 +14,7 @@ public interface TiaCluster {
         ServerRunner sr= SpringUtil.getBean("serverRunner");
         sr.addNameSpaceHandler(namespace);
         try {
-            SyncNameSpaceMessage(namespace);
+            SyncNameSpaceMessage(ClusterMessageType.SYNC_NAMESPACE_ADD.getName(),namespace);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -22,19 +26,22 @@ public interface TiaCluster {
         ServerRunner sr= SpringUtil.getBean("serverRunner");
         sr.RemoveNameSpaceHandler(namespace);
         try {
-            SyncNameSpaceMessage(namespace);
+            SyncNameSpaceMessage(ClusterMessageType.SYNC_NAMESPACE_REMOVE.getName(), namespace);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-    default void UpdateNamespace(String namespace) {
+    default void UpdateNamespace(String oldnamespace,String namespace) {
         ServerRunner sr= SpringUtil.getBean("serverRunner");
-        sr.RemoveNameSpaceHandler(namespace);
+        sr.RemoveNameSpaceHandler(oldnamespace);
         sr.addNameSpaceHandler(namespace);
         try {
-            SyncNameSpaceMessage(namespace);
+            Map<String,String> map= MapUtil.newHashMap();
+            map.put("old",oldnamespace);
+            map.put("new",namespace);
+            SyncNameSpaceMessage(ClusterMessageType.SYNC_NAMESPACE_UPDATE.getName(), map);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -44,5 +51,7 @@ public interface TiaCluster {
     public boolean isCluster();
     public boolean isLeader();
     public void allMembers();
-    public void SyncNameSpaceMessage(String namespace )throws Exception;
+    public void SyncNameSpaceMessage(String type,Object o )throws Exception;
+
+
 }

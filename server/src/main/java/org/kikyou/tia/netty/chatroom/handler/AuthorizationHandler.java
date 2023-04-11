@@ -1,12 +1,10 @@
 package org.kikyou.tia.netty.chatroom.handler;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
 import com.corundumstudio.socketio.AuthorizationListener;
 import com.corundumstudio.socketio.HandshakeData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.kikyou.tia.netty.chatroom.constant.EventNam;
 import org.kikyou.tia.netty.chatroom.models.MainBody;
 import org.kikyou.tia.netty.chatroom.service.MainBodyService;
 import org.kikyou.tia.netty.chatroom.utils.MySecureUtil;

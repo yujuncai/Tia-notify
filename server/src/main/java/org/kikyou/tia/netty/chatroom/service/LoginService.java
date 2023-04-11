@@ -15,17 +15,14 @@ import org.kikyou.tia.netty.chatroom.constant.EventNam;
 import org.kikyou.tia.netty.chatroom.constant.StatusType;
 import org.kikyou.tia.netty.chatroom.constant.SystemType;
 import org.kikyou.tia.netty.chatroom.models.LoginSuccessData;
-import org.kikyou.tia.netty.chatroom.models.Message;
 import org.kikyou.tia.netty.chatroom.models.User;
 import org.kikyou.tia.netty.chatroom.utils.MyBeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static org.kikyou.tia.netty.chatroom.constant.Common.USER_KEY;
 

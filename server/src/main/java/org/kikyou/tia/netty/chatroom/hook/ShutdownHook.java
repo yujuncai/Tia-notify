@@ -41,8 +41,11 @@ public class ShutdownHook {
                 });
 
         if (!StringUtils.isNullOrEmpty(Keeping.HOST)) {
+            log.info("shutdown hook, del host info");
             stringRedisTemplate.opsForHash().delete(Keeping.NAMESPACE_KEY, Keeping.HOST);
             stringRedisTemplate.opsForHash().delete(Keeping.MONITOR_KEY, Keeping.HOST);
         }
+
+        log.info("shutdown hook, GG");
     }
 }

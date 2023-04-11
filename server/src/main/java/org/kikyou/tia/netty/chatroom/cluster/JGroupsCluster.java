@@ -8,8 +8,6 @@ import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jgroups.*;
-import org.kikyou.tia.netty.chatroom.config.ServerRunner;
-import org.kikyou.tia.netty.chatroom.constant.ClusterMessageType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -31,17 +29,16 @@ public class JGroupsCluster implements  TiaCluster{
 
     private JChannel channel;
 
-    
+    public static Address localAddress;
     @PostConstruct
     public void init() {
         log.info("init");
         try {
-            log.info(jGroupsConfig);
-            log.info(clusterName);
+            log.info("加载配置文件 {} ",jGroupsConfig);
             channel = new JChannel(jGroupsConfig);
             channel.receiver(SpringUtil.getBean("clusterReceiver"));
             channel.connect(clusterName);
-
+            localAddress=channel.getAddress();
         } catch (Exception ex) {
             log.error("registering the channel in JMX failed: {}", ex.toString());
         }
@@ -82,12 +79,13 @@ public class JGroupsCluster implements  TiaCluster{
         });
     }
 
-    public void SyncNameSpaceMessage(String namespace ) throws Exception {
+    public void SyncNameSpaceMessage(String type,Object o ) throws Exception {
         ClusterMessageVo v=new ClusterMessageVo();
-        v.setMsgType( ClusterMessageType.SYNC_NAMESPACE.getName());
-        v.setData(namespace);
+        v.setMsgType( type);
+        v.setData(o);
         Message msg=new ObjectMessage(null,v);
         channel.send(msg);
     }
+
 
 }
