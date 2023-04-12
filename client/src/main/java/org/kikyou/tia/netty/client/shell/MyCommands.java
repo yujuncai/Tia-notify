@@ -8,6 +8,7 @@ import io.socket.client.Socket;
 import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.kikyou.tia.netty.chatroom.constant.EventNam;
 import org.kikyou.tia.netty.chatroom.models.User;
 import org.kikyou.tia.netty.chatroom.utils.MySecureUtil;
@@ -23,18 +24,19 @@ import java.util.concurrent.Executors;
 
 @ShellComponent
 @RequiredArgsConstructor
+@Slf4j
 public class MyCommands {
 
     private final Socket socket;
     @ShellMethod(value = "check")
     public void check(){
-       System.out.println("是否连接上 "+socket.connected());
+        log.info("是否连接上 "+socket.connected());
 
     }
 
     @ShellMethod(value = "login")
     public void login(){
-        System.out.println("发起login");
+        log.info("发起login");
         User user = new User();
         user.setName("111");
         user.setPassword("111");
@@ -45,15 +47,15 @@ public class MyCommands {
 
 //ack
        socket.emit(EventNam.LOGIN, new Object[]{JSONUtil.parseObj(user)},(ack)-> {
-            System.out.println(ack.length);
-            System.out.println(String.valueOf(ack));
-            System.out.println(Arrays.stream(ack).count());
+            log.info(ack.length+"");
+            log.info(String.valueOf(ack));
+            log.info(Arrays.stream(ack).count()+"");
         });
 
     }
     @ShellMethod(value = "register")
     public void register(){
-        System.out.println("发起register");
+        log.info("发起register");
         User user = new User();
         user.setName("111");
         user.setPassword("111");
@@ -85,7 +87,7 @@ public class MyCommands {
                         Manager m=new Manager(new URI(s));
                         Socket  socket=m.socket("/tia-java");
                         Socket connect = socket.connect();
-                        System.out.println("发起register");
+                        log.info("发起register");
                         User user = new User();
                         user.setName(String.valueOf(finalI));
                         user.setPassword(String.valueOf(finalI));
@@ -97,7 +99,7 @@ public class MyCommands {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    System.out.println(Thread.currentThread().getName());
+                    log.info(Thread.currentThread().getName());
                 }
             };
             // 将任务交给线程池管理
@@ -124,7 +126,7 @@ public class MyCommands {
                         Manager m=new Manager(new URI(s));
                         Socket  socket=m.socket("/tia-java");
                         Socket connect = socket.connect();
-                        System.out.println("发起login");
+                        log.info("发起login");
                         User user = new User();
                         user.setName(String.valueOf(finalI));
                         user.setPassword(String.valueOf(finalI));
@@ -136,7 +138,7 @@ public class MyCommands {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    System.out.println(Thread.currentThread().getName());
+                    log.info(Thread.currentThread().getName());
                 }
             };
             // 将任务交给线程池管理
@@ -152,9 +154,9 @@ public class MyCommands {
 
     @ShellMethod(value = "message2user")
     public void message2user(String currid){
-        System.out.println("发起message to user");
+        log.info("发起message to user");
         if(!StringUtils.hasText(currid)){
-            System.out.println("参数为空!");
+            log.info("参数为空!");
         }
         User form = new User();
         form.setName("111");
@@ -201,7 +203,7 @@ public class MyCommands {
 
     @ShellMethod(value = "logout")
     public void logout(){
-        System.out.println("发起logout");
+        log.info("发起logout");
         User user = new User();
         socket.emit(EventNam.LOGOUT,  JSONUtil.parseObj(user));
 
@@ -209,12 +211,12 @@ public class MyCommands {
 
     @ShellMethod(value = "all")
     public void all(){
-        System.out.println("获取在线所有用户");
+        log.info("获取在线所有用户");
        UserMap.map.forEach((k,v) -> {
-           System.out.println("用户名:"+k);
-           System.out.println("用户currid:"+v.getCurrId());
-           System.out.println("用户:"+v);
-           System.out.println("______________________________");
+           log.info("用户名:"+k);
+           log.info("用户currid:"+v.getCurrId());
+           log.info("用户:"+v);
+           log.info("______________________________");
        });
 
     }

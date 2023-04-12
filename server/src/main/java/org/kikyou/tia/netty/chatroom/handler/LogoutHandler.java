@@ -38,7 +38,7 @@ public class LogoutHandler {
 
         // 判断是否是已登录用户
         if (Objects.nonNull(user)) {
-            log.debug("用户退出: {}", user.getName());
+            log.info("用户退出: {}", user.getName());
             client.del(Common.USER_KEY);
             storeService.delIdKeyV(user.getId(),user.getNameSpace());
             if (StrUtil.isNotBlank(user.getId())) {

@@ -10,7 +10,7 @@ manager:
 
 tia:
   port: 8080
-  host: ${APP_HOST:localhost}
+  host: ${APP_HOST:0.0.0.0}
   #"alg":"HS256","typ":"JWT"
   token-key: ${APP_TOKEN_KEY:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9}
   boss: 1

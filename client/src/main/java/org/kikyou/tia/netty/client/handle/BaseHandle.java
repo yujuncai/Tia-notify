@@ -24,11 +24,11 @@ public class BaseHandle {
 
     @PostConstruct
     public void init() {
-        System.out.println("初始化接收消息------------");
+        log.info("初始化接收消息------------");
         socket.on(EventNam.HISTORY_MESSAGE, new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                System.out.println(EventNam.HISTORY_MESSAGE + " : " + args[0]);
+                 log.info(EventNam.HISTORY_MESSAGE + " : " + args[0]);
             }
         });
 
@@ -36,7 +36,7 @@ public class BaseHandle {
         socket.on(EventNam.REGISTER_FAIL, new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                System.out.println(EventNam.REGISTER_FAIL + " : " + args[0]);
+                 log.info(EventNam.REGISTER_FAIL + " : " + args[0]);
             }
         });
 
@@ -44,7 +44,7 @@ public class BaseHandle {
         socket.on(EventNam.REGISTER_SUCCESS, new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                System.out.println(EventNam.REGISTER_SUCCESS + " : " + args[0]);
+                 log.info(EventNam.REGISTER_SUCCESS + " : " + args[0]);
             }
         });
 
@@ -52,7 +52,7 @@ public class BaseHandle {
         socket.on(EventNam.LOGIN_FAIL, new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                System.out.println(EventNam.LOGIN_FAIL + " : " + args[0]);
+                 log.info(EventNam.LOGIN_FAIL + " : " + args[0]);
             }
         });
 
@@ -60,7 +60,7 @@ public class BaseHandle {
         socket.on(EventNam.SERVER_ERR, new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                System.out.println(EventNam.SERVER_ERR + " : " + args[0]);
+                 log.info(EventNam.SERVER_ERR + " : " + args[0]);
             }
         });
 
@@ -68,8 +68,8 @@ public class BaseHandle {
         socket.on(EventNam.LOGIN_SUCCESS, new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                System.out.println(EventNam.LOGIN_SUCCESS + " : " + args[0]);
-                System.out.println(EventNam.LOGIN_SUCCESS + " : " + args[1]);
+                 log.info(EventNam.LOGIN_SUCCESS + " : " + args[0]);
+                 log.info(EventNam.LOGIN_SUCCESS + " : " + args[1]);
                 if (!JSONUtil.isNull(args[1])) {
                    String json= String.valueOf(args[1]);
                     JSONArray jsonArray = JSONUtil.parseArray(json);
@@ -87,10 +87,10 @@ public class BaseHandle {
             @Override
             public void call(Object... args) {
 
-                System.out.println(EventNam.MESSAGE + " : " + args[0]);
-                System.out.println(EventNam.MESSAGE + " : " + args[1]);
-                System.out.println(EventNam.MESSAGE + " : " + args[2]);
-                System.out.println(EventNam.MESSAGE + " : " + args[3]);
+                 log.info(EventNam.MESSAGE + " : " + args[0]);
+                 log.info(EventNam.MESSAGE + " : " + args[1]);
+                 log.info(EventNam.MESSAGE + " : " + args[2]);
+                 log.info(EventNam.MESSAGE + " : " + args[3]);
             }
         });
 
@@ -98,7 +98,7 @@ public class BaseHandle {
         socket.on(EventNam.SYSTEM, new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                System.out.println(EventNam.SYSTEM + " : " + args[0]);
+                 log.info(EventNam.SYSTEM + " : " + args[0]);
             }
         });
 
@@ -106,21 +106,21 @@ public class BaseHandle {
         socket.on(EventNam.LOGIN, new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                System.out.println(EventNam.LOGIN + " : " + args[0]);
+                 log.info(EventNam.LOGIN + " : " + args[0]);
             }
         });
 
         socket.on(EventNam.LOGOUT, new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                System.out.println(EventNam.LOGOUT + " : " + args[0]);
+                 log.info(EventNam.LOGOUT + " : " + args[0]);
             }
         });
 
         socket.on(EventNam.REGISTER, new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                System.out.println(EventNam.REGISTER + " : " + args[0]);
+                 log.info(EventNam.REGISTER + " : " + args[0]);
             }
         });
 

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 import static org.kikyou.tia.netty.chatroom.constant.Common.TOKEN;
 import static org.kikyou.tia.netty.chatroom.constant.Common.USER_KEY;
@@ -32,17 +33,22 @@ public class LoginHandler {
     private final LoginService loginService;
     private final SocketIOServer socketIOServer;
     private final SystemMessageHandler systemMessageHandler;
+
     @OnEvent(EventNam.LOGIN)
     public void onData(SocketIOClient client, User data, AckRequest ackSender) {
         HttpHeaders httpHeaders = client.getHandshakeData().getHttpHeaders();
         String token = httpHeaders.get(TOKEN);
         log.info("客户端：{} 已连接, token: {}, Namespace: {} ,url: {}", client.getSessionId(), token, client.getNamespace().getName(), client.getHandshakeData().getUrl());
-        log.debug("用户登录: {}", data.getName());
-         User user=  loginService.login(data, client, false);
-        // 通知namespace下的的用户(登录状态)加入
-        systemMessageHandler.bocastSystemMessage(user, socketIOServer,SystemType.JOIN);
-    }
 
+        User u = loginService.login(data, client, false);
+
+        if (u != null) {
+            // 通知namespace下的的用户(登录状态)加入
+            systemMessageHandler.bocastSystemMessage(u, socketIOServer, SystemType.JOIN);
+
+        }
+
+    }
 
 
 }

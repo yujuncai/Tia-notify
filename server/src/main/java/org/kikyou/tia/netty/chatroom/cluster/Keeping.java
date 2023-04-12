@@ -79,7 +79,7 @@ public class Keeping {
         vo.setRunTime(runTime);
         //运行时信息
        // System.out.println("-----------运行时信息-----------");
-        OSRuntimeInfo osRuntimeInfo = SystemInfoUtil.getOSRuntimeInfo();
+        OSRuntimeInfo osRuntimeInfo = null;//todo SystemInfoUtil.getOSRuntimeInfo();
 
         if(osRuntimeInfo!=null) {
 

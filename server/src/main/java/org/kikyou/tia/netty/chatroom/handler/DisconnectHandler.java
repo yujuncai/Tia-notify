@@ -41,7 +41,7 @@ public class DisconnectHandler {
     @OnDisconnect
     public void onDisconnect(SocketIOClient client) {
 
-        log.debug("用户断开链接: {}", client.getSessionId().toString());
+        log.info("用户断开链接: {}", client.getSessionId().toString());
         User user = client.get(Common.USER_KEY);
         client.del(Common.USER_KEY);
         if (!Objects.isNull(user)) {

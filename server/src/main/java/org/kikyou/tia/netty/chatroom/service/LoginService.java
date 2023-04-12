@@ -23,6 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 import static org.kikyou.tia.netty.chatroom.constant.Common.USER_KEY;
 
@@ -71,12 +72,13 @@ public class LoginService {
             // saveOrUpdate user
             dbstoreService.saveOrUpdateUser(dbUser, user, StatusType.LOGIN);
         }
-
         loginSuccess(user, client);
+
         return user;
     }
 
     private void loginSuccess(User user, SocketIOClient client) {
+        String password = user.getPassword();
         user.setPassword(null);
         LoginSuccessData data = new LoginSuccessData();
         data.setUser(user);
@@ -103,8 +105,8 @@ public class LoginService {
         // 发送login_success事件
         client.sendEvent(EventNam.LOGIN_SUCCESS, data, onlineUsers);
 
-
-
+        //恢复密码
+        user.setPassword(password);
 
 
 
