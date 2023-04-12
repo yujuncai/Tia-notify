@@ -32,4 +32,8 @@ public class StandoneCluster implements  TiaCluster{
     public boolean isCluster() {
         return false;
     }
+    @Override
+    public void SyncSystemssage(String type, Object o) {
+
+    }
 }

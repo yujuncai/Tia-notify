@@ -45,4 +45,6 @@ public interface TiaCluster {
      void SyncNameSpaceMessage(String type, Object o);
 
      void SyncUserMessage(String type, Object o);
+
+     void SyncSystemssage(String type, Object o);
 }

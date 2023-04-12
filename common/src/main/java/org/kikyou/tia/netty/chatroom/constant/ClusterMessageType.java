@@ -16,7 +16,8 @@ public enum ClusterMessageType {
     SYNC_NAMESPACE_UPDATE("sync_namespace_update"),
 
 
-    SYNC_USER_MESSAGE("sync_user_message")
+    SYNC_USER_MESSAGE("sync_user_message"),
+    SYNC_SYSTEM_MESSAGE("sync_system_message")
     ;
 
     private final String name;

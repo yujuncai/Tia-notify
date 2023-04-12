@@ -31,7 +31,7 @@ public class MessageHandler {
 
     private final DBStoreService dbstoreService;
     private final SocketIOServer socketIOServer;
-    private final TiaCluster tiaCluster;
+    private final SystemMessageHandler systemMessageHandler;
     @OnEvent(EventNam.MESSAGE)
     public void onData(SocketIOClient client, User from, User to, String content, String type, AckRequest ackSender) throws Exception {
         // 判断是指定发送方发送消息,还是群发
@@ -55,7 +55,7 @@ public class MessageHandler {
                         content,
                         type);
             }else {//离线或者不在本机,发送到集群
-                sendMessageToCluster(storeMsg);
+                systemMessageHandler.sendMessageToCluster(storeMsg);
             }
             //存到数据库
             dbstoreService.saveMessage(storeMsg);
@@ -72,19 +72,13 @@ public class MessageHandler {
                     type);
 
             //并发送到集群
-            future.thenAccept (m -> {
-                sendMessageToCluster(m);
-            });
+            future.thenAccept (systemMessageHandler::sendMessageToCluster);
 
         }
     }
 
 
-    private  void sendMessageToCluster(Message m){
-        if(tiaCluster.isCluster()){
-            tiaCluster.SyncUserMessage(ClusterMessageType.SYNC_USER_MESSAGE.getName(),m);
-        }
-    }
+
 
 
 

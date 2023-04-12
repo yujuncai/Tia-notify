@@ -30,7 +30,7 @@ public class LogoutHandler {
     private final SocketIOServer socketIOServer;
 
     private final StoreService storeService;
-
+    private final SystemMessageHandler systemMessageHandler;
 
     @OnEvent(EventNam.LOGOUT)
     public void onData(SocketIOClient client, AckRequest ackSender)  {
@@ -40,24 +40,11 @@ public class LogoutHandler {
         if (Objects.nonNull(user)) {
             log.debug("用户退出: {}", user.getName());
             client.del(Common.USER_KEY);
-            if (!Objects.isNull(user)) {
-                storeService.delIdKeyV(user.getId(),user.getNameSpace());
-            }
+            storeService.delIdKeyV(user.getId(),user.getNameSpace());
             if (StrUtil.isNotBlank(user.getId())) {
                 // 修改登录用户信息并通知所有在线用户
-                // 通知namespace下的的用户(登录状态)加入 todo 集群状态下需要广播
-                socketIOServer.getNamespace(user.getNameSpace()).getAllClients().stream().forEach(s -> {
-                            User u = s.get(USER_KEY);
+                systemMessageHandler.bocastSystemMessage(user, socketIOServer,SystemType.LOGOUT);
 
-                            if (!Objects.isNull(u) ) {
-                                log.info(u.getName());
-                                s.sendEvent(EventNam.SYSTEM, user, SystemType.LOGOUT.getName());
-                            }
-
-                        }
-                );
-              //  socketIOServer.getNamespace(user.getNameSpace()).getBroadcastOperations().sendEvent(EventNam.SYSTEM, user, SystemType.LOGOUT.getName());
-                //storeService.saveOrUpdateUser(user, StatusType.LOGOUT);
             }
         }
     }

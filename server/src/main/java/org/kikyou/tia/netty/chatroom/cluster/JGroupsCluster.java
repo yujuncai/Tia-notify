@@ -98,6 +98,18 @@ public class JGroupsCluster implements TiaCluster {
         }
     }
 
+
+
+    @Async("asyncExecutor")
+    public void SyncSystemssage(String type, Object o) {
+        try {
+            sendMessage(type, o);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     private void sendMessage(String type, Object o) throws Exception {
         ClusterMessageVo v = new ClusterMessageVo();
         v.setMsgType(type);

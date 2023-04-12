@@ -1,6 +1,7 @@
 package org.kikyou.tia.netty.chatroom.config;
 
 
+import jakarta.annotation.PreDestroy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.AsyncTaskExecutor;
@@ -38,4 +39,7 @@ public class AsyncConfig {
         asyncTaskExecutor.initialize();
         return asyncTaskExecutor;
     }
+
+
+
 }

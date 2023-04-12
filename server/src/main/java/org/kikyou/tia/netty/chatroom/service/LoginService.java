@@ -43,18 +43,18 @@ public class LoginService {
 
     private final StoreService storeService;
 
-    private final SocketIOServer socketIOServer;
+
 
     private final DBStoreService dbstoreService;
 
-    public void login(User user, SocketIOClient client, boolean isReconnect) {
+    public User login(User user, SocketIOClient client, boolean isReconnect) {
 
         // 判断是否重复登录
         User dbUser = userService.getUserByName(user.getName());
         userService.organizeUser(dbUser, user, client);
         if (!Objects.isNull(dbUser) && userService.exitActiveUser(dbUser)) {
             client.sendEvent(EventNam.LOGIN_FAIL, "重复登录,请先退出!");
-            return;
+            return null;
         }
         // 是否需要重新登录
         if (!isReconnect) {
@@ -62,17 +62,18 @@ public class LoginService {
             if (Objects.isNull(dbUser)) {
                 log.error("登录失败,账户'{}'不存在", user.getName());
                 client.sendEvent(EventNam.LOGIN_FAIL, "登录失败,账户不存在!");
-                return;
+                return null;
             } else if (!dbUser.getPassword().equals(DigestUtil.md5Hex(user.getPassword().concat(Common.SALT)))) {
                 log.error("登录失败,账户'{}'密码不正确", user.getName());
                 client.sendEvent(EventNam.LOGIN_FAIL, "登录失败,用户名/密码不正确!");
-                return;
+                return null;
             }
             // saveOrUpdate user
             dbstoreService.saveOrUpdateUser(dbUser, user, StatusType.LOGIN);
         }
 
         loginSuccess(user, client);
+        return user;
     }
 
     private void loginSuccess(User user, SocketIOClient client) {
@@ -92,19 +93,7 @@ public class LoginService {
 
         data.setToken(JWTUtil.createToken(map, appConfiguration.getTokenKey().getBytes(StandardCharsets.UTF_8)));
 
-        // 通知namespace下的的用户(登录状态)加入 todo 集群状态下需要广播
-        socketIOServer.getNamespace(user.getNameSpace()).getAllClients().stream().forEach(s -> {
-                    User u = s.get(USER_KEY);
-                    if (!Objects.isNull(u) ) {
-                        log.info(u.getName());
-                        s.sendEvent(EventNam.SYSTEM,
-                                //client,
-                                user,
-                                SystemType.JOIN.getName());
-                    }
 
-                }
-        );
         //当前namespace下的用户
         List<User> onlineUsers = userService.getOnlineUsers(user.getNameSpace());
         // 为当前client赋值user

@@ -9,19 +9,16 @@
             <pattern>%date{HH:mm:ss} [%-5level] [%thread] %logger{17} - %m%n </pattern>
         </encoder>
     </appender>
-    <!--<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        &lt;!&ndash; 日志文件名称 &ndash;&gt;
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>logFile.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            &lt;!&ndash; 每天产生一个新的日志文件 &ndash;&gt;
             <fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
-            &lt;!&ndash; 保留 15 天的日志 &ndash;&gt;
             <maxHistory>15</maxHistory>
         </rollingPolicy>
         <encoder>
             <pattern>%date{HH:mm:ss} [%-5level] [%thread] %logger{17} - %m%n </pattern>
         </encoder>
-    </appender>-->
+    </appender>
 
     <!-- 用来控制查看那个类的日志内容（对mybatis name 代表命名空间） -->
     <logger name="org.kikyou.tia.netty.chatroom" level="DEBUG" additivity="false">
@@ -32,7 +29,7 @@
         <appender-ref ref="STDOUT"/>
     </logger>
 
-    <root level="ERROR">
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
