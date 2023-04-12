@@ -8,7 +8,7 @@ WORKDIR /home/work
 
 VOLUME /tmp
 
-EXPOSE 8080 80 45588
+EXPOSE 8080 80 45588/udp
 
 COPY ./server-1.0-SNAPSHOT.jar /home/work/tia.jar
 
