@@ -80,88 +80,91 @@ public class Keeping {
         //运行时信息
        // System.out.println("-----------运行时信息-----------");
         OSRuntimeInfo osRuntimeInfo = SystemInfoUtil.getOSRuntimeInfo();
-        //1.CPU信息
-       // System.out.println("------cpu信息------");
-       // System.out.println("cpu使用率：" + SystemInfoUtil.formatRate(osRuntimeInfo.getCpuUsage()));
-        vo.setCpuUsage(SystemInfoUtil.formatRate(osRuntimeInfo.getCpuUsage()));
-       // System.out.println("cpu基准速度：" + osRuntimeInfo.getCpuMaxFreq());
-        vo.setCpuMaxFreq(osRuntimeInfo.getCpuMaxFreq());
-       // System.out.println("cpu速度：" + osRuntimeInfo.getCpuCurrentFreq());
-        vo.setCpuCurrentFreq(osRuntimeInfo.getCpuCurrentFreq());
-        //2.内存信息
-      //  System.out.println("------内存信息------");
-        //系统内存总量
-        long total = osRuntimeInfo.getTotalMemory();
-        long used = osRuntimeInfo.getUsedMemory();
-        double usage = used * 1.0 / total;
-       // System.out.println("系统内存总量：" + total + " -> " + SystemInfoUtil.formatData(total));
-        vo.setTotalMemory(SystemInfoUtil.formatData(total));
-       // System.out.println("系统内存使用量：" + used + " -> " + SystemInfoUtil.formatData(used));
-        vo.setUsedMemory(SystemInfoUtil.formatData(used));
-       // System.out.println("系统内存使用率：" + SystemInfoUtil.formatRate(usage));
-        vo.setUsage(SystemInfoUtil.formatRate(usage));
-        //可用虚拟总内存
-        long swapTotal = osRuntimeInfo.getSwapTotalMemory();
-        //已用虚拟内存
-        long swapUsed = osRuntimeInfo.getSwapUsedMemory();
-       // System.out.println("可用虚拟总内存(swap)：" + swapTotal + " -> " + SystemInfoUtil.formatData(swapTotal));
-        vo.setSwapTotalMemory(SystemInfoUtil.formatData(swapTotal));
-       // System.out.println("虚拟内存使用量(swap)：" + swapUsed + " -> " + SystemInfoUtil.formatData(swapUsed));
-        vo.setSwapUsed(SystemInfoUtil.formatData(swapUsed));
-        //3.磁盘信息
-       // System.out.println("------磁盘信息------");
-       // System.out.println("磁盘读取速度：" + osRuntimeInfo.getDiskReadRate() + "Kb/s");
-      //  vo.setDiskReadRate(String.valueOf(osRuntimeInfo.getDiskReadRate()));
-      //  System.out.println("磁盘写入速度：" + osRuntimeInfo.getDiskWriteRate() + "Kb/s");
-      //  vo.setDiskWriteRate(String.valueOf(osRuntimeInfo.getDiskWriteRate()));
 
-        List<DisksInfo> disksList = osRuntimeInfo.getDisksList();
-        List<DisksInfoVo> diskvo=new ArrayList<>();
-        for (DisksInfo disksInfo : disksList) {
-           // System.out.println("挂载点：" + disksInfo.getDirName());
-          //  System.out.println("文件系统名称：" + disksInfo.getSysTypeName());
-          //  System.out.println("文件系统类型：" + disksInfo.getTypeName());
-          //  System.out.println("磁盘总量：" + disksInfo.getTotal() + " -> " + SystemInfoUtil.formatData(disksInfo.getTotal()));
-           // System.out.println("磁盘使用量：" + disksInfo.getUsed() + " -> " + SystemInfoUtil.formatData(disksInfo.getUsed()));
-           // System.out.println("磁盘剩余量：" + disksInfo.getFree() + " -> " + SystemInfoUtil.formatData(disksInfo.getFree()));
-          //  System.out.println("磁盘使用率：" + SystemInfoUtil.formatRate(disksInfo.getUsage()));
+        if(osRuntimeInfo!=null) {
 
-            DisksInfoVo v=new DisksInfoVo();
-            v.setDirName(disksInfo.getDirName());
-            v.setSysTypeName(disksInfo.getSysTypeName());
-            v.setTypeName(disksInfo.getTypeName());
-            v.setTotal(SystemInfoUtil.formatData(disksInfo.getTotal()));
-            v.setUsed(SystemInfoUtil.formatData(disksInfo.getUsed()));
-            v.setFree(SystemInfoUtil.formatData(disksInfo.getFree()));
-            v.setUsedrate(SystemInfoUtil.formatRate(disksInfo.getUsage()));
-            diskvo.add(v);
+            //1.CPU信息
+            // System.out.println("------cpu信息------");
+            // System.out.println("cpu使用率：" + SystemInfoUtil.formatRate(osRuntimeInfo.getCpuUsage()));
+            vo.setCpuUsage(SystemInfoUtil.formatRate(osRuntimeInfo.getCpuUsage()));
+            // System.out.println("cpu基准速度：" + osRuntimeInfo.getCpuMaxFreq());
+            vo.setCpuMaxFreq(osRuntimeInfo.getCpuMaxFreq());
+            // System.out.println("cpu速度：" + osRuntimeInfo.getCpuCurrentFreq());
+            vo.setCpuCurrentFreq(osRuntimeInfo.getCpuCurrentFreq());
+            //2.内存信息
+            //  System.out.println("------内存信息------");
+            //系统内存总量
+            long total = osRuntimeInfo.getTotalMemory();
+            long used = osRuntimeInfo.getUsedMemory();
+            double usage = used * 1.0 / total;
+            // System.out.println("系统内存总量：" + total + " -> " + SystemInfoUtil.formatData(total));
+            vo.setTotalMemory(SystemInfoUtil.formatData(total));
+            // System.out.println("系统内存使用量：" + used + " -> " + SystemInfoUtil.formatData(used));
+            vo.setUsedMemory(SystemInfoUtil.formatData(used));
+            // System.out.println("系统内存使用率：" + SystemInfoUtil.formatRate(usage));
+            vo.setUsage(SystemInfoUtil.formatRate(usage));
+            //可用虚拟总内存
+            long swapTotal = osRuntimeInfo.getSwapTotalMemory();
+            //已用虚拟内存
+            long swapUsed = osRuntimeInfo.getSwapUsedMemory();
+            // System.out.println("可用虚拟总内存(swap)：" + swapTotal + " -> " + SystemInfoUtil.formatData(swapTotal));
+            vo.setSwapTotalMemory(SystemInfoUtil.formatData(swapTotal));
+            // System.out.println("虚拟内存使用量(swap)：" + swapUsed + " -> " + SystemInfoUtil.formatData(swapUsed));
+            vo.setSwapUsed(SystemInfoUtil.formatData(swapUsed));
+            //3.磁盘信息
+            // System.out.println("------磁盘信息------");
+            // System.out.println("磁盘读取速度：" + osRuntimeInfo.getDiskReadRate() + "Kb/s");
+            //  vo.setDiskReadRate(String.valueOf(osRuntimeInfo.getDiskReadRate()));
+            //  System.out.println("磁盘写入速度：" + osRuntimeInfo.getDiskWriteRate() + "Kb/s");
+            //  vo.setDiskWriteRate(String.valueOf(osRuntimeInfo.getDiskWriteRate()));
+
+            List<DisksInfo> disksList = osRuntimeInfo.getDisksList();
+            List<DisksInfoVo> diskvo = new ArrayList<>();
+            for (DisksInfo disksInfo : disksList) {
+                // System.out.println("挂载点：" + disksInfo.getDirName());
+                //  System.out.println("文件系统名称：" + disksInfo.getSysTypeName());
+                //  System.out.println("文件系统类型：" + disksInfo.getTypeName());
+                //  System.out.println("磁盘总量：" + disksInfo.getTotal() + " -> " + SystemInfoUtil.formatData(disksInfo.getTotal()));
+                // System.out.println("磁盘使用量：" + disksInfo.getUsed() + " -> " + SystemInfoUtil.formatData(disksInfo.getUsed()));
+                // System.out.println("磁盘剩余量：" + disksInfo.getFree() + " -> " + SystemInfoUtil.formatData(disksInfo.getFree()));
+                //  System.out.println("磁盘使用率：" + SystemInfoUtil.formatRate(disksInfo.getUsage()));
+
+                DisksInfoVo v = new DisksInfoVo();
+                v.setDirName(disksInfo.getDirName());
+                v.setSysTypeName(disksInfo.getSysTypeName());
+                v.setTypeName(disksInfo.getTypeName());
+                v.setTotal(SystemInfoUtil.formatData(disksInfo.getTotal()));
+                v.setUsed(SystemInfoUtil.formatData(disksInfo.getUsed()));
+                v.setFree(SystemInfoUtil.formatData(disksInfo.getFree()));
+                v.setUsedrate(SystemInfoUtil.formatRate(disksInfo.getUsage()));
+                diskvo.add(v);
+            }
+            vo.setDisksInfos(diskvo);
+
+            //4.网卡网络信息
+            List<NetworkInfo> netList = SystemInfoUtil.getNetworkInfo();
+            // System.out.println("------网卡网络信息------");
+
+            List<NetworkInfoVo> netvos = new ArrayList<>();
+
+            for (NetworkInfo networkInfo : netList) {
+                //  System.out.println("ipv4地址："+networkInfo.getIpv4Address());
+                //  System.out.println("mac地址："+networkInfo.getMacAddress());
+                // System.out.println("网卡名称："+networkInfo.getNetworkName());
+                double send = networkInfo.getSend() / 1024.0;
+                double accept = networkInfo.getAccept() / 1024.0;
+                // System.out.println("上传速度↑："+String.format("%.1f%s", send, "Kbps"));
+                //  System.out.println("下载速度↓："+String.format("%.1f%s", accept, "Kbps"));
+                NetworkInfoVo v = new NetworkInfoVo();
+                v.setIpv4Address(networkInfo.getIpv4Address());
+                v.setMacAddress(networkInfo.getMacAddress());
+                v.setNetworkName(networkInfo.getNetworkName());
+                v.setSend(String.format("%.1f%s", send, "Kbps"));
+                v.setAccept(String.format("%.1f%s", accept, "Kbps"));
+                netvos.add(v);
+            }
+            vo.setNetworkInfos(netvos);
         }
-        vo.setDisksInfos(diskvo);
-
-        //4.网卡网络信息
-        List<NetworkInfo> netList = SystemInfoUtil.getNetworkInfo();
-       // System.out.println("------网卡网络信息------");
-
-        List<NetworkInfoVo> netvos=new ArrayList<>();
-
-        for (NetworkInfo networkInfo : netList) {
-          //  System.out.println("ipv4地址："+networkInfo.getIpv4Address());
-          //  System.out.println("mac地址："+networkInfo.getMacAddress());
-           // System.out.println("网卡名称："+networkInfo.getNetworkName());
-            double send = networkInfo.getSend() / 1024.0;
-            double accept = networkInfo.getAccept() / 1024.0;
-           // System.out.println("上传速度↑："+String.format("%.1f%s", send, "Kbps"));
-          //  System.out.println("下载速度↓："+String.format("%.1f%s", accept, "Kbps"));
-            NetworkInfoVo v=new NetworkInfoVo();
-            v.setIpv4Address(networkInfo.getIpv4Address());
-            v.setMacAddress(networkInfo.getMacAddress());
-            v.setNetworkName(networkInfo.getNetworkName());
-            v.setSend(String.format("%.1f%s", send, "Kbps"));
-            v.setAccept(String.format("%.1f%s", accept, "Kbps"));
-            netvos.add(v);
-        }
-        vo.setNetworkInfos(netvos);
-
         HOST=osInfo.getHost();
         stringRedisTemplate.opsForHash().put(NAMESPACE_KEY,osInfo.getHost(), JSONUtil.toJsonStr(spacevos));
         stringRedisTemplate.opsForHash().put(MONITOR_KEY,osInfo.getHost(), JSONUtil.toJsonStr(vo));

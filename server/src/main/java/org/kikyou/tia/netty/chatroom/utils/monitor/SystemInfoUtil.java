@@ -210,7 +210,7 @@ public class SystemInfoUtil {
     }
 
     /**
-     * 获取系统运行信息
+     * 获取系统运行信息 TODO docker环境要出错
      *
      * @return
      * @throws InterruptedException
@@ -220,6 +220,7 @@ public class SystemInfoUtil {
         osRuntimeInfo.setTimestamp(DateUtil.now());
         //cpu使用率
         osRuntimeInfo.setCpuUsage(getCpuRate());
+        try {
         //cpu基准速度（GHz）
         osRuntimeInfo.setCpuMaxFreq(df.format(centralProcessor.getMaxFreq() / 1000000000.0) + " GHz");
         //cpu当前速度（GHz）
@@ -245,6 +246,12 @@ public class SystemInfoUtil {
       //  osRuntimeInfo.setDiskWriteRate(diskWriteRate);
         //网卡信息
         osRuntimeInfo.setNetworkList(getNetworkInfo());
+
+        }catch (Exception e){
+            return null;
+        }
+
+
         return osRuntimeInfo;
     }
 
