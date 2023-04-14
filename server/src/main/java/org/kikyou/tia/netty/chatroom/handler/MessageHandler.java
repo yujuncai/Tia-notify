@@ -36,6 +36,9 @@ public class MessageHandler {
     public void onData(SocketIOClient client, User from, User to, String content, String type, AckRequest ackSender) throws Exception {
         // 判断是指定发送方发送消息,还是群发
         log.debug("form:{} to:{} content:{} type:{}", from,to,content,type);
+
+        User user =  client.get(Common.USER_KEY);
+        from.setId(user.getId()); //替换from id
         Message storeMsg = new Message();
         storeMsg.setFrom(from);
         storeMsg.setTo(to);
@@ -44,7 +47,6 @@ public class MessageHandler {
         storeMsg.setContent(content);
         storeMsg.setId(IdUtil.fastSimpleUUID());
 
-        User user =  client.get(Common.USER_KEY);
         if (UserType.USER.getName().equals(to.getType())) {
             // 向所属用户发消息
             SocketIOClient receiverClient = socketIOServer.getNamespace(user.getNameSpace()).getClient(UUID.fromString(to.getCurrId()));

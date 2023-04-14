@@ -159,6 +159,7 @@ public class MyCommands {
             log.info("参数为空!");
         }
         User form = new User();
+        form.setId("111111111");
         form.setName("111");
         form.setPassword("111");
         form.setAvatarUrl("img/20180414165827.jpg");
@@ -167,6 +168,7 @@ public class MyCommands {
         form.setType("user");
 
         User to = new User();
+        to.setId("2222222");
         to.setName("222");
         to.setPassword("222");
         to.setAvatarUrl("img/20180414165827.jpg");
