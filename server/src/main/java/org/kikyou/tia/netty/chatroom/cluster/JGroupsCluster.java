@@ -1,6 +1,7 @@
 package org.kikyou.tia.netty.chatroom.cluster;
 
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -13,6 +14,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Component
 @Slf4j
@@ -30,13 +32,14 @@ public class JGroupsCluster implements TiaCluster {
     private JChannel channel;
 
     public static Address localAddress;
-
     @PostConstruct
     public void init() {
         log.info("init");
         try {
-            log.info("加载配置文件 {} ", jGroupsConfig);
+
+            log.info("加载配置文件 {} 开始 {}", jGroupsConfig,DateUtil.date());
             channel = new JChannel(jGroupsConfig);
+            log.info("加载配置文件 {} 结束 {}", jGroupsConfig,DateUtil.date());
             channel.receiver(SpringUtil.getBean("clusterReceiver"));
             channel.connect(clusterName);
             localAddress = channel.getAddress();

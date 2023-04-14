@@ -7,6 +7,7 @@ import org.kikyou.tia.netty.chatroom.config.AppConfiguration;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -27,13 +28,13 @@ public class TiaNettyChatroomApplication implements CommandLineRunner {
 
     private final SocketIOServer socketIOServer;
 
-    public static void main(String[] args) {
-        SpringApplication.run(TiaNettyChatroomApplication.class, args);
+    public static void main(String[] args) throws InterruptedException {
+        ConfigurableApplicationContext run = SpringApplication.run(TiaNettyChatroomApplication.class, args);
     }
 
     @Override
-    public void run(String... args)  {
+    public void run(String... args) {
 
-        socketIOServer.startAsync().addListener(future -> log.debug("server port start on {}", appConfiguration.getPort()));
+        socketIOServer.startAsync().addListener(future -> log.info("EIO server port start on {}", appConfiguration.getPort()));
     }
 }
