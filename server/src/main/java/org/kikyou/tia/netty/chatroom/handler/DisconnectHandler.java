@@ -43,8 +43,9 @@ public class DisconnectHandler {
 
         log.info("用户断开链接: {}", client.getSessionId().toString());
         User user = client.get(Common.USER_KEY);
-        client.del(Common.USER_KEY);
+
         if (!Objects.isNull(user)) {
+            client.del(Common.USER_KEY);
             storeService.delIdKeyV(user.getId(),user.getNameSpace());
             systemMessageHandler.bocastSystemMessage(user, socketIOServer,SystemType.LOGOUT);
         }

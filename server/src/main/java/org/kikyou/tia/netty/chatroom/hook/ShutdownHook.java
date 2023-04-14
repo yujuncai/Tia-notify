@@ -34,8 +34,8 @@ public class ShutdownHook {
                 .stream().parallel()
                 .forEach(socketIOClient -> {
                     User user = socketIOClient.get(USER_KEY);
-                    socketIOClient.del(USER_KEY);
                     if (!Objects.isNull(user)) {
+                        socketIOClient.del(USER_KEY);
                         storeService.delIdKeyV(user.getId(), user.getNameSpace());
                     }
                 });
