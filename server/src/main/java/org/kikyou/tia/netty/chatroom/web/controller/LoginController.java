@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.kikyou.tia.netty.chatroom.models.User;
+import org.kikyou.tia.netty.chatroom.utils.MySecureUtil;
 import org.kikyou.tia.netty.chatroom.web.config.AdminConfiguration;
 import org.kikyou.tia.netty.chatroom.web.config.Auth;
 import org.kikyou.tia.netty.chatroom.web.enums.ResultEnum;
@@ -51,6 +52,9 @@ public class LoginController implements ErrorController {
     public String toLogin(Model model) {
 
         model.addAttribute("isCaptcha", true);
+        String signature = MySecureUtil.aesEncrypt("jvZJhHtp3vOVmpool6QlMw==", "/tia-java");
+        String s="webDemo/index.html".concat("?").concat("appid=987654321").concat("&").concat("signature="+signature).concat("&namespace=tia-java");
+        model.addAttribute("url", s);
         return "/login";
     }
 

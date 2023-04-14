@@ -18,7 +18,7 @@ target/
 *.iws
 *.iml
 *.ipr
-
+*.jpg
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
@@ -26,6 +26,7 @@ target/
 /nbdist/
 /.nb-gradle/
 build/
+webDemo/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
