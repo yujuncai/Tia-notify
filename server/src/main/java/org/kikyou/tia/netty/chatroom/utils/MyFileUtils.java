@@ -8,9 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.UUID;
 
-/**
- * @author xiaowu
- */
+
 public class MyFileUtils {
 
     public static File base64ToFile(String base64FileStr) throws Exception {

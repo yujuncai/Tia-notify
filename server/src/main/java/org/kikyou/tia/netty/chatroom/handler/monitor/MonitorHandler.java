@@ -40,7 +40,7 @@ public class MonitorHandler {
 
 
 
-
+            log.info("MONITOR");
 
 
 

@@ -5,6 +5,7 @@ function initSocket() {
   var namespace = $.getUrlParam('namespace');
   var appid= $.getUrlParam('appid');
   var signature = $.getUrlParam('signature');
+  var host = $.getUrlParam('host');
 
   if (namespace == '' || appid == ''|| signature == ''|| namespace == undefined   ||appid == undefined   ||signature == undefined) {
     alert('必要的参数为空!');
@@ -26,12 +27,23 @@ function initSocket() {
   });
   socket.on('connect', function () {
     console.log('socket连接成功');
+
   });
   socket.on('disconnect', function () {
     console.log('socket断开连接');
   });
 
+  socket.on('system', function (var1,var2) {
 
+    console.log("------system------- "+var1+" "+var2+" ");
+
+
+  });
+
+   setInterval(function(){
+    console.log("每5秒执行一次");
+    monitor(host);
+  },5000);
 }
 (function ($) {
   $.getUrlParam = function (name) {
@@ -40,3 +52,12 @@ function initSocket() {
     if (r != null) return unescape(r[2]); return null;
   }
 })(jQuery);
+
+
+function monitor(host) {
+  socket.emit('monitor', host);
+}
+
+
+
+
