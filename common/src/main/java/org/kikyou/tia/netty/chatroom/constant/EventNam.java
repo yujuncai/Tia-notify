@@ -35,4 +35,8 @@ public interface EventNam {
     String REGISTER = "register";
 
     String ACK = "ack";
+
+
+
+    String MONITOR = "monitor";
 }

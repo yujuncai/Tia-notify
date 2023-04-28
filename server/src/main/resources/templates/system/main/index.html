@@ -76,7 +76,12 @@
             <i class="icon fa fa-users fa-3x"></i>
             <div class="widget-small-info">
                 <h4>操作系统</h4>
-                <span th:text="${m.os}"></span>
+
+
+
+
+                <a th:href="@{'/monitor?host='+${m.host}+''+${url}}"
+                   target="_blank"> <span th:text="${m.os}"></span></a>
             </div>
         </div>
     </div>
@@ -101,7 +106,7 @@
         </div>
     </div>
 
-    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+    <!--<div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
         <div class="widget-small widget-like">
             <i class="icon fa fa-star fa-3x"></i>
             <div class="widget-small-info">
@@ -109,28 +114,12 @@
                 <span th:text="${m.userDir}"></span>
             </div>
         </div>
-    </div>
-
-    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
-        <div class="widget-small widget-like">
-            <i class="icon fa fa-star fa-3x"></i>
-            <div class="widget-small-info">
-                <h4>cpu核心数</h4>
-                <span th:text="${m.cpuCount}"></span>
-            </div>
-        </div>
-    </div>
+    </div>-->
 
 
-    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
-        <div class="widget-small widget-like">
-            <i class="icon fa fa-star fa-3x"></i>
-            <div class="widget-small-info">
-                <h4>host</h4>
-                <span th:text="${m.host}"></span>
-            </div>
-        </div>
-    </div>
+
+
+
 
     <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
         <div class="widget-small widget-like">
@@ -144,97 +133,16 @@
 
 
 
-    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
-        <div class="widget-small widget-like">
-            <i class="icon fa fa-star fa-3x"></i>
-            <div class="widget-small-info">
-                <h4>运行时间</h4>
-                <span th:text="${m.runTime}"></span>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
-        <div class="widget-small widget-user">
-            <i class="icon fa fa-users fa-3x"></i>
-            <div class="widget-small-info">
-                <h4>cpu使用率</h4>
-                <span th:text="${m.cpuUsage}"></span>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
-        <div class="widget-small widget-user">
-            <i class="icon fa fa-users fa-3x"></i>
-            <div class="widget-small-info">
-                <h4>cpu基准速度</h4>
-                <span th:text="${m.cpuMaxFreq}"></span>
-            </div>
-        </div>
-    </div>
-    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
-        <div class="widget-small widget-user">
-            <i class="icon fa fa-users fa-3x"></i>
-            <div class="widget-small-info">
-                <h4>cpu当前速度</h4>
-                <span th:text="${m.cpuCurrentFreq}"></span>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
-        <div class="widget-small widget-like">
-            <i class="icon fa fa-star fa-3x"></i>
-            <div class="widget-small-info">
-                <h4>总内存</h4>
-                <span th:text="${m.totalMemory}"></span>
-            </div>
-        </div>
-    </div>
-
-    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
-        <div class="widget-small widget-like">
-            <i class="icon fa fa-star fa-3x"></i>
-            <div class="widget-small-info">
-                <h4>内存使用量</h4>
-                <span th:text="${m.usedMemory}"></span>
-            </div>
-        </div>
-    </div>
-    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
-        <div class="widget-small widget-like">
-            <i class="icon fa fa-star fa-3x"></i>
-            <div class="widget-small-info">
-                <h4>内存使用率</h4>
-                <span th:text="${m.usage}"></span>
-            </div>
-        </div>
-    </div>
 
 
 
-    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
-        <div class="widget-small widget-like">
-            <i class="icon fa fa-star fa-3x"></i>
-            <div class="widget-small-info">
-                <h4>总虚拟内存</h4>
-                <span th:text="${m.swapTotalMemory}"></span>
-            </div>
-        </div>
-    </div>
-    <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
-        <div class="widget-small widget-like">
-            <i class="icon fa fa-star fa-3x"></i>
-            <div class="widget-small-info">
-                <h4>使用的虚拟内存</h4>
-                <span th:text="${m.swapUsed}"></span>
-            </div>
-        </div>
-    </div>
+
+
+
+
+
+
+
 
 
 

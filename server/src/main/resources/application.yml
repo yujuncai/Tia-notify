@@ -62,14 +62,21 @@ spring:
     mode: HTML
     encoding: utf-8
     servlet.content-type: text/html
-    cache: false
+    cache: true
 
 
 cluster:
-  model: jgroups
+  model: standone #jgroups  standone
 jgroups:
   clustername: ${JGROUPS_CLUSTER_NAME:tia-cluster}
   config: ${JGROUPS_CONFIG:jgroups-config-udp.xml}
+
+
+
+
+monitor:
+  appid: tia-monitor
+  key: jvZJhHtp3vOVmpool6QlMw==
 
 
 

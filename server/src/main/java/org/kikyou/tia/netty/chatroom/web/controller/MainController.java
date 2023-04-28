@@ -8,7 +8,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kikyou.tia.netty.chatroom.cluster.Keeping;
+import org.kikyou.tia.netty.chatroom.config.MonitorKeyConfiguration;
 import org.kikyou.tia.netty.chatroom.models.User;
+import org.kikyou.tia.netty.chatroom.utils.MySecureUtil;
 import org.kikyou.tia.netty.chatroom.web.config.Auth;
 import org.kikyou.tia.netty.chatroom.web.enums.MenuTypeEnum;
 import org.kikyou.tia.netty.chatroom.web.service.WebService;
@@ -32,6 +34,9 @@ public class MainController{
 
     private final RedisTemplate<String,Object> redisTemplate;
     private final WebService menuService;
+
+    private final MonitorKeyConfiguration monitorKeyConfiguration;
+
     @Auth
     @GetMapping("/main/index")
     public String index(Model model)  {
@@ -58,6 +63,12 @@ public class MainController{
 
         model.addAttribute("namespace", sos);
         model.addAttribute("monitor", mos);
+
+
+        String signature = MySecureUtil.aesEncrypt(monitorKeyConfiguration.getKey(), "/monitor");
+        String s="&appid=".concat(monitorKeyConfiguration.getAppid()).concat("&").concat("signature="+signature).concat("&namespace=monitor");
+        model.addAttribute("url", s);
+
         return "/system/main/index";
     }
 

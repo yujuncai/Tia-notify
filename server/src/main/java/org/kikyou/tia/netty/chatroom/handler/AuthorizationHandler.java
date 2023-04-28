@@ -5,6 +5,7 @@ import com.corundumstudio.socketio.AuthorizationListener;
 import com.corundumstudio.socketio.HandshakeData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.kikyou.tia.netty.chatroom.config.MonitorKeyConfiguration;
 import org.kikyou.tia.netty.chatroom.models.MainBody;
 import org.kikyou.tia.netty.chatroom.service.MainBodyService;
 import org.kikyou.tia.netty.chatroom.utils.MySecureUtil;
@@ -17,13 +18,22 @@ public class AuthorizationHandler implements AuthorizationListener {
 
     private final MainBodyService mainBodyService;
 
-
+    private final MonitorKeyConfiguration monitorKeyConfiguration;
     @Override
     public boolean isAuthorized(HandshakeData handshakeData) {
         //signature 为通过AppSecret加密的 namespace
         String signature = handshakeData.getSingleUrlParam("signature");
         String appid = handshakeData.getSingleUrlParam("appid");
         if (StrUtil.isNotBlank(signature) && StrUtil.isNotBlank(appid)) {
+
+
+            if(appid.equals(monitorKeyConfiguration.getAppid())){
+                String s = MySecureUtil.aesDecrypt(monitorKeyConfiguration.getKey(), signature);
+                if ("/monitor".equals(s)) {
+                    return true;
+                }
+            }
+
             //todo 加入时间限制
             log.info("appid-{}   signature-{}      url-{}", appid, signature, handshakeData.getUrl());
             MainBody body = mainBodyService.getMainBodyByAppId(appid);
@@ -38,6 +48,8 @@ public class AuthorizationHandler implements AuthorizationListener {
             }
             return true;
         } else {
+
+
             log.error("signature err...");
             return false;
         }

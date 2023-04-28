@@ -25,20 +25,41 @@ public class ServerRunner implements CommandLineRunner {
 
     private final MainBodyService mainBodyService;
     private final SocketIOServer socketIOServer;
+    private final static  String MONITORSPACE="/monitor";
     @Override
     public void run(String... args) throws Exception {
         if (socketIOServer != null) {
 
             List<MainBody> allMainBody = mainBodyService.getAllMainBody();
-
             Optional.ofNullable(allMainBody).ifPresent(nss ->
                     nss.stream().forEach(ns -> {
                         addNameSpaceHandler(ns.getNameSpace());
                     }));
 
+            //监控事件
+            addMonitorSpaceHandler();
+
 
         }
     }
+
+
+
+
+    public void addMonitorSpaceHandler(){
+
+        SocketIONamespace socketIONamespace = socketIOServer.addNamespace(MONITORSPACE);
+        List<String> classNames = Arrays.asList("monitorHandler");
+        try {
+            classNames.stream().forEach(s -> {
+                Object bean = SpringUtil.getBean(s);
+                Optional.ofNullable(bean).ifPresent(socketIONamespace::addListeners);
+            });
+        } catch (Exception e) {
+            log.error("获取bean失败! {}", e);
+        }
+    }
+
 
 
     public void addNameSpaceHandler(String namesp){
