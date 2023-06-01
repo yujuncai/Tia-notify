@@ -47,7 +47,7 @@ public class ServerRunner implements CommandLineRunner {
 
 
     public void addMonitorSpaceHandler(){
-
+        log.info("  {}  加入namespace--------",  MONITORSPACE);
         SocketIONamespace socketIONamespace = socketIOServer.addNamespace(MONITORSPACE);
         List<String> classNames = Arrays.asList("monitorHandler");
         try {

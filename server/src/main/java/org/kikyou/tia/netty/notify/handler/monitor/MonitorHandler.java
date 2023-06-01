@@ -1,5 +1,6 @@
 package org.kikyou.tia.netty.notify.handler.monitor;
 
+import cn.hutool.json.JSONUtil;
 import com.corundumstudio.socketio.AckRequest;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
@@ -7,7 +8,14 @@ import com.corundumstudio.socketio.annotation.OnEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kikyou.tia.netty.notify.constant.EventNam;
+import org.kikyou.tia.netty.notify.constant.SystemType;
 import org.kikyou.tia.netty.notify.service.StoreService;
+import org.kikyou.tia.netty.notify.web.dto.InfoDto;
+import org.kikyou.tia.netty.notify.web.dto.UptimeDto;
+import org.kikyou.tia.netty.notify.web.dto.UsageDto;
+import org.kikyou.tia.netty.notify.web.service.InfoService;
+import org.kikyou.tia.netty.notify.web.service.UptimeService;
+import org.kikyou.tia.netty.notify.web.service.UsageService;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,20 +27,25 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MonitorHandler {
 
-    private final StoreService storeService;
-
-
-    private final SocketIOServer socketIOServer;
+    private final InfoService infoService;
+    private final UptimeService uptimeService;
+    private final UsageService usageService;
 
     @OnEvent(EventNam.MONITOR)
     public void onData(SocketIOClient client,  AckRequest ackSender) throws Exception {
 
 
+        log.info("MONITOR");
+        if(client.isChannelOpen()&&client.isWritable()) {
 
-            log.info("MONITOR");
+            InfoDto info = infoService.getInfo();
+            UptimeDto uptime = uptimeService.getUptime();
+            UsageDto usage = usageService.getUsage();
 
-
-
+            client.sendEvent(EventNam.SYSTEM, JSONUtil.toJsonStr(info), SystemType.MONITOR_INFO.getName());
+            client.sendEvent(EventNam.SYSTEM, JSONUtil.toJsonStr(uptime), SystemType.MONITOR_UPTIME.getName());
+            client.sendEvent(EventNam.SYSTEM, JSONUtil.toJsonStr(usage), SystemType.MONITOR_USAGE.getName());
+        }
 
     }
 

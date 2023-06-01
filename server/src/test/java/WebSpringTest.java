@@ -3,7 +3,7 @@ import jakarta.annotation.Resource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kikyou.tia.netty.notify.TiaNettyChatroomApplication;
+import org.kikyou.tia.netty.notify.TiaNettyNotifyApplication;
 import org.kikyou.tia.netty.notify.cluster.Keeping;
 import org.kikyou.tia.netty.notify.models.User;
 import org.kikyou.tia.netty.notify.web.vo.NameSpaceVo;
@@ -20,7 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = TiaNettyChatroomApplication.class)
+@SpringBootTest(classes = TiaNettyNotifyApplication.class)
 public class WebSpringTest {
 
     @Resource

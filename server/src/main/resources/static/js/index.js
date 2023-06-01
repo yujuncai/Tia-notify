@@ -32,9 +32,9 @@ function indexInitialization()
     minutes = document.getElementById("uptime-minutes");
     seconds = document.getElementById("uptime-seconds");
 
-    usageXHR = new XMLHttpRequest();
-    infoXHR = new XMLHttpRequest();
-    uptimeXHR = new XMLHttpRequest();
+   // usageXHR = new XMLHttpRequest();
+  //  infoXHR = new XMLHttpRequest();
+   // uptimeXHR = new XMLHttpRequest();
 
     //sendUsageRequest();
 
@@ -91,72 +91,52 @@ function getRandomSequenceArray()
 /**
  * Sending ajax request to receive usage info
  */
-function sendUsageRequest()
+function sendRequest(data,type)
 {
-    usageXHR.onreadystatechange = function()
-    {
-        if ((this.readyState == 4) && (this.status == 200))
-        {
-            let response = JSON.parse(this.response);
+    console.log("------sendRequest------- "+type);
 
+        if (type=='monitor_usage')
+        {
+            let response = JSON.parse(data);
+            console.log("------monitor_usage------- "+response);
             labelsTick(response);
             chartTick(response);
 
-            sendInfoRequest();
         }
-    }
 
-    usageXHR.open("GET", "/api/usage");
-    usageXHR.send();
-}
 
-/**
- * Sending ajax request to receive info about server
- */
-function sendInfoRequest()
-{
-    infoXHR.onreadystatechange = function()
+        if (type=='monitor_info')
     {
-        if ((this.readyState == 4) && (this.status == 200))
-        {
-            let response = JSON.parse(this.response);
+        let response = JSON.parse(data);
+        console.log("------monitor_info------- "+response);
+        currentClockSpeed.innerHTML = response.processor.clockSpeed;
+        currentProcCount.innerHTML = response.machine.procCount;
+        currentTotalStorage.innerHTML = response.storage.total;
+        currentDiskCount.innerHTML = response.storage.diskCount;
 
-            currentClockSpeed.innerHTML = response.processor.clockSpeed;
-            currentProcCount.innerHTML = response.machine.procCount;
-            currentTotalStorage.innerHTML = response.storage.total;
-            currentDiskCount.innerHTML = response.storage.diskCount;
 
-            sendUptimeRequest();
-        }
     }
 
-    infoXHR.open("GET", "/api/info");
-    infoXHR.send();
-}
 
-/**
- * Sending ajax request to receive server uptime
- */
-function sendUptimeRequest()
-{
-    infoXHR.onreadystatechange = function()
+
+    if (type=='monitor_uptime')
     {
-        if ((this.readyState == 4) && (this.status == 200))
-        {
-            let response = JSON.parse(this.response);
+        let response = JSON.parse(data);
+        console.log("------monitor_uptime------- "+response);
+        days.innerHTML = response.days;
+        hours.innerHTML = response.hours;
+        minutes.innerHTML = response.minutes;
+        seconds.innerHTML = response.seconds;
 
-            days.innerHTML = response.days;
-            hours.innerHTML = response.hours;
-            minutes.innerHTML = response.minutes;
-            seconds.innerHTML = response.seconds;
 
-            sendUsageRequest()
-        }
     }
 
-    infoXHR.open("GET", "/api/uptime");
-    infoXHR.send();
+
 }
+
+
+
+
 
 /**
  * Changes page

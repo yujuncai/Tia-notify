@@ -12,10 +12,11 @@ function initSocket() {
     return;
   }
   var param= '/'+namespace+'?'+'appid='+appid+'&signature='+signature;
-  var url='http://localhost:8080'+param;
+  var url='http://'+host+':8080'+param;
   console.log(url)
   var token = sessionStorage.getItem("tia-token")
   socket = io(url, {
+    reconnectionAttempts: 10,
     transports: ['websocket', 'polling'],
     transportOptions: {
       polling: {
@@ -35,15 +36,15 @@ function initSocket() {
 
   socket.on('system', function (var1,var2) {
 
-    console.log("------system------- "+var1+" "+var2+" ");
-
+    //console.log("------system------- "+var1+" "+var2.name+" ");
+    sendRequest(var1,var2)
 
   });
 
    setInterval(function(){
     console.log("每5秒执行一次");
     monitor(host);
-  },5000);
+  },2000);
 }
 (function ($) {
   $.getUrlParam = function (name) {

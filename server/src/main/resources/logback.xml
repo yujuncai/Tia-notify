@@ -21,7 +21,7 @@
     </appender>
 
     <!-- 用来控制查看那个类的日志内容（对mybatis name 代表命名空间） -->
-    <logger name="org.kikyou.tia.netty.chatroom" level="DEBUG" additivity="false">
+    <logger name="org.kikyou.tia.netty.notify" level="DEBUG" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 
