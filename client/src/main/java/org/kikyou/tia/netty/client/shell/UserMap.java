@@ -1,8 +1,7 @@
 package org.kikyou.tia.netty.client.shell;
 
-import org.kikyou.tia.netty.chatroom.models.User;
+import org.kikyou.tia.netty.notify.models.User;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 

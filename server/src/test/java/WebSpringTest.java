@@ -1,16 +1,14 @@
-import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
 import jakarta.annotation.Resource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kikyou.tia.netty.chatroom.TiaNettyChatroomApplication;
-import org.kikyou.tia.netty.chatroom.cluster.Keeping;
-import org.kikyou.tia.netty.chatroom.models.User;
-import org.kikyou.tia.netty.chatroom.web.vo.NameSpaceVo;
-import org.kikyou.tia.netty.chatroom.web.vo.SystemVo;
+import org.kikyou.tia.netty.notify.TiaNettyChatroomApplication;
+import org.kikyou.tia.netty.notify.cluster.Keeping;
+import org.kikyou.tia.netty.notify.models.User;
+import org.kikyou.tia.netty.notify.web.vo.NameSpaceVo;
+import org.kikyou.tia.netty.notify.web.vo.SystemVo;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -20,7 +18,6 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TiaNettyChatroomApplication.class)

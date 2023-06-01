@@ -1,18 +1,15 @@
 package org.kikyou.tia.netty.client.shell;
 
 import cn.hutool.json.JSONUtil;
-import io.socket.client.Ack;
 import io.socket.client.IO;
 import io.socket.client.Manager;
 import io.socket.client.Socket;
-import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.kikyou.tia.netty.chatroom.constant.EventNam;
-import org.kikyou.tia.netty.chatroom.models.User;
-import org.kikyou.tia.netty.chatroom.utils.MySecureUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.kikyou.tia.netty.notify.constant.EventNam;
+import org.kikyou.tia.netty.notify.models.User;
+import org.kikyou.tia.netty.notify.utils.MySecureUtil;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.util.StringUtils;

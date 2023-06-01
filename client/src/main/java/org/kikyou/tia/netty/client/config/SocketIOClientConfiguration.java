@@ -1,16 +1,11 @@
 package org.kikyou.tia.netty.client.config;
 
-import cn.hutool.json.JSONUtil;
-import com.corundumstudio.socketio.SocketIOServer;
 import io.socket.client.IO;
 import io.socket.client.Manager;
 import io.socket.client.Socket;
-import io.socket.emitter.Emitter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.kikyou.tia.netty.chatroom.constant.EventNam;
-import org.kikyou.tia.netty.chatroom.models.User;
-import org.kikyou.tia.netty.chatroom.utils.MySecureUtil;
+import org.kikyou.tia.netty.notify.utils.MySecureUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 

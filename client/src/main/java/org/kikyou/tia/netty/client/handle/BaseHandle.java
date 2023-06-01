@@ -9,8 +9,8 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.kikyou.tia.netty.chatroom.constant.EventNam;
-import org.kikyou.tia.netty.chatroom.models.User;
+import org.kikyou.tia.netty.notify.constant.EventNam;
+import org.kikyou.tia.netty.notify.models.User;
 import org.kikyou.tia.netty.client.shell.UserMap;
 import org.springframework.stereotype.Component;
 
