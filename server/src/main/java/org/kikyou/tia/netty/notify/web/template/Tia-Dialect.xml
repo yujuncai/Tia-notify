@@ -22,11 +22,11 @@
 <dialect
         xmlns="http://www.thymeleaf.org/extras/dialect"
         prefix="mo"
-        class="org.kikyou.tia.netty.chatroom.web.template.TiaDialect">
+        class="org.kikyou.tia.netty.notify.web.template.TiaDialect">
 
 
     <!-- 自定义对象工具 -->
-    <expression-object name="pageUtil" class="org.kikyou.tia.netty.chatroom.web.utils.PageUtil"/>
+    <expression-object name="pageUtil" class="org.kikyou.tia.netty.notify.web.utils.PageUtil"/>
 
 
 

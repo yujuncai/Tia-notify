@@ -22,14 +22,14 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableAspectJAutoProxy
 @EnableAsync
-public class TiaNettyChatroomApplication implements CommandLineRunner {
+public class TiaNettyNotifyApplication implements CommandLineRunner {
 
     private final AppConfiguration appConfiguration;
 
     private final SocketIOServer socketIOServer;
 
     public static void main(String[] args) throws InterruptedException {
-        ConfigurableApplicationContext run = SpringApplication.run(TiaNettyChatroomApplication.class, args);
+        ConfigurableApplicationContext run = SpringApplication.run(TiaNettyNotifyApplication.class, args);
     }
 
     @Override
