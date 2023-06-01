@@ -99,7 +99,7 @@
 
 
 
-##感谢
+## 感谢
 
 
 前端代码是在是写的不咋地!很多前端是从其他项目里扣出来的,也用来部分代码,感谢一下项目
@@ -108,7 +108,7 @@ https://github.com/auntvt/Timo         后台管理页面
 https://github.com/Rudolf-Barbu/Ward   监控页面
 https://github.com/nguyencse/HeyU      客户端UI
 
-##简单使用说明
+## 简单使用说明
 
 1.先查看server的配置文件,确保cluster在standone状态
 
