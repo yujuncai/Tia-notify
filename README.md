@@ -93,3 +93,29 @@
 ##### ![image.png](https://cdn.nlark.com/yuque/0/2023/png/1608622/1680076640606-48cff368-f70f-44cf-91e8-f3a2ecffa562.png)
 
 ##### ![image.png](https://cdn.nlark.com/yuque/0/2023/png/1608622/1680076663702-43d0671b-508c-4710-92da-a465d8c6e94a.png)
+
+
+##### ![image.png](https://cdn.nlark.com/yuque/0/2023/jpeg/1608622/1685603430721-63291597-baf4-4884-8c8a-21ea91f48bb9.jpeg)
+
+
+##感谢
+
+前端代码是在是写的不咋地!很多前端是从其他项目里扣出来的,也用来部分代码,感谢一下项目
+
+https://github.com/auntvt/Timo         后台管理页面
+https://github.com/Rudolf-Barbu/Ward   监控页面
+https://github.com/nguyencse/HeyU      客户端UI
+
+##简单使用说明
+1.先查看server的配置文件,确保cluster在standone状态
+
+2.导入sql文件 本地是5.7的sql 如果是8.0 的修改下类型即可
+
+3.配置好必要的参数 redis和mysql,导入sql
+
+4.启动server
+
+5.管理后台tomcat http://localhost/web/login 默认端口80,Netty 默认8080
+要体验客户端请将https://github.com/yujuncai/Tia-web-demo代码放入resources/static/webDemo文件夹下
+
+PS:前端只是demo,不能生产使用,而且代码极烂,有前端大佬来帮帮我吗?

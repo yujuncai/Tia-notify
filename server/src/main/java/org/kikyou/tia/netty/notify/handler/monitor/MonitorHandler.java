@@ -32,10 +32,10 @@ public class MonitorHandler {
     private final UsageService usageService;
 
     @OnEvent(EventNam.MONITOR)
-    public void onData(SocketIOClient client,  AckRequest ackSender) throws Exception {
+    public void onData(SocketIOClient client,String host,  AckRequest ackSender) throws Exception {
 
 
-        log.info("MONITOR");
+        log.info("MONITOR host {}",host);
         if(client.isChannelOpen()&&client.isWritable()) {
 
             InfoDto info = infoService.getInfo();

@@ -44,7 +44,7 @@ function initSocket() {
    setInterval(function(){
     console.log("每5秒执行一次");
     monitor(host);
-  },2000);
+  },3000);
 }
 (function ($) {
   $.getUrlParam = function (name) {
