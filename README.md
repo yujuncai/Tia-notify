@@ -1,6 +1,6 @@
 # Tia
 
-小巧,高性能,可插拔,可集群的多租户长连接服务
+基于Netty-socketIO的可集群的多Namespace长连接服务
 
 ## 技术栈说明
 
@@ -98,7 +98,9 @@
 ##### ![image.png](https://cdn.nlark.com/yuque/0/2023/jpeg/1608622/1685603430721-63291597-baf4-4884-8c8a-21ea91f48bb9.jpeg)
 
 
+
 ##感谢
+
 
 前端代码是在是写的不咋地!很多前端是从其他项目里扣出来的,也用来部分代码,感谢一下项目
 
@@ -107,6 +109,7 @@ https://github.com/Rudolf-Barbu/Ward   监控页面
 https://github.com/nguyencse/HeyU      客户端UI
 
 ##简单使用说明
+
 1.先查看server的配置文件,确保cluster在standone状态
 
 2.导入sql文件 本地是5.7的sql 如果是8.0 的修改下类型即可
