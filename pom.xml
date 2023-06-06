@@ -19,7 +19,7 @@
     <artifactId>tia-notify</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>tia-notify</name>
-    <description>小巧,高性能,可插拔,可集群的推送组件</description>
+    <description>基于Netty-socketIO的可集群的多Namespace长连接服务</description>
     <inceptionYear>2023</inceptionYear>
 
 
