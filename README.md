@@ -8,7 +8,7 @@
 | 技术栈 | 版本 |
 | --- | --- |
 | socket.io-client(java-websocket客户端支持) | 1.0.2 |
-| netty-socketio(socket.io的java语言服务端实现) | 2.0.2 |
+| netty-socketio(socket.io的java语言服务端实现) | 2.0.3 |
 | jdk | >= 17 |
 | springboot | 3.0.0 |
 | redisson | 3.18.1 |
