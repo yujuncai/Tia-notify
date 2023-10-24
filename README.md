@@ -1,14 +1,14 @@
 # Tia
 
-基于Netty-socketIO的可集群的多Namespace长连接服务
+A clusterable multi-namespace long connection service based on Netty-socketIO
 
 ## 技术栈说明
 
 ### 后端
-| 技术栈 | 版本 |
+| Technology | Version |
 | --- | --- |
-| socket.io-client(java-websocket客户端支持) | 1.0.2 |
-| netty-socketio(socket.io的java语言服务端实现) | 2.0.3 |
+| socket.io-client (Java WebSocket client support) | 1.0.2 |
+| netty-socketio (Socket.IO Java server implementation) | 2.0.3 |
 | jdk | >= 17 |
 | springboot | 3.0.0 |
 | redisson | 3.18.1 |
@@ -16,61 +16,61 @@
 
 
 ### 前端(待补充)
-| 技术栈 | 版本 |
+| Technology | Version |
 | --- | --- |
-| socket.io-client(js-websocket客户端支持) | 2.5.0(目前netty-socketio仅支持2.x版本的socket.io-client) |
+| socket.io-client (JS WebSocket client support)| 2.5.0(2.5.0 (currently netty-socketio only supports socket.io-client v2.x)) |
 
 
 ## 文档
 
-1.为什么不用原生的websocket,而选用socketio
+1.Why use Socket.IO instead of native WebSocket
 
 [为何选用Socket.io](https://github.com/yujuncai/Tia-notify/blob/main/docs/%E4%B8%BA%E4%BD%95%E9%80%89%E7%94%A8%E7%9A%84%E6%98%AFSocket.io.md)
 
-2.集群的思路
+2.Clustering Approach
 
 [集群思路](https://github.com/yujuncai/Tia-notify/blob/main/docs/%E9%9B%86%E7%BE%A4%E6%80%9D%E8%B7%AF.md)
 
-3.系统调优
+3.System Optimization
 
 [系统调优](https://github.com/yujuncai/Tia-notify/blob/main/docs/%E7%B3%BB%E7%BB%9F%E8%B0%83%E4%BC%98.md)
 
-4.EIO协议说明
+4.EIO Protocol Specification
 
 [eio协议官方说明](https://socket.io/zh-CN/docs/v4/engine-io-protocol/#protocol)
 
 
 ---
 
-## 规范说明
+## Specifications
 
-### 提交格式
+### Commit Format
 
-项目格式化代码的方式采用IntelliJ Idea默认的格式化
+The project uses IntelliJ Idea's default formatting
 
-- 一个功能点作为一次提交...重要
+- Each feature should be one commit ... This is important
 
-代码提交的说明(commit message) 按照下面给出的些常用格式
+The commit messages follow these common formats:
 
--  feat[module]: 新增某一项功能
--  perf[module]: 优化了模块代码或者优化了什么功能
--  fix[module]: 修改了什么bug
--  test[module]: 测试了什么东西
--  del[module]: 删除了某些功能或者无用代码
--  ref[module]: 重命名或者重构了模块
--  doc[module]: 增加了什么文档
+-  feat[module]: Add some feature
+-  perf[module]: Optimize module code or some feature
+-  fix[module]: Fix some bug
+-  test[module]: Test something
+-  del[module]: Delete some feature or useless code
+-  ref[module]: Rename or refactor module
+-  doc[module]: Add some docs
 
-更多详情请参考:<br />[commit-types](https://github.com/pvdlg/conventional-changelog-metahub#commit-types)
+See more details::<br />[commit-types](https://github.com/pvdlg/conventional-changelog-metahub#commit-types)
 
 ---
 
 
 
-## 页面展示
+## UI Showcase
 
 #### H5
-  
-  客户端demo源码地址:<br />[客户端demo](https://github.com/yujuncai/Tia-web-demo)
+
+Mobile client demo source code:<br />[客户端demo](https://github.com/yujuncai/Tia-web-demo)
 
 ![image.png](https://cdn.nlark.com/yuque/0/2023/png/1608622/1677051430945-a33353ef-2903-458b-b8a6-7b9625822d91.png)
 
@@ -89,26 +89,26 @@
 
 
 
-## 感谢
+## Acknowledgements
 
 
-前端代码是在是写的不咋地!很多前端是从其他项目里扣出来的,也用来部分代码,感谢一下项目
+The frontend code is really poorly written! Lots of code are copied from other projects, thanks to these projects:
 
 https://github.com/auntvt/Timo         后台管理页面
 https://github.com/Rudolf-Barbu/Ward   监控页面
 https://github.com/nguyencse/HeyU      客户端UI
 
-## 简单使用说明
+## Quick Start
 
-1.先查看server的配置文件,确保cluster在standone状态
+1.Check server config, make sure cluster is in standalone mode
 
-2.导入sql文件 本地是5.7的sql 如果是8.0 的修改下类型即可
+2.Import SQL file. My local is MySQL 5.7, adjust types if 8.0
 
-3.配置好必要的参数 redis和mysql,导入sql
+3.Configure Redis and MySQL, import SQL
 
-4.启动server
+4.Start server
 
-5.管理后台tomcat http://localhost/web/login 默认端口80,Netty 默认8080
-要体验客户端请将https://github.com/yujuncai/Tia-web-demo代码放入resources/static/webDemo文件夹下
+5.Admin portal http://localhost/web/login default port 80, Netty default 8080 To try client demo, 
+put https://github.com/yujuncai/Tia-web-demo code into resources/static/webDemo folder
 
-PS:前端只是demo,不能生产使用,而且代码极烂,有前端大佬来帮帮我吗?
+PS: Frontend is just for demo, cannot be used in production. Code quality is really bad. Any frontend experts willing to help improve it?
