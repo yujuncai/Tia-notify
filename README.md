@@ -1,10 +1,12 @@
-# Tia
+[中文说明](https://github.com/yujuncai/Tia-notify/blob/main/README_CN.md)
+
+# Tia   
 
 A clusterable multi-namespace long connection service based on Netty-socketIO
 
-## 技术栈说明
+## Technology Stack
 
-### 后端
+### Backend
 | Technology | Version |
 | --- | --- |
 | socket.io-client (Java WebSocket client support) | 1.0.2 |
@@ -15,13 +17,13 @@ A clusterable multi-namespace long connection service based on Netty-socketIO
 | Jgroups | 5.2.2.Final |
 
 
-### 前端(待补充)
+### Frontend (TBD)
 | Technology | Version |
 | --- | --- |
 | socket.io-client (JS WebSocket client support)| 2.5.0(2.5.0 (currently netty-socketio only supports socket.io-client v2.x)) |
 
 
-## 文档
+## Documentation
 
 1.Why use Socket.IO instead of native WebSocket
 
@@ -94,9 +96,9 @@ Mobile client demo source code:<br />[客户端demo](https://github.com/yujuncai
 
 The frontend code is really poorly written! Lots of code are copied from other projects, thanks to these projects:
 
-https://github.com/auntvt/Timo         后台管理页面
-https://github.com/Rudolf-Barbu/Ward   监控页面
-https://github.com/nguyencse/HeyU      客户端UI
+https://github.com/auntvt/Timo         (Admin UI)
+https://github.com/Rudolf-Barbu/Ward   (Monitoring UI)
+https://github.com/nguyencse/HeyU      (Client UI)
 
 ## Quick Start
 
