@@ -16,7 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Slf4j
@@ -70,7 +71,7 @@ public class MenuController {
      */
     @Auth
     @GetMapping({"/menu/add"})
-    public String toAdd( Model model) {
+    public String toAdd(Model model) {
 
         return "/system/menu/add";
     }
@@ -80,7 +81,7 @@ public class MenuController {
      */
     @Auth
     @GetMapping({"/menu/edit"})
-    public String toEdit( Menu menu, Model model) {
+    public String toEdit(Menu menu, Model model) {
         Menu pMenu = menuService.getMenuById(menu.getPid());
         menu = menuService.getMenuById(menu.getId());
         model.addAttribute("menu", menu);
@@ -91,9 +92,9 @@ public class MenuController {
     @Auth
     @PostMapping("/menu/save")
     @ResponseBody
-    public ResultVo save( Menu menu) {
+    public ResultVo save(Menu menu) {
 
-      List<Menu> list=  new ArrayList<>();
+        List<Menu> list = new ArrayList<>();
         // 编辑
         if (menu.getId() != null) {
             Menu beMenu = menuService.getMenuById(menu.getId());
@@ -101,7 +102,7 @@ public class MenuController {
             list.add(menu);
 
             menuService.updateMenu(list);
-        }else{
+        } else {
             list.add(menu);
             // 新增
             menuService.saveMenu(list);
@@ -121,7 +122,7 @@ public class MenuController {
             @RequestParam(value = "ids", required = false) List<Long> ids) {
         // 更新状态
 
-        if (menuService.delMenu( ids)) {
+        if (menuService.delMenu(ids)) {
             return ResultVoUtil.success("成功");
         } else {
             return ResultVoUtil.error("失败，请重新操作");

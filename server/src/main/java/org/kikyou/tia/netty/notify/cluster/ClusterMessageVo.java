@@ -7,6 +7,6 @@ import java.io.Serializable;
 @Data
 public class ClusterMessageVo<T> implements Serializable {
 
-    private  String  msgType;
-    private  T  data;
+    private String msgType;
+    private T data;
 }

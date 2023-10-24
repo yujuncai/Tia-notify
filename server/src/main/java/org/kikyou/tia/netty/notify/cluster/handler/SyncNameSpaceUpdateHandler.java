@@ -11,13 +11,13 @@ import java.util.Map;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class SyncNameSpaceUpdateHandler implements  BaseHandler{
+public class SyncNameSpaceUpdateHandler implements BaseHandler {
 
     private final ServerRunner serverRunner;
 
     @Override
     public void doHandler(Object name) {
-        Map<String,String> map= (Map<String, String>) name;
+        Map<String, String> map = (Map<String, String>) name;
         serverRunner.RemoveNameSpaceHandler(map.get("old"));
         serverRunner.addNameSpaceHandler(map.get("new"));
     }

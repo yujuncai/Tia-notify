@@ -2,6 +2,7 @@ package org.kikyou.tia.netty.notify.constant;
 
 /**
  * 事件名称
+ *
  * @author yujuncai
  */
 public interface EventNam {
@@ -35,7 +36,6 @@ public interface EventNam {
     String REGISTER = "register";
 
     String ACK = "ack";
-
 
 
     String MONITOR = "monitor";

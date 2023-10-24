@@ -29,34 +29,34 @@ import java.util.*;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class MainController{
+public class MainController {
     private final StringRedisTemplate stringRedisTemplate;
 
-    private final RedisTemplate<String,Object> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
     private final WebService menuService;
 
     private final MonitorKeyConfiguration monitorKeyConfiguration;
 
     @Auth
     @GetMapping("/main/index")
-    public String index(Model model)  {
+    public String index(Model model) {
 
         Set<Object> namespaceKey = stringRedisTemplate.opsForHash().keys(Keeping.NAMESPACE_KEY);
         Set<Object> monitorKey = stringRedisTemplate.opsForHash().keys(Keeping.MONITOR_KEY);
 
 
-        List<List<NameSpaceVo>> sos=new ArrayList<>();
-        namespaceKey.stream().forEach(s ->{
-            String value= (String) stringRedisTemplate.opsForHash().get(Keeping.NAMESPACE_KEY,s);
-            List<NameSpaceVo>  list= JSONUtil.toList(value,NameSpaceVo.class);
+        List<List<NameSpaceVo>> sos = new ArrayList<>();
+        namespaceKey.stream().forEach(s -> {
+            String value = (String) stringRedisTemplate.opsForHash().get(Keeping.NAMESPACE_KEY, s);
+            List<NameSpaceVo> list = JSONUtil.toList(value, NameSpaceVo.class);
             sos.add(list);
         });
 
 
-        List<SystemVo> mos=new ArrayList<>();
-        monitorKey.stream().forEach(s ->{
-            String value= (String)  stringRedisTemplate.opsForHash().get(Keeping.MONITOR_KEY,s);
-            SystemVo vo=(JSONUtil.toBean(value, SystemVo.class));
+        List<SystemVo> mos = new ArrayList<>();
+        monitorKey.stream().forEach(s -> {
+            String value = (String) stringRedisTemplate.opsForHash().get(Keeping.MONITOR_KEY, s);
+            SystemVo vo = (JSONUtil.toBean(value, SystemVo.class));
             mos.add(vo);
         });
 
@@ -66,7 +66,7 @@ public class MainController{
 
 
         String signature = MySecureUtil.aesEncrypt(monitorKeyConfiguration.getKey(), "/monitor");
-        String s="&appid=".concat(monitorKeyConfiguration.getAppid()).concat("&").concat("signature="+signature).concat("&namespace=monitor");
+        String s = "&appid=".concat(monitorKeyConfiguration.getAppid()).concat("&").concat("signature=" + signature).concat("&namespace=monitor");
         model.addAttribute("url", s);
 
         return "/system/main/index";
@@ -74,10 +74,10 @@ public class MainController{
 
     @Auth
     @GetMapping("/main")
-    public String main(HttpServletRequest request, HttpServletResponse response, Model model){
-        Optional<Cookie> code_cookie=  Arrays.stream(request.getCookies()).filter(p -> p.getName().equals("online_token") ).findFirst();;
-        String  vale  =code_cookie.get().getValue();
-       User u= (User) redisTemplate.opsForValue().get("WEB_ONLINE_".concat(vale));
+    public String main(HttpServletRequest request, HttpServletResponse response, Model model) {
+        Optional<Cookie> code_cookie = Arrays.stream(request.getCookies()).filter(p -> p.getName().equals("online_token")).findFirst();
+        String vale = code_cookie.get().getValue();
+        User u = (User) redisTemplate.opsForValue().get("WEB_ONLINE_".concat(vale));
         model.addAttribute("user", u);
 
 
@@ -89,11 +89,11 @@ public class MainController{
         // 封装菜单树形数据
         Map<Long, Menu> treeMenu = new HashMap<>(16);
         keyMenu.forEach((id, menu) -> {
-            if(!menu.getType().equals(MenuTypeEnum.BUTTON.getCode())){
-                if(keyMenu.get(menu.getPid()) != null){
+            if (!menu.getType().equals(MenuTypeEnum.BUTTON.getCode())) {
+                if (keyMenu.get(menu.getPid()) != null) {
                     keyMenu.get(menu.getPid()).getChildren().put(Long.valueOf(menu.getSort()), menu);
-                }else{
-                    if(menu.getType().equals(MenuTypeEnum.DIRECTORY.getCode())){
+                } else {
+                    if (menu.getType().equals(MenuTypeEnum.DIRECTORY.getCode())) {
                         treeMenu.put(Long.valueOf(menu.getSort()), menu);
                     }
                 }

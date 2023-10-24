@@ -42,7 +42,6 @@ public class LoginService {
     private final StoreService storeService;
 
 
-
     private final DBStoreService dbstoreService;
 
     public User login(User user, SocketIOClient client, boolean isReconnect) {
@@ -104,7 +103,6 @@ public class LoginService {
 
         //恢复密码
         user.setPassword(password);
-
 
 
     }

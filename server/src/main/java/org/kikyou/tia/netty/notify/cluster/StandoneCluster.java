@@ -3,10 +3,11 @@ package org.kikyou.tia.netty.notify.cluster;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
+
 @Component
 @Slf4j
-@ConditionalOnProperty(prefix = "cluster" ,name="model",havingValue = "standone")
-public class StandoneCluster implements  TiaCluster{
+@ConditionalOnProperty(prefix = "cluster", name = "model", havingValue = "standone")
+public class StandoneCluster implements TiaCluster {
     @Override
     public boolean isLeader() {
         return false;
@@ -18,12 +19,12 @@ public class StandoneCluster implements  TiaCluster{
     }
 
     @Override
-    public void SyncNameSpaceMessage(String type,Object o)  {
+    public void SyncNameSpaceMessage(String type, Object o) {
         log.debug("Standone model");
     }
 
     @Override
-    public void SyncUserMessage(String type, Object o)  {
+    public void SyncUserMessage(String type, Object o) {
         log.debug("Standone model");
     }
 
@@ -32,6 +33,7 @@ public class StandoneCluster implements  TiaCluster{
     public boolean isCluster() {
         return false;
     }
+
     @Override
     public void SyncSystemssage(String type, Object o) {
 

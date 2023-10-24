@@ -6,17 +6,17 @@
     <!-- 输出控制，格式控制-->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%date{HH:mm:ss} [%-5level] [%thread] %logger{17} - %m%n </pattern>
+            <pattern>%date{HH:mm:ss} [%-5level] [%thread] %logger{17} - %m%n</pattern>
         </encoder>
     </appender>
-  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>logFile.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>15</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>%date{HH:mm:ss} [%-5level] [%thread] %logger{17} - %m%n </pattern>
+            <pattern>%date{HH:mm:ss} [%-5level] [%thread] %logger{17} - %m%n</pattern>
         </encoder>
     </appender>
 

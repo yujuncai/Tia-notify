@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 
 /**
- *
  * @author yujuncai
  */
 @Slf4j
@@ -28,14 +27,14 @@ public class RegisterService {
         // 判断用户是否已经存在
         User dbUser = userService.getUserByName(user.getName());
         // 组织user properties
-        userService.organizeUser(dbUser,user,client);
+        userService.organizeUser(dbUser, user, client);
         if (Objects.isNull(dbUser)) {
             // register user
-            dbstoreService.saveOrUpdateUser(null,user, StatusType.REGISTER);
-            client.sendEvent(EventNam.REGISTER_SUCCESS,"注册成功,请登录!");
+            dbstoreService.saveOrUpdateUser(null, user, StatusType.REGISTER);
+            client.sendEvent(EventNam.REGISTER_SUCCESS, "注册成功,请登录!");
         } else {
             log.warn("注册失败,昵称'{}'已存在", user.getName());
-            client.sendEvent(EventNam.REGISTER_FAIL,"注册失败,昵称已存在!");
+            client.sendEvent(EventNam.REGISTER_FAIL, "注册失败,昵称已存在!");
         }
     }
 }

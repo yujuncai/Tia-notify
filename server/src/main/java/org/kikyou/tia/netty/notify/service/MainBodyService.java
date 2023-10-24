@@ -19,7 +19,6 @@ public class MainBodyService {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
 
-
     public List<MainBody> getAllMainBody() {
         List<MainBody> entries = namedParameterJdbcTemplate.query("select * from db_main_body where mainStatus=0", new MapSqlParameterSource(), new BeanPropertyRowMapper<MainBody>(MainBody.class));
         if (CollectionUtil.isEmpty(entries)) {
@@ -40,9 +39,6 @@ public class MainBodyService {
             return entries.get(0);
         }
     }
-
-
-
 
 
 }

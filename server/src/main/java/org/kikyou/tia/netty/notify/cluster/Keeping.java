@@ -32,40 +32,39 @@ public class Keeping {
     private final StringRedisTemplate stringRedisTemplate;
 
 
-
-
     private final InfoService infoService;
     private final UptimeService uptimeService;
     private final UsageService usageService;
 
 
-    public static  final String NAMESPACE_KEY="namespace_all";
-    public static  final String MONITOR_KEY="monitor_all";
+    public static final String NAMESPACE_KEY = "namespace_all";
+    public static final String MONITOR_KEY = "monitor_all";
 
-    public static  final String MONITOR_KEY_INFO="monitor_info";
-    public static  final String MONITOR_KEY_UPTIME="monitor_uptime";
-    public static  final String MONITOR_KEY_USAGE="monitor_usage";
+    public static final String MONITOR_KEY_INFO = "monitor_info";
+    public static final String MONITOR_KEY_UPTIME = "monitor_uptime";
+    public static final String MONITOR_KEY_USAGE = "monitor_usage";
 
 
-    public static  String HOST=null;
+    public static String HOST = null;
+
     @SneakyThrows
     @Scheduled(fixedDelay = 60_000, initialDelay = 5000)
     public void keeping() throws InterruptedException {
-        List<NameSpaceVo> spacevos=new ArrayList<>();
+        List<NameSpaceVo> spacevos = new ArrayList<>();
         Collection<SocketIONamespace> allNamespaces = socketIOServer.getAllNamespaces();
-        allNamespaces.stream().forEach((n) ->{
+        allNamespaces.stream().forEach((n) -> {
             SocketIONamespace namespace = socketIOServer.getNamespace(n.getName());
             long count = namespace.getAllClients().stream().count();
-            NameSpaceVo v=new NameSpaceVo();
+            NameSpaceVo v = new NameSpaceVo();
             v.setNamespace(n.getName());
             v.setCounts(String.valueOf(count));
             spacevos.add(v);
         });
 
         InetAddress address = InetAddress.getLocalHost();
-        HOST=address.getHostAddress();
+        HOST = address.getHostAddress();
 
-        SystemVo vo=new SystemVo();
+        SystemVo vo = new SystemVo();
         Properties props = System.getProperties();
         // System.out.println("操作系统："+ osInfo.getOs());
         vo.setOs(props.getProperty("os.name"));
@@ -80,8 +79,8 @@ public class Keeping {
         vo.setHostName(address.getHostName());
 
 
-        stringRedisTemplate.opsForHash().put(NAMESPACE_KEY,HOST, JSONUtil.toJsonStr(spacevos));
-        stringRedisTemplate.opsForHash().put(MONITOR_KEY,HOST, JSONUtil.toJsonStr(vo));
+        stringRedisTemplate.opsForHash().put(NAMESPACE_KEY, HOST, JSONUtil.toJsonStr(spacevos));
+        stringRedisTemplate.opsForHash().put(MONITOR_KEY, HOST, JSONUtil.toJsonStr(vo));
 
     }
 
@@ -98,17 +97,16 @@ public class Keeping {
     }*/
 
 
-
     @Scheduled(fixedDelay = 5_000, initialDelay = 1000)
     public void monitor() throws Exception {
         InetAddress address = InetAddress.getLocalHost();
-        HOST=address.getHostAddress();
+        HOST = address.getHostAddress();
         var info = infoService.getInfo();
-        var uptime=  uptimeService.getUptime();
-        var usage=  usageService.getUsage();
-        stringRedisTemplate.opsForValue().set(MONITOR_KEY_INFO.concat(HOST), JSONUtil.toJsonStr(info),10, TimeUnit.SECONDS);
-        stringRedisTemplate.opsForValue().set(MONITOR_KEY_UPTIME.concat(HOST), JSONUtil.toJsonStr(uptime),10, TimeUnit.SECONDS);
-        stringRedisTemplate.opsForValue().set(MONITOR_KEY_USAGE.concat(HOST), JSONUtil.toJsonStr(usage),10, TimeUnit.SECONDS);
+        var uptime = uptimeService.getUptime();
+        var usage = usageService.getUsage();
+        stringRedisTemplate.opsForValue().set(MONITOR_KEY_INFO.concat(HOST), JSONUtil.toJsonStr(info), 10, TimeUnit.SECONDS);
+        stringRedisTemplate.opsForValue().set(MONITOR_KEY_UPTIME.concat(HOST), JSONUtil.toJsonStr(uptime), 10, TimeUnit.SECONDS);
+        stringRedisTemplate.opsForValue().set(MONITOR_KEY_USAGE.concat(HOST), JSONUtil.toJsonStr(usage), 10, TimeUnit.SECONDS);
 
     }
 

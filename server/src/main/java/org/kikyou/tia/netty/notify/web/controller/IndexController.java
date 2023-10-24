@@ -17,8 +17,7 @@ import java.io.IOException;
 @Controller
 @RequestMapping(value = "/monitor")
 @RequiredArgsConstructor
-public class IndexController
-{
+public class IndexController {
 
 
     private final MonitorIndexService indexService;
@@ -26,17 +25,15 @@ public class IndexController
 
     @GetMapping
     @Auth
-    public String getIndex(final Model model) throws IOException
-    {
+    public String getIndex(final Model model) throws IOException {
         String host = HttpServletUtil.getParameter("host");
 
-        if(StrUtil.isEmpty(host)){
+        if (StrUtil.isEmpty(host)) {
             return "redirect:/login";
         }
 
-        return indexService.getIndex(host,model);
+        return indexService.getIndex(host, model);
     }
-
 
 
 }

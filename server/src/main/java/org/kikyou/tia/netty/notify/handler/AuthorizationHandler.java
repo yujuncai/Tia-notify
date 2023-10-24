@@ -19,6 +19,7 @@ public class AuthorizationHandler implements AuthorizationListener {
     private final MainBodyService mainBodyService;
 
     private final MonitorKeyConfiguration monitorKeyConfiguration;
+
     @Override
     public boolean isAuthorized(HandshakeData handshakeData) {
         //signature 为通过AppSecret加密的 namespace
@@ -27,7 +28,7 @@ public class AuthorizationHandler implements AuthorizationListener {
         if (StrUtil.isNotBlank(signature) && StrUtil.isNotBlank(appid)) {
 
 
-            if(appid.equals(monitorKeyConfiguration.getAppid())){
+            if (appid.equals(monitorKeyConfiguration.getAppid())) {
                 String s = MySecureUtil.aesDecrypt(monitorKeyConfiguration.getKey(), signature);
                 if ("/monitor".equals(s)) {
                     return true;
@@ -37,7 +38,7 @@ public class AuthorizationHandler implements AuthorizationListener {
             //todo 加入时间限制
             log.info("appid-{}   signature-{}      url-{}", appid, signature, handshakeData.getUrl());
             MainBody body = mainBodyService.getMainBodyByAppId(appid);
-            if(body==null){
+            if (body == null) {
                 log.error("MainBody is null");
                 return false;
             }

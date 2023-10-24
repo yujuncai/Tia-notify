@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class SyncNameSpaceAddHandler implements  BaseHandler{
+public class SyncNameSpaceAddHandler implements BaseHandler {
 
     private final ServerRunner serverRunner;
 

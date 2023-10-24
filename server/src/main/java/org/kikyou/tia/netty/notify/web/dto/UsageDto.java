@@ -6,8 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UsageDto
-{
+public class UsageDto {
 
     private int processor;
 

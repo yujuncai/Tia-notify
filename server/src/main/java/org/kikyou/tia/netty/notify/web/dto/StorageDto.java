@@ -6,8 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class StorageDto
-{
+public class StorageDto {
 
     private String mainStorage;
 

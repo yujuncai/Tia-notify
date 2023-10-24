@@ -27,11 +27,11 @@ import static org.kikyou.tia.netty.notify.constant.Common.USER_KEY;
 public class SystemMessageHandler {
 
 
-
     private final TiaCluster tiaCluster;
+
     @Async("asyncExecutor")
-    public  void bocastSystemMessage(User user, SocketIOServer socketIOServer, SystemType systemType) {
-        log.info("开始广播事件 {} ",systemType.getName());
+    public void bocastSystemMessage(User user, SocketIOServer socketIOServer, SystemType systemType) {
+        log.info("开始广播事件 {} ", systemType.getName());
         socketIOServer.getNamespace(user.getNameSpace()).getAllClients().forEach(s -> {
                     User u = s.get(USER_KEY);
                     if (!Objects.isNull(u)) {
@@ -46,18 +46,16 @@ public class SystemMessageHandler {
             Map<String, Object> map = MapUtil.newHashMap();
             map.put("user", user);
             map.put("systemType", systemType.getName());
-            tiaCluster.SyncSystemssage(ClusterMessageType.SYNC_SYSTEM_MESSAGE.getName(),map );
+            tiaCluster.SyncSystemssage(ClusterMessageType.SYNC_SYSTEM_MESSAGE.getName(), map);
         }
 
 
     }
 
 
-
-
-    public  void sendMessageToCluster(Message m){
-        if(tiaCluster.isCluster()){
-            tiaCluster.SyncUserMessage(ClusterMessageType.SYNC_USER_MESSAGE.getName(),m);
+    public void sendMessageToCluster(Message m) {
+        if (tiaCluster.isCluster()) {
+            tiaCluster.SyncUserMessage(ClusterMessageType.SYNC_USER_MESSAGE.getName(), m);
         }
     }
 

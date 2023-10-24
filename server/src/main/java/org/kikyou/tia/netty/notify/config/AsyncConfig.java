@@ -19,10 +19,10 @@ public class AsyncConfig {
     private static final int CORE_POOL_SIZE = 10;
 
 
-    private static final int queueCapacity=1000;
+    private static final int queueCapacity = 1000;
 
 
-    private static final int keepAliveSeconds=60;
+    private static final int keepAliveSeconds = 60;
 
     @Bean("asyncExecutor")
     public AsyncTaskExecutor asyncTaskExecutor() {
@@ -38,7 +38,6 @@ public class AsyncConfig {
         asyncTaskExecutor.initialize();
         return asyncTaskExecutor;
     }
-
 
 
 }

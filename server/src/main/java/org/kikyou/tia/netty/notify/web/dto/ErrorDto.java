@@ -6,8 +6,7 @@ import java.time.LocalDateTime;
 
 
 @Getter
-public final class ErrorDto
-{
+public final class ErrorDto {
 
     private final String timestamp = LocalDateTime.now().toString();
 
@@ -18,8 +17,7 @@ public final class ErrorDto
     private final String exceptionName;
 
 
-    public ErrorDto(final Exception exception)
-    {
+    public ErrorDto(final Exception exception) {
         this.errMessage = exception.getMessage();
         this.exceptionName = exception.getClass().getName();
     }

@@ -5,11 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 
-
 @Getter
 @Setter
-public class SetupDto
-{
+public class SetupDto {
 
     @NotNull
     @NotEmpty

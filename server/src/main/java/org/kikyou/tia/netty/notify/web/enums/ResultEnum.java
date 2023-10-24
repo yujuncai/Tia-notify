@@ -6,7 +6,7 @@ import lombok.Getter;
  * 后台返回结果集枚举
  */
 @Getter
-public enum ResultEnum  {
+public enum ResultEnum {
 
     /**
      * 通用状态
@@ -31,12 +31,11 @@ public enum ResultEnum  {
     STATUS_ERROR(401, "非法操作：状态有误"),
 
 
-
     ;
 
-    private Integer code;
+    private final Integer code;
 
-    private String message;
+    private final String message;
 
     ResultEnum(Integer code, String message) {
         this.code = code;

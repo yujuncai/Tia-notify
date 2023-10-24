@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- *
  * @author yujuncai
  */
 @Getter
@@ -17,8 +16,7 @@ public enum ClusterMessageType {
 
 
     SYNC_USER_MESSAGE("sync_user_message"),
-    SYNC_SYSTEM_MESSAGE("sync_system_message")
-    ;
+    SYNC_SYSTEM_MESSAGE("sync_system_message");
 
     private final String name;
 }

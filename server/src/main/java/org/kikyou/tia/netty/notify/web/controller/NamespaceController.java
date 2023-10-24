@@ -46,7 +46,7 @@ public class NamespaceController {
     public ResultVo delete(
             @RequestParam(value = "ids", required = false) List<String> ids) {
         // 更新状态
-        if (namespaceService.delNameSpace( ids)) {
+        if (namespaceService.delNameSpace(ids)) {
             return ResultVoUtil.success("成功");
         } else {
             return ResultVoUtil.error("失败，请重新操作");
@@ -58,10 +58,11 @@ public class NamespaceController {
      */
     @Auth
     @GetMapping({"/namespace/add"})
-    public String toAdd( Model model) {
+    public String toAdd(Model model) {
 
         return "/system/namespace/add";
     }
+
     /**
      * 跳转到编辑页面
      */
@@ -76,16 +77,16 @@ public class NamespaceController {
     @Auth
     @PostMapping("/namespace/save")
     @ResponseBody
-    public ResultVo save( MainBody mainBody) {
+    public ResultVo save(MainBody mainBody) {
 
-        List<MainBody> list=  new ArrayList<>();
+        List<MainBody> list = new ArrayList<>();
         // 编辑
         if (mainBody.getId() != null) {
             MainBody beMainBody = namespaceService.getNameSpaceById(mainBody.getId());
             EntityBeanUtil.copyProperties(beMainBody, mainBody);
             list.add(mainBody);
             namespaceService.updateNameSapce(list);
-        }else{
+        } else {
             list.add(mainBody);
             // 新增
             namespaceService.saveNameSapce(list);

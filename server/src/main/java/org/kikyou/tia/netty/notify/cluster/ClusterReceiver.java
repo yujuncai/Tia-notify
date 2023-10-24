@@ -34,7 +34,7 @@ public class ClusterReceiver implements Receiver {
 
     //接收到消息后会调用此函数
     public void receive(Message msg) {
-        log.info("收到 {} 的消息 {} 目标为 {}", msg.getSrc(), msg.getObject(),msg.getDest());
+        log.info("收到 {} 的消息 {} 目标为 {}", msg.getSrc(), msg.getObject(), msg.getDest());
 
         if (msg.getSrc().equals(JGroupsCluster.localAddress)) {
             log.info("本地消息,丢弃!");
@@ -44,8 +44,8 @@ public class ClusterReceiver implements Receiver {
         ClusterMessageVo vo = msg.getObject();
         BaseHandler h = strategy.get(vo.getMsgType());
         if (h != null) {
-            h.doHandler((Object) vo.getData());
-        }else {
+            h.doHandler(vo.getData());
+        } else {
             log.error("没有对应的策略");
         }
 

@@ -42,8 +42,8 @@ public class DisconnectHandler {
 
         if (!Objects.isNull(user)) {
             client.del(Common.USER_KEY);
-            storeService.delIdKeyV(user.getId(),user.getNameSpace());
-            systemMessageHandler.bocastSystemMessage(user, socketIOServer,SystemType.LOGOUT);
+            storeService.delIdKeyV(user.getId(), user.getNameSpace());
+            systemMessageHandler.bocastSystemMessage(user, socketIOServer, SystemType.LOGOUT);
         }
     }
 

@@ -6,8 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class InfoDto
-{
+public class InfoDto {
 
     private ProcessorDto processor;
 

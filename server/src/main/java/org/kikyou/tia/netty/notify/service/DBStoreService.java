@@ -26,13 +26,13 @@ public class DBStoreService {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
 
-    public User getUserByName(String name){
+    public User getUserByName(String name) {
         MapSqlParameterSource param = new MapSqlParameterSource();
         param.addValue("username", name);
-        List<User> entries = namedParameterJdbcTemplate.query("select * from db_user where name=:username",param,new BeanPropertyRowMapper<User>(User.class));
-        if(CollectionUtil.isEmpty(entries)){
+        List<User> entries = namedParameterJdbcTemplate.query("select * from db_user where name=:username", param, new BeanPropertyRowMapper<User>(User.class));
+        if (CollectionUtil.isEmpty(entries)) {
             return null;
-        }else {
+        } else {
             return entries.get(0);
         }
 
@@ -40,18 +40,18 @@ public class DBStoreService {
     }
 
     @Async("asyncExecutor")
-    public void saveOrUpdateUser(User dbuser,User user, StatusType status) {
+    public void saveOrUpdateUser(User dbuser, User user, StatusType status) {
         log.debug("保存/更新user: {}, StatusType: {}", user, status);
 
 
         //插入数据
-        if(dbuser!=null){
-            BeanUtil.copyProperties(user,dbuser,"id","password");
+        if (dbuser != null) {
+            BeanUtil.copyProperties(user, dbuser, "id", "password");
             MapSqlParameterSource param = new MapSqlParameterSource();
             log.info("用户信息: {}", dbuser);
             initParam(dbuser, param);
             namedParameterJdbcTemplate.update("Update db_user Set time=:time,avatarUrl=:avatarUrl,ip=:ip,deviceType=:deviceType,currId=:currId,type=:type,nameSpace=:nameSpace Where id = :id", param);
-        }else {
+        } else {
             MapSqlParameterSource param = new MapSqlParameterSource();
             initParam(user, param);
             namedParameterJdbcTemplate.update("insert into db_user(id,name, password,time,avatarUrl,ip,deviceType,currId,type,nameSpace) " +

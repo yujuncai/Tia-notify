@@ -12,7 +12,10 @@ import org.kikyou.tia.netty.notify.web.vo.ResultVo;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -44,7 +47,7 @@ public class UserController {
             @RequestParam(value = "ids", required = false) List<String> ids) {
         // 更新状态
 
-        if (userService.delUser( ids)) {
+        if (userService.delUser(ids)) {
             return ResultVoUtil.success("成功");
         } else {
             return ResultVoUtil.error("失败，请重新操作");

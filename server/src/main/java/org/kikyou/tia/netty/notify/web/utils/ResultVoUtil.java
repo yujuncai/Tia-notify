@@ -6,7 +6,6 @@ import org.kikyou.tia.netty.notify.web.vo.ResultVo;
 
 /**
  * 响应数据(结果)最外层对象工具
- *
  */
 public class ResultVoUtil {
 

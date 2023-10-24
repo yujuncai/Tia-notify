@@ -16,14 +16,15 @@ import static org.kikyou.tia.netty.notify.constant.Common.USER_KEY;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class SyncSystemMessageHandler implements  BaseHandler{
+public class SyncSystemMessageHandler implements BaseHandler {
 
     private final SocketIOServer socketIOServer;
+
     @Override
     public void doHandler(Object m) {
-        Map<String,Object> map= (Map<String, Object>) m;
-         User user= (User) map.get("user");
-        String  systemType = (String) map.get("systemType");
+        Map<String, Object> map = (Map<String, Object>) m;
+        User user = (User) map.get("user");
+        String systemType = (String) map.get("systemType");
 
         socketIOServer.getNamespace(user.getNameSpace()).getAllClients().forEach(s -> {
                     User u = s.get(USER_KEY);

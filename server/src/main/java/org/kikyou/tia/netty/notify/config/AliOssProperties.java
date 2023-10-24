@@ -24,7 +24,7 @@ public class AliOssProperties {
 
     private String accessKeySecret;
 
-    @Bean(name = "ossClient",destroyMethod = "shutdown")
+    @Bean(name = "ossClient", destroyMethod = "shutdown")
     public OSSClient ossClient() {
         return (OSSClient) new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
     }

@@ -13,7 +13,6 @@ import org.kikyou.tia.netty.notify.models.User;
 import org.kikyou.tia.netty.notify.service.LoginService;
 import org.springframework.stereotype.Component;
 
-
 import static org.kikyou.tia.netty.notify.constant.Common.TOKEN;
 
 /**

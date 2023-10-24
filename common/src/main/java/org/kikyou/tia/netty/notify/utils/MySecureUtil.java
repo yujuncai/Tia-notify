@@ -12,8 +12,8 @@ import java.util.Base64;
 public class MySecureUtil {
 
     /**
-     * @desc: 返回AES算法使用的随机密钥key
      * @return Base64格式的key
+     * @desc: 返回AES算法使用的随机密钥key
      */
 
     public static void main(String[] args) {
@@ -25,18 +25,18 @@ public class MySecureUtil {
         System.out.println(s2);
     }
 
-    public static String generateAesKey(){
+    public static String generateAesKey() {
         byte[] key = SecureUtil.generateKey(SymmetricAlgorithm.AES.getValue()).getEncoded();
         return Base64.getEncoder().encodeToString(key);
     }
 
     /**
-     * @param key base64格式的key
+     * @param key     base64格式的key
      * @param content 待加密文本
      * @return 加密后文本
      */
-    public static String aesEncrypt(String key,String content){
-        if(StringUtils.isBlank(key) || StringUtils.isBlank(content)){
+    public static String aesEncrypt(String key, String content) {
+        if (StringUtils.isBlank(key) || StringUtils.isBlank(content)) {
             return "";
         }
         byte[] decode = Base64.getDecoder().decode(key);
@@ -48,8 +48,8 @@ public class MySecureUtil {
      * @param content
      * @return 解密后文本
      */
-    public static String aesDecrypt(String key,String content){
-        if(StringUtils.isBlank(key) || StringUtils.isBlank(content)){
+    public static String aesDecrypt(String key, String content) {
+        if (StringUtils.isBlank(key) || StringUtils.isBlank(content)) {
             return "";
         }
         byte[] decode = Base64.getDecoder().decode(key);

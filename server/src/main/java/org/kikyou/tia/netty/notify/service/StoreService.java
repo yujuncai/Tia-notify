@@ -32,6 +32,7 @@ import static org.kikyou.tia.netty.notify.constant.Common.ID_KEY;
 
 /**
  * store data
+ *
  * @author yujuncai
  */
 @Service
@@ -41,7 +42,7 @@ public class StoreService {
 
     private final StringRedisTemplate stringRedisTemplate;
 
-    private final RedisTemplate<String,Object> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     private final FileUploadService fileUploadService;
 
@@ -66,7 +67,7 @@ public class StoreService {
         storeMsg.setContent(message);
         // 之后按时间排序获取
         stringRedisTemplate.opsForZSet().add(GROUP_001_MESSAGE, JSONUtil.toJsonStr(storeMsg), storeMsg.getTime());
-        return  CompletableFuture.completedFuture(storeMsg);
+        return CompletableFuture.completedFuture(storeMsg);
     }
 
     public List<Message> getGroupMessages() {
@@ -79,34 +80,36 @@ public class StoreService {
                 .collect(Collectors.toList());
     }
 
-    public User getUserByName(String name){
+    public User getUserByName(String name) {
         Map<Object, Object> entries = redisTemplate.opsForHash().entries(name);
-        if (MapUtil.isEmpty(entries)){
+        if (MapUtil.isEmpty(entries)) {
             return null;
         }
         return BeanUtil.mapToBean(entries, User.class, true, CopyOptions.create());
     }
 
 
-    public void setIdKeyV(String id,String namespace,User u){
-        if(StrUtil.isBlank(namespace)){
-            namespace= Common.DEFAULT;
+    public void setIdKeyV(String id, String namespace, User u) {
+        if (StrUtil.isBlank(namespace)) {
+            namespace = Common.DEFAULT;
         }
         redisTemplate.opsForValue().set(namespace.concat("_").concat(ID_KEY).concat(id), u);
     }
-    public User getIdKeyV(String id,String namespace){
-        if(StrUtil.isBlank(namespace)){
-            namespace= Common.DEFAULT;
+
+    public User getIdKeyV(String id, String namespace) {
+        if (StrUtil.isBlank(namespace)) {
+            namespace = Common.DEFAULT;
         }
         return (User) redisTemplate.opsForValue().get(namespace.concat("_").concat(ID_KEY).concat(id)
         );
     }
+
     @Async("asyncExecutor")
-    public void delIdKeyV(String id,String namespace){
-        if(StrUtil.isBlank(namespace)){
-            namespace= Common.DEFAULT;
+    public void delIdKeyV(String id, String namespace) {
+        if (StrUtil.isBlank(namespace)) {
+            namespace = Common.DEFAULT;
         }
-         redisTemplate.delete(namespace.concat("_").concat(ID_KEY).concat(id));
+        redisTemplate.delete(namespace.concat("_").concat(ID_KEY).concat(id));
     }
 
 }

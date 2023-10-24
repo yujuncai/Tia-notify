@@ -28,13 +28,13 @@ public class HistoryHandler {
 
     @OnEvent(EventNam.HISTORY)
     public void onData(SocketIOClient client, User user, AckRequest ackSender) {
-        log.info("history----"+user.getId());
+        log.info("history----" + user.getId());
         // 群group1消息
         List<Message> messages = storeService.getGroupMessages();
 
-        if(ackSender.isAckRequested()){
+        if (ackSender.isAckRequested()) {
             ackSender.sendAckData(messages);
-        }else {
+        } else {
             client.sendEvent(EventNam.HISTORY_MESSAGE, Common.GROUP_001_CHANNEL, messages);
         }
     }

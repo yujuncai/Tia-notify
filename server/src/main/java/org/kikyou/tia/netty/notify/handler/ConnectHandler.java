@@ -27,6 +27,7 @@ import static org.kikyou.tia.netty.notify.constant.Common.TOKEN;
 
 /**
  * 监听连接事件
+ *
  * @author yujuncai
  */
 @Slf4j
@@ -39,21 +40,19 @@ public class ConnectHandler {
     private final LoginService loginService;
 
 
-
     @OnConnect
     public void onConnect(SocketIOClient client) {
         Map<String, List<String>> urlParams = client.getHandshakeData().getUrlParams();
         HttpHeaders httpHeaders = client.getHandshakeData().getHttpHeaders();
         String token = httpHeaders.get(TOKEN);
 
-        log.info("客户端：{} 已连接, token: {}, urlParams:{} ,Namespace: {} ,url: {}", client.getSessionId(), token, urlParams,client.getNamespace().getName(),client.getHandshakeData().getUrl());
-
+        log.info("客户端：{} 已连接, token: {}, urlParams:{} ,Namespace: {} ,url: {}", client.getSessionId(), token, urlParams, client.getNamespace().getName(), client.getHandshakeData().getUrl());
 
 
         User user = null;
         if (StrUtil.isNotBlank(token)) {
             try {
-                if (JWTUtil.verify(token, appConfiguration.getTokenKey().getBytes(StandardCharsets.UTF_8))){
+                if (JWTUtil.verify(token, appConfiguration.getTokenKey().getBytes(StandardCharsets.UTF_8))) {
                     JWTValidator.of(token).validateDate();
                     JSONObject payloads = JWTUtil.parseToken(token).getPayloads();
                     user = JSONUtil.toBean(payloads, User.class);
@@ -61,7 +60,7 @@ public class ConnectHandler {
             } catch (ValidateException e) {
                 // token失效, 需要用户回到登录页面重新登录
                 log.error("token失效, 重新认证...");
-                client.sendEvent(EventNam.SERVER_ERR,"请重新认证");
+                client.sendEvent(EventNam.SERVER_ERR, "请重新认证");
                 return;
             }
         }

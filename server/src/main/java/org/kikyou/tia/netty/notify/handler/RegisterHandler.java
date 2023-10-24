@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 监听登录数据
+ *
  * @author yujuncai
  */
 @Slf4j
@@ -22,7 +23,7 @@ public class RegisterHandler {
     private final RegisterService registerService;
 
     @OnEvent(EventNam.REGISTER)
-    public void onData(SocketIOClient client, User data, AckRequest ackSender)  {
+    public void onData(SocketIOClient client, User data, AckRequest ackSender) {
         log.debug("用户注册: {}", data.getName());
         registerService.register(data, client);
     }

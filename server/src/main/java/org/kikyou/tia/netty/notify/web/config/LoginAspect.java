@@ -21,7 +21,7 @@ import java.util.Optional;
 @Component
 public class LoginAspect {
     @Resource
-    private RedisTemplate<String,Object> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Pointcut(value = "@annotation(org.kikyou.tia.netty.notify.web.config.Auth)")
     public void access() {
@@ -38,19 +38,17 @@ public class LoginAspect {
 
         try {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            Optional<Cookie> code_cookie=  Arrays.stream(request.getCookies()).filter(p -> p.getName().equals("online_token") ).findFirst();
-            if(code_cookie.isEmpty()){
-                  return "redirect:/login";
+            Optional<Cookie> code_cookie = Arrays.stream(request.getCookies()).filter(p -> p.getName().equals("online_token")).findFirst();
+            if (code_cookie.isEmpty()) {
+                return "redirect:/login";
             }
-            String  vale  =code_cookie.get().getValue();
-            User u= (User) redisTemplate.opsForValue().get("WEB_ONLINE_".concat(vale));
+            String vale = code_cookie.get().getValue();
+            User u = (User) redisTemplate.opsForValue().get("WEB_ONLINE_".concat(vale));
 
-            if(u==null){
-                  return "redirect:/noAuth";
+            if (u == null) {
+                return "redirect:/noAuth";
             }
             return pj.proceed();
-
-
 
 
         } catch (Throwable throwable) {

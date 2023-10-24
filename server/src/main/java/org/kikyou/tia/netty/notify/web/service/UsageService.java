@@ -15,14 +15,12 @@ import java.util.Arrays;
 
 
 @Service
-public class UsageService
-{
+public class UsageService {
     @Resource
     private SystemInfo systemInfo;
 
 
-    private int getProcessor()
-    {
+    private int getProcessor() {
         CentralProcessor centralProcessor = systemInfo.getHardware().getProcessor();
 
         long[] prevTicksArray = centralProcessor.getSystemCpuLoadTicks();
@@ -43,8 +41,7 @@ public class UsageService
      *
      * @return int that display ram usage
      */
-    private int getRam()
-    {
+    private int getRam() {
         GlobalMemory globalMemory = systemInfo.getHardware().getMemory();
 
         long totalMemory = globalMemory.getTotal();
@@ -58,8 +55,7 @@ public class UsageService
      *
      * @return int that display storage usage
      */
-    private int getStorage()
-    {
+    private int getStorage() {
         FileSystem fileSystem = systemInfo.getOperatingSystem().getFileSystem();
 
         long totalStorage = fileSystem.getFileStores().stream().mapToLong(OSFileStore::getTotalSpace).sum();
@@ -73,16 +69,15 @@ public class UsageService
      *
      * @return ResponseEntityWrapperAsset filled with usageDto
      */
-    public UsageDto getUsage()
-    {
+    public UsageDto getUsage() {
 
-            UsageDto usageDto = new UsageDto();
+        UsageDto usageDto = new UsageDto();
 
-            usageDto.setProcessor(getProcessor());
-            usageDto.setRam(getRam());
-            usageDto.setStorage(getStorage());
+        usageDto.setProcessor(getProcessor());
+        usageDto.setRam(getRam());
+        usageDto.setStorage(getStorage());
 
-            return usageDto;
+        return usageDto;
 
 
     }

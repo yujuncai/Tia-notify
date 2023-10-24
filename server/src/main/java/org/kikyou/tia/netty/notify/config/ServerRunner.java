@@ -22,10 +22,10 @@ import java.util.Optional;
 public class ServerRunner implements CommandLineRunner {
 
 
-
     private final MainBodyService mainBodyService;
     private final SocketIOServer socketIOServer;
-    private final static  String MONITORSPACE="/monitor";
+    private final static String MONITORSPACE = "/monitor";
+
     @Override
     public void run(String... args) throws Exception {
         if (socketIOServer != null) {
@@ -44,10 +44,8 @@ public class ServerRunner implements CommandLineRunner {
     }
 
 
-
-
-    public void addMonitorSpaceHandler(){
-        log.info("  {}  加入namespace--------",  MONITORSPACE);
+    public void addMonitorSpaceHandler() {
+        log.info("  {}  加入namespace--------", MONITORSPACE);
         SocketIONamespace socketIONamespace = socketIOServer.addNamespace(MONITORSPACE);
         List<String> classNames = Arrays.asList("monitorHandler");
         try {
@@ -61,25 +59,25 @@ public class ServerRunner implements CommandLineRunner {
     }
 
 
+    public void addNameSpaceHandler(String namesp) {
 
-    public void addNameSpaceHandler(String namesp){
-
-            log.info("  {}  加入namespace--------",  namesp);
-            SocketIONamespace socketIONamespace = socketIOServer.addNamespace(namesp);
-            //获取期待的类名
-            List<String> classNames = Arrays.asList("loginHandler", "logoutHandler", "messageHandler", "registerHandler", "historyHandler");
-            try {
-                classNames.stream().forEach(s -> {
-                    Object bean = SpringUtil.getBean(s);
-                    Optional.ofNullable(bean).ifPresent(socketIONamespace::addListeners);
-                });
-            } catch (Exception e) {
-                log.error("获取bean失败! {}", e);
-            }
+        log.info("  {}  加入namespace--------", namesp);
+        SocketIONamespace socketIONamespace = socketIOServer.addNamespace(namesp);
+        //获取期待的类名
+        List<String> classNames = Arrays.asList("loginHandler", "logoutHandler", "messageHandler", "registerHandler", "historyHandler");
+        try {
+            classNames.stream().forEach(s -> {
+                Object bean = SpringUtil.getBean(s);
+                Optional.ofNullable(bean).ifPresent(socketIONamespace::addListeners);
+            });
+        } catch (Exception e) {
+            log.error("获取bean失败! {}", e);
+        }
 
     }
-    public void RemoveNameSpaceHandler(String namesp){
-        log.info("  {}  移除namespace--------",  namesp);
+
+    public void RemoveNameSpaceHandler(String namesp) {
+        log.info("  {}  移除namespace--------", namesp);
         socketIOServer.removeNamespace(namesp);
     }
 

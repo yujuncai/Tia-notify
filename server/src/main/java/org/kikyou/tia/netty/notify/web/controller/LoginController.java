@@ -26,19 +26,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.net.MalformedURLException;
-
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 
-
 @Controller
 @RequiredArgsConstructor
 public class LoginController implements ErrorController {
 
-    private final RedisTemplate<String,Object> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     private final AdminConfiguration adminConfiguration;
 
@@ -50,7 +48,7 @@ public class LoginController implements ErrorController {
 
         model.addAttribute("isCaptcha", true);
         String signature = MySecureUtil.aesEncrypt("jvZJhHtp3vOVmpool6QlMw==", "/tia-java");
-        String s="webDemo/index.html".concat("?").concat("appid=987654321").concat("&").concat("signature="+signature).concat("&namespace=tia-java");
+        String s = "webDemo/index.html".concat("?").concat("appid=987654321").concat("&").concat("signature=" + signature).concat("&namespace=tia-java");
         model.addAttribute("url", s);
         return "/login";
     }
@@ -60,38 +58,37 @@ public class LoginController implements ErrorController {
      */
     @PostMapping("/login")
     @ResponseBody
-    public ResultVo login(String username, String password, String captcha, String rememberMe,HttpServletRequest request,HttpServletResponse response) throws MalformedURLException {
+    public ResultVo login(String username, String password, String captcha, String rememberMe, HttpServletRequest request, HttpServletResponse response) throws MalformedURLException {
         // 判断账号密码是否为空
-        if (!StringUtils.hasLength(username) || !StringUtils.hasLength(password)||!StringUtils.hasLength(captcha)) {
-            return  ResultVoUtil.error("输入数据为空");
+        if (!StringUtils.hasLength(username) || !StringUtils.hasLength(password) || !StringUtils.hasLength(captcha)) {
+            return ResultVoUtil.error("输入数据为空");
         }
-      Optional<Cookie> code_cookie=  Arrays.stream(request.getCookies()).filter(p -> p.getName().equals("code_token") ).findFirst();;
-        String  vale  =code_cookie.get().getValue();
-        String  name  =code_cookie.get().getName();
-        String code= (String) redisTemplate.opsForValue().get("IMGCODE_".concat(vale));
+        Optional<Cookie> code_cookie = Arrays.stream(request.getCookies()).filter(p -> p.getName().equals("code_token")).findFirst();
+        String vale = code_cookie.get().getValue();
+        String name = code_cookie.get().getName();
+        String code = (String) redisTemplate.opsForValue().get("IMGCODE_".concat(vale));
 
 
+        if (StrUtil.isEmpty(code) || !captcha.equalsIgnoreCase(code)) {
+            return ResultVoUtil.error("验证码错误");
+        }
+        redisTemplate.delete("IMGCODE_".concat(name));
 
-            if (StrUtil.isEmpty(code) || !captcha.toUpperCase().equals(code.toUpperCase())) {
-                return  ResultVoUtil.error("验证码错误");
-            }
-            redisTemplate.delete("IMGCODE_".concat(name));
+        if (username.equals(adminConfiguration.getUsername()) && password.equals(adminConfiguration.getPassword())) {
 
-            if(username.equals(adminConfiguration.getUsername())&&password.equals(adminConfiguration.getPassword())) {
+            String online_token = UUID.randomUUID().toString();
+            Cookie online_cookie = new Cookie("online_token", online_token);
+            online_cookie.setPath("/");
+            response.addCookie(online_cookie);
 
-                String online_token = UUID.randomUUID().toString();
-                Cookie online_cookie = new Cookie("online_token", online_token);
-                online_cookie.setPath("/");
-                response.addCookie(online_cookie);
+            User u = new User();
+            u.setName(username);
+            redisTemplate.opsForValue().set("WEB_ONLINE_".concat(online_token), u, 3000, TimeUnit.SECONDS);
+        } else {
 
-                User u=new User();
-                u.setName(username);
-                redisTemplate.opsForValue().set("WEB_ONLINE_".concat(online_token), u, 3000, TimeUnit.SECONDS);
-            }else{
-
-                return  ResultVoUtil.error("账号密码错误!");
-            }
-          return ResultVoUtil.success("登录成功", new URL("/main"));
+            return ResultVoUtil.error("账号密码错误!");
+        }
+        return ResultVoUtil.success("登录成功", new URL("/main"));
     }
 
     /**
@@ -108,11 +105,11 @@ public class LoginController implements ErrorController {
         // 获取验证码
         String code = CaptchaUtil.getRandomCode();
 
-       String code_token= UUID.randomUUID().toString();
+        String code_token = UUID.randomUUID().toString();
         Cookie cookie = new Cookie("code_token", code_token);
         cookie.setPath("/");
         response.addCookie(cookie);
-        redisTemplate.opsForValue().set("IMGCODE_".concat(code_token),code,300, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set("IMGCODE_".concat(code_token), code, 300, TimeUnit.SECONDS);
         // 输出到web页面
         ImageIO.write(CaptchaUtil.genCaptcha(code), "jpg", response.getOutputStream());
     }
@@ -123,7 +120,7 @@ public class LoginController implements ErrorController {
     @Auth
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
-        Optional<Cookie> cookie=  Arrays.stream(request.getCookies()).filter(p -> p.getName().equals("online_token") ).findFirst();;
+        Optional<Cookie> cookie = Arrays.stream(request.getCookies()).filter(p -> p.getName().equals("online_token")).findFirst();
         redisTemplate.delete("WEB_ONLINE_".concat(cookie.get().getName()));
         return "redirect:/login";
     }
@@ -135,8 +132,6 @@ public class LoginController implements ErrorController {
     public String noAuth() {
         return "/system/main/noAuth";
     }
-
-
 
 
 }

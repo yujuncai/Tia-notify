@@ -26,7 +26,7 @@ public class TimoExpressionObjectFactory implements IExpressionObjectFactory {
 
     @Override
     public Object buildObject(IExpressionContext context, String expressionObjectName) {
-        if(PAGE_UTIL_NAME.equals(expressionObjectName)){
+        if (PAGE_UTIL_NAME.equals(expressionObjectName)) {
             return PAGE_UTIL_OBJECT;
         }
 

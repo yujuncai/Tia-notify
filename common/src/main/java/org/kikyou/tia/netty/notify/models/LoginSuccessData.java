@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 /**
  * login success dto
+ *
  * @author yujuncai
  */
 @Data

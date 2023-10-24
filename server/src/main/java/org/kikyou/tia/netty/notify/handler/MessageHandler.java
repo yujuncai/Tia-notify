@@ -7,7 +7,10 @@ import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.annotation.OnEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.kikyou.tia.netty.notify.constant.*;
+import org.kikyou.tia.netty.notify.constant.Common;
+import org.kikyou.tia.netty.notify.constant.EventNam;
+import org.kikyou.tia.netty.notify.constant.MessageType;
+import org.kikyou.tia.netty.notify.constant.UserType;
 import org.kikyou.tia.netty.notify.models.Message;
 import org.kikyou.tia.netty.notify.models.User;
 import org.kikyou.tia.netty.notify.service.DBStoreService;
@@ -19,6 +22,7 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * 监听接收消息
+ *
  * @author yujuncai
  */
 @Slf4j
@@ -31,12 +35,13 @@ public class MessageHandler {
     private final DBStoreService dbstoreService;
     private final SocketIOServer socketIOServer;
     private final SystemMessageHandler systemMessageHandler;
+
     @OnEvent(EventNam.MESSAGE)
     public void onData(SocketIOClient client, User from, User to, String content, String type, AckRequest ackSender) throws Exception {
         // 判断是指定发送方发送消息,还是群发
-        log.debug("form:{} to:{} content:{} type:{}", from,to,content,type);
+        log.debug("form:{} to:{} content:{} type:{}", from, to, content, type);
 
-        User user =  client.get(Common.USER_KEY);
+        User user = client.get(Common.USER_KEY);
         from.setId(user.getId()); //替换from id
         Message storeMsg = new Message();
         storeMsg.setFrom(from);
@@ -55,14 +60,14 @@ public class MessageHandler {
                         to,
                         content,
                         type);
-            }else {//离线或者不在本机,发送到集群
+            } else {//离线或者不在本机,发送到集群
                 systemMessageHandler.sendMessageToCluster(storeMsg);
             }
             //存到数据库
             dbstoreService.saveMessage(storeMsg);
         }
         if (UserType.GROUP.getName().equals(to.getType())) {
-            CompletableFuture<Message> future= storeService.saveGroupMessage(from, to, content, MessageType.getTypeByName(type));//群消息到redis,异步,有IO操作
+            CompletableFuture<Message> future = storeService.saveGroupMessage(from, to, content, MessageType.getTypeByName(type));//群消息到redis,异步,有IO操作
             // 群发
             socketIOServer.getNamespace(user.getNameSpace()).getBroadcastOperations().sendEvent(EventNam.MESSAGE,
                     /*排除自己*/
@@ -73,14 +78,10 @@ public class MessageHandler {
                     type);
 
             //并发送到集群
-            future.thenAccept (systemMessageHandler::sendMessageToCluster);
+            future.thenAccept(systemMessageHandler::sendMessageToCluster);
 
         }
     }
-
-
-
-
 
 
 }

@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- *
  * @author xiaowu
  */
 @UtilityClass

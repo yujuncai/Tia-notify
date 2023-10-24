@@ -4,14 +4,12 @@ import lombok.Getter;
 
 
 @Getter
-public final class ResponseDto
-{
+public final class ResponseDto {
 
     private final String message;
 
 
-    public ResponseDto(final String message)
-    {
+    public ResponseDto(final String message) {
         this.message = message;
     }
 }

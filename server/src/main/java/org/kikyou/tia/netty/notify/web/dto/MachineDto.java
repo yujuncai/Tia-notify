@@ -6,8 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MachineDto
-{
+public class MachineDto {
 
     private String operatingSystem;
 

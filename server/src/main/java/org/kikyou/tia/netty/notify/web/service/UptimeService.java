@@ -6,14 +6,12 @@ import org.springframework.stereotype.Service;
 import oshi.SystemInfo;
 
 @Service
-public class UptimeService
-{
+public class UptimeService {
     @Resource
     private SystemInfo systemInfo;
 
 
-    public UptimeDto getUptime()
-    {
+    public UptimeDto getUptime() {
         UptimeDto uptimeDto = new UptimeDto();
 
         long uptimeInSeconds = systemInfo.getOperatingSystem().getSystemUptime();

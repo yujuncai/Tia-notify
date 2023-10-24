@@ -36,15 +36,15 @@ public interface TiaCluster {
     }
 
 
-     boolean isCluster();
+    boolean isCluster();
 
-     boolean isLeader();
+    boolean isLeader();
 
-     void allMembers();
+    void allMembers();
 
-     void SyncNameSpaceMessage(String type, Object o);
+    void SyncNameSpaceMessage(String type, Object o);
 
-     void SyncUserMessage(String type, Object o);
+    void SyncUserMessage(String type, Object o);
 
-     void SyncSystemssage(String type, Object o);
+    void SyncSystemssage(String type, Object o);
 }

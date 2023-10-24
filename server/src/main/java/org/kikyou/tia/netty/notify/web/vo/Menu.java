@@ -2,7 +2,7 @@ package org.kikyou.tia.netty.notify.web.vo;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.Data;
 import org.springframework.data.annotation.Transient;
 
 import java.io.Serializable;

@@ -15,14 +15,11 @@ import java.io.IOException;
 import java.net.InetAddress;
 
 
-
 @Service
 public class MonitorIndexService {
 
     @Resource
     StringRedisTemplate stringRedisTemplate;
-
-
 
 
     private String getVersion() throws IOException {
@@ -48,8 +45,6 @@ public class MonitorIndexService {
             model.addAttribute("uptime", JSONUtil.toBean(uptime, UptimeDto.class));
         }
         model.addAttribute("version", getVersion());
-
-
 
 
         return "/system/monitor/index";

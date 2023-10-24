@@ -6,14 +6,12 @@ import oshi.SystemInfo;
 
 
 @Configuration
-public class BeanConfiguration
-{
+public class BeanConfiguration {
     /**
      * @return SystemInfo object
      */
     @Bean
-    public SystemInfo systemInfo()
-    {
+    public SystemInfo systemInfo() {
         return new SystemInfo();
     }
 }

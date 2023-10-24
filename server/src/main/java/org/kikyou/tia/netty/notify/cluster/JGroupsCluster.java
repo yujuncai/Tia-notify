@@ -7,7 +7,10 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jgroups.*;
+import org.jgroups.Address;
+import org.jgroups.JChannel;
+import org.jgroups.Message;
+import org.jgroups.ObjectMessage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Async;
@@ -31,14 +34,15 @@ public class JGroupsCluster implements TiaCluster {
     private JChannel channel;
 
     public static Address localAddress;
+
     @PostConstruct
     public void init() {
         log.info("init");
         try {
 
-            log.info("加载配置文件 {} 开始 {}", jGroupsConfig,DateUtil.date());
+            log.info("加载配置文件 {} 开始 {}", jGroupsConfig, DateUtil.date());
             channel = new JChannel(jGroupsConfig);
-            log.info("加载配置文件 {} 结束 {}", jGroupsConfig,DateUtil.date());
+            log.info("加载配置文件 {} 结束 {}", jGroupsConfig, DateUtil.date());
             channel.receiver(SpringUtil.getBean("clusterReceiver"));
             channel.connect(clusterName);
             localAddress = channel.getAddress();
@@ -81,6 +85,7 @@ public class JGroupsCluster implements TiaCluster {
             log.info("address is {}", s);
         });
     }
+
     @Async("asyncExecutor")
     public void SyncNameSpaceMessage(String type, Object o) {
         try {
@@ -99,7 +104,6 @@ public class JGroupsCluster implements TiaCluster {
             e.printStackTrace();
         }
     }
-
 
 
     @Async("asyncExecutor")

@@ -29,17 +29,16 @@ public class SocketIOClientConfiguration {
 // "name":"/tia-java"
 // }"
         String signature = MySecureUtil.aesEncrypt("jvZJhHtp3vOVmpool6QlMw==", "/tia-java");
-        String s="http://localhost:8080".concat("?").concat("appid=987654321").concat("&").concat("signature="+signature);
-        log.info("完整的路径 {} ",s);
-        Manager m=new Manager(new URI(s));
-        Socket  socket=m.socket("/tia-java");
-       // Socket socket = IO.socket(URI.create(s), options); //
+        String s = "http://localhost:8080".concat("?").concat("appid=987654321").concat("&").concat("signature=" + signature);
+        log.info("完整的路径 {} ", s);
+        Manager m = new Manager(new URI(s));
+        Socket socket = m.socket("/tia-java");
+        // Socket socket = IO.socket(URI.create(s), options); //
 
         Socket connect = socket.connect();
 
         return connect;
     }
-
 
 
 }

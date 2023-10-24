@@ -75,18 +75,18 @@ public class WebService {
 
 
     @Transactional
-    public void   saveMenu ( List<Menu> list){
+    public void saveMenu(List<Menu> list) {
 
         list.stream().forEach(s -> {
             MapSqlParameterSource param = new MapSqlParameterSource();
-            param.addValue("icon",s.getIcon());
-            param.addValue("pid",s.getPid());
-            param.addValue("remark",s.getRemark());
-            param.addValue("sort",s.getSort());
-            param.addValue("status",1);
-            param.addValue("title",s.getTitle());
-            param.addValue("type",s.getType());
-            param.addValue("url",s.getUrl());
+            param.addValue("icon", s.getIcon());
+            param.addValue("pid", s.getPid());
+            param.addValue("remark", s.getRemark());
+            param.addValue("sort", s.getSort());
+            param.addValue("status", 1);
+            param.addValue("title", s.getTitle());
+            param.addValue("type", s.getType());
+            param.addValue("url", s.getUrl());
             System.out.println("1111111");
             namedParameterJdbcTemplate.update("insert into db_menu(icon, pid,remark,sort,status,title,type,url) values (:icon, :pid,:remark,:sort,:status,:title,:type,:url)", param);
         });
@@ -94,38 +94,35 @@ public class WebService {
     }
 
 
-
     @Transactional
-    public void   updateMenu ( List<Menu> list){
+    public void updateMenu(List<Menu> list) {
 
         list.stream().forEach(s -> {
             MapSqlParameterSource param = new MapSqlParameterSource();
-            param.addValue("id",s.getId());
-            param.addValue("icon",s.getIcon());
-            param.addValue("pid",s.getPid());
-            param.addValue("remark",s.getRemark());
-            param.addValue("sort",s.getSort());
-            param.addValue("status",1);
-            param.addValue("title",s.getTitle());
-            param.addValue("type",s.getType());
-            param.addValue("url",s.getUrl());
+            param.addValue("id", s.getId());
+            param.addValue("icon", s.getIcon());
+            param.addValue("pid", s.getPid());
+            param.addValue("remark", s.getRemark());
+            param.addValue("sort", s.getSort());
+            param.addValue("status", 1);
+            param.addValue("title", s.getTitle());
+            param.addValue("type", s.getType());
+            param.addValue("url", s.getUrl());
 
-         namedParameterJdbcTemplate.update("update  db_menu set icon=:icon, pid=:pid,remark=:remark,sort=:sort,status=:status,title=:title,type=:type,url=:url where id=:id", param);
+            namedParameterJdbcTemplate.update("update  db_menu set icon=:icon, pid=:pid,remark=:remark,sort=:sort,status=:status,title=:title,type=:type,url=:url where id=:id", param);
         });
 
     }
 
 
-
-
     @Transactional
-    public boolean   delMenu ( List<Long> list){
+    public boolean delMenu(List<Long> list) {
         list.stream().forEach(s -> {
             MapSqlParameterSource param = new MapSqlParameterSource();
-            param.addValue("id",s);
+            param.addValue("id", s);
             namedParameterJdbcTemplate.update("  delete from db_menu where id=:id ", param);
         });
-            return true;
+        return true;
     }
 
 
@@ -133,31 +130,32 @@ public class WebService {
     public Page<User> getUserPageList(String username) {
 
         MapSqlParameterSource param = new MapSqlParameterSource();
-        param.addValue("username",username);
-        String countsql="SELECT count(*) as count FROM db_user ";
-        String querysql="SELECT * FROM db_user   ";
-     if(StringUtils.isNotEmpty(username)){
-         countsql=countsql+" where name=:username ";
-         querysql=querysql+" where name=:username ";
-     }
-         Long count=   namedParameterJdbcTemplate.queryForObject(countsql,param,Long.class);
-         Long totalSize = Objects.isNull(count) ? 0 : count;
+        param.addValue("username", username);
+        String countsql = "SELECT count(*) as count FROM db_user ";
+        String querysql = "SELECT * FROM db_user   ";
+        if (StringUtils.isNotEmpty(username)) {
+            countsql = countsql + " where name=:username ";
+            querysql = querysql + " where name=:username ";
+        }
+        Long count = namedParameterJdbcTemplate.queryForObject(countsql, param, Long.class);
+        Long totalSize = Objects.isNull(count) ? 0 : count;
         // 创建分页对象
         PageRequest pageable = PageSortUtil.pageRequest(Sort.Direction.ASC);
         if (totalSize.longValue() == 0) {
-            List<User> list=new ArrayList<>();
-            return  new PageImpl<>(list,pageable,totalSize);
+            List<User> list = new ArrayList<>();
+            return new PageImpl<>(list, pageable, totalSize);
         }
-        List<User> list=   namedParameterJdbcTemplate.query(querysql+" limit "+pageable.getOffset() +","+pageable.getPageSize(),param,
+        List<User> list = namedParameterJdbcTemplate.query(querysql + " limit " + pageable.getOffset() + "," + pageable.getPageSize(), param,
                 new BeanPropertyRowMapper<>(User.class));
-        Page<User>  page = new PageImpl<>(list,pageable,totalSize);
+        Page<User> page = new PageImpl<>(list, pageable, totalSize);
         return page;
     }
+
     @Transactional
-    public boolean   delUser ( List<String> list){
+    public boolean delUser(List<String> list) {
         list.stream().forEach(s -> {
             MapSqlParameterSource param = new MapSqlParameterSource();
-            param.addValue("id",s);
+            param.addValue("id", s);
             namedParameterJdbcTemplate.update("  delete from db_user where id=:id ", param);
         });
         return true;
@@ -168,34 +166,35 @@ public class WebService {
     public Page<MainBody> getNameSpacePageList(String space) {
 
         MapSqlParameterSource param = new MapSqlParameterSource();
-        param.addValue("space",space);
-        String countsql="SELECT count(*) as count FROM db_main_body ";
-        String querysql="SELECT * FROM db_main_body   ";
-        if(StringUtils.isNotEmpty(space)){
-            countsql=countsql+" where name=:space ";
-            querysql=querysql+" where name=:space ";
+        param.addValue("space", space);
+        String countsql = "SELECT count(*) as count FROM db_main_body ";
+        String querysql = "SELECT * FROM db_main_body   ";
+        if (StringUtils.isNotEmpty(space)) {
+            countsql = countsql + " where name=:space ";
+            querysql = querysql + " where name=:space ";
         }
-        Long count=   namedParameterJdbcTemplate.queryForObject(countsql,param,Long.class);
+        Long count = namedParameterJdbcTemplate.queryForObject(countsql, param, Long.class);
         Long totalSize = Objects.isNull(count) ? 0 : count;
         // 创建分页对象
         PageRequest pageable = PageSortUtil.pageRequest(Sort.Direction.ASC);
         if (totalSize.longValue() == 0) {
-            List<MainBody> list=new ArrayList<>();
-            return  new PageImpl<>(list,pageable,totalSize);
+            List<MainBody> list = new ArrayList<>();
+            return new PageImpl<>(list, pageable, totalSize);
         }
-        List<MainBody> list=   namedParameterJdbcTemplate.query(querysql+" limit "+pageable.getOffset() +","+pageable.getPageSize(),param,
+        List<MainBody> list = namedParameterJdbcTemplate.query(querysql + " limit " + pageable.getOffset() + "," + pageable.getPageSize(), param,
                 new BeanPropertyRowMapper<>(MainBody.class));
-        Page<MainBody>  page = new PageImpl<>(list,pageable,totalSize);
+        Page<MainBody> page = new PageImpl<>(list, pageable, totalSize);
         return page;
     }
+
     @Transactional
-    public boolean   delNameSpace ( List<String> list){
+    public boolean delNameSpace(List<String> list) {
         list.stream().forEach(s -> {
 
-           MainBody b= this.getNameSpaceById(s);
+            MainBody b = this.getNameSpaceById(s);
             tiaCluster.RemoveNamespace(b.getNameSpace());
             MapSqlParameterSource param = new MapSqlParameterSource();
-            param.addValue("id",s);
+            param.addValue("id", s);
             namedParameterJdbcTemplate.update("  delete from db_main_body where id=:id ", param);
 
 
@@ -216,35 +215,35 @@ public class WebService {
 
     }
 
-    public void   updateNameSapce ( List<MainBody> list) {
+    public void updateNameSapce(List<MainBody> list) {
 
         list.stream().forEach(s -> {
             MapSqlParameterSource param = new MapSqlParameterSource();
-            param.addValue("id",s.getId());
-            param.addValue("name",s.getName());
-            param.addValue("nameSpace",s.getNameSpace());
-            param.addValue("mainStatus",s.getMainStatus());
+            param.addValue("id", s.getId());
+            param.addValue("name", s.getName());
+            param.addValue("nameSpace", s.getNameSpace());
+            param.addValue("mainStatus", s.getMainStatus());
 
             MainBody oldNameSpace = getNameSpaceById(s.getId());
 
             if (!s.getNameSpace().isEmpty() && s.getNameSpace().startsWith("/") && s.getNameSpace().length() < 50) {
-                tiaCluster.UpdateNamespace(oldNameSpace.getNameSpace(),s.getNameSpace());
+                tiaCluster.UpdateNamespace(oldNameSpace.getNameSpace(), s.getNameSpace());
                 namedParameterJdbcTemplate.update("update  db_main_body set name=:name, nameSpace=:nameSpace,mainStatus=:mainStatus where id=:id", param);
             }
 
         });
     }
 
-    public void   saveNameSapce ( List<MainBody> list) {
+    public void saveNameSapce(List<MainBody> list) {
 
         list.stream().forEach(s -> {
             MapSqlParameterSource param = new MapSqlParameterSource();
             param.addValue("id", IdUtil.fastSimpleUUID());
-            param.addValue("name",s.getName());
-            param.addValue("nameSpace",s.getNameSpace());
+            param.addValue("name", s.getName());
+            param.addValue("nameSpace", s.getNameSpace());
             param.addValue("appSecret", MySecureUtil.generateAesKey());
-            param.addValue("mainStatus",0);
-            param.addValue("appId",IdUtil.fastUUID());
+            param.addValue("mainStatus", 0);
+            param.addValue("appId", IdUtil.fastUUID());
             if (!s.getNameSpace().isEmpty() && s.getNameSpace().startsWith("/") && s.getNameSpace().length() < 50) {
                 namedParameterJdbcTemplate.update("insert into db_main_body(id,name, nameSpace,appSecret,mainStatus,appId) values (:id,:name, :nameSpace,:appSecret,:mainStatus,:appId)", param);
                 tiaCluster.addNamespace(s.getNameSpace());

@@ -6,8 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UptimeDto
-{
+public class UptimeDto {
 
     private String days;
 

@@ -15,16 +15,17 @@ import java.util.UUID;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class SyncUserMessageHandler implements  BaseHandler{
+public class SyncUserMessageHandler implements BaseHandler {
 
     private final DBStoreService dbstoreService;
     private final SocketIOServer socketIOServer;
+
     @Override
     public void doHandler(Object m) {
 
-        Message storeMsg= (Message) m;
+        Message storeMsg = (Message) m;
 
-        SocketIOClient receiverClient = socketIOServer.getNamespace( storeMsg.getFrom().getNameSpace()).getClient(UUID.fromString(storeMsg.getTo().getCurrId()));
+        SocketIOClient receiverClient = socketIOServer.getNamespace(storeMsg.getFrom().getNameSpace()).getClient(UUID.fromString(storeMsg.getTo().getCurrId()));
 
         if (receiverClient != null && receiverClient.isChannelOpen()) {//本机在线
             receiverClient.sendEvent(EventNam.MESSAGE,

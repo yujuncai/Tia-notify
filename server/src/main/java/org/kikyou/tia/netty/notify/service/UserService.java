@@ -70,7 +70,7 @@ public class UserService {
 
 
     public Boolean exitActiveUser(User sc) {
-        User user = storeService.getIdKeyV(sc.getId(),sc.getNameSpace());
+        User user = storeService.getIdKeyV(sc.getId(), sc.getNameSpace());
         if (Objects.nonNull(user)) {
             return user.getName().equals(sc.getName());
         }

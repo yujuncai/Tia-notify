@@ -22,58 +22,44 @@ import java.util.regex.Pattern;
 
 
 @Service
-public class InfoService
-{
+public class InfoService {
 
     @Resource
     private SystemInfo systemInfo;
 
 
-    private String getConvertedFrequency(final long[] hertzArray)
-    {
+    private String getConvertedFrequency(final long[] hertzArray) {
         long totalFrequency = Arrays.stream(hertzArray).sum();
         long hertz = totalFrequency / hertzArray.length;
 
-        if ((hertz / 1E+6) > 999)
-        {
+        if ((hertz / 1E+6) > 999) {
             return (Math.round((hertz / 1E+9) * 10.0) / 10.0) + " GHz";
-        }
-        else
-        {
+        } else {
             return Math.round(hertz / 1E+6) + " MHz";
         }
     }
 
 
-    private String getConvertedCapacity(final long bits)
-    {
-        if ((bits / 1.049E+6) > 999)
-        {
-            if ((bits / 1.074E+9) > 999)
-            {
+    private String getConvertedCapacity(final long bits) {
+        if ((bits / 1.049E+6) > 999) {
+            if ((bits / 1.074E+9) > 999) {
                 return (Math.round((bits / 1.1E+12) * 10.0) / 10.0) + " TiB";
-            }
-            else
-            {
+            } else {
                 return Math.round(bits / 1.074E+9) + " GiB";
             }
-        }
-        else
-        {
+        } else {
             return Math.round(bits / 1.049E+6) + " MiB";
         }
     }
 
 
-    private ProcessorDto getProcessor()
-    {
+    private ProcessorDto getProcessor() {
         ProcessorDto processorDto = new ProcessorDto();
 
         CentralProcessor centralProcessor = systemInfo.getHardware().getProcessor();
 
         String name = centralProcessor.getProcessorIdentifier().getName();
-        if (name.contains("@"))
-        {
+        if (name.contains("@")) {
             name = name.substring(0, name.indexOf('@') - 1);
         }
         processorDto.setName(name.trim());
@@ -89,8 +75,7 @@ public class InfoService
     }
 
 
-    private MachineDto getMachine()
-    {
+    private MachineDto getMachine() {
         MachineDto machineDto = new MachineDto();
 
         OperatingSystem operatingSystem = systemInfo.getOperatingSystem();
@@ -101,12 +86,9 @@ public class InfoService
         machineDto.setTotalRam(getConvertedCapacity(globalMemory.getTotal()) + " Ram");
 
         Optional<PhysicalMemory> physicalMemoryOptional = globalMemory.getPhysicalMemory().stream().findFirst();
-        if (physicalMemoryOptional.isPresent())
-        {
+        if (physicalMemoryOptional.isPresent()) {
             machineDto.setRamTypeOrOSBitDepth(physicalMemoryOptional.get().getMemoryType());
-        }
-        else
-        {
+        } else {
             machineDto.setRamTypeOrOSBitDepth(operatingSystem.getBitness() + "-bit");
         }
 
@@ -117,28 +99,23 @@ public class InfoService
     }
 
 
-    private StorageDto getStorage()
-    {
+    private StorageDto getStorage() {
         StorageDto storageDto = new StorageDto();
 
         List<HWDiskStore> hwDiskStores = systemInfo.getHardware().getDiskStores();
         GlobalMemory globalMemory = systemInfo.getHardware().getMemory();
 
         Optional<HWDiskStore> hwDiskStoreOptional = hwDiskStores.stream().findFirst();
-        if (hwDiskStoreOptional.isPresent())
-        {
+        if (hwDiskStoreOptional.isPresent()) {
             String mainStorage = hwDiskStoreOptional.get().getModel();
             Matcher matcher = Pattern.compile("\\(.{1,15} .{1,15} .{1,15}\\)").matcher(mainStorage);
 
-            if (matcher.find())
-            {
+            if (matcher.find()) {
                 mainStorage = mainStorage.substring(0, matcher.start() - 1);
             }
 
             storageDto.setMainStorage(mainStorage.trim());
-        }
-        else
-        {
+        } else {
             storageDto.setMainStorage("Undefined");
         }
 
@@ -154,16 +131,15 @@ public class InfoService
     }
 
 
-    public InfoDto getInfo()
-    {
+    public InfoDto getInfo() {
 
-            InfoDto infoDto = new InfoDto();
+        InfoDto infoDto = new InfoDto();
 
-            infoDto.setProcessor(getProcessor());
-            infoDto.setMachine(getMachine());
-            infoDto.setStorage(getStorage());
+        infoDto.setProcessor(getProcessor());
+        infoDto.setMachine(getMachine());
+        infoDto.setStorage(getStorage());
 
-            return infoDto;
+        return infoDto;
 
     }
 }

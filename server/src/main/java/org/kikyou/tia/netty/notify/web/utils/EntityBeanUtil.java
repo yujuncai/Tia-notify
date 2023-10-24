@@ -16,15 +16,15 @@ import java.util.List;
 
 /**
  * 实体对象操作工具
- *
  */
 public class EntityBeanUtil {
 
-    /** 复制实体对象保留的默认字段 */
-    private static String[] defaultFields = new String[]{
+    /**
+     * 复制实体对象保留的默认字段
+     */
+    private static final String[] defaultFields = new String[]{
 
     };
-
 
 
     /**

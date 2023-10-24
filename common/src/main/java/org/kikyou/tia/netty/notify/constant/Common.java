@@ -2,6 +2,7 @@ package org.kikyou.tia.netty.notify.constant;
 
 /**
  * Common
+ *
  * @author yujuncai
  */
 public interface Common {
@@ -24,10 +25,10 @@ public interface Common {
      */
     String GROUP_001_CHANNEL = "group_001";
 
-    String SALT="TIA";
+    String SALT = "TIA";
 
 
-    String ID_KEY="id_key_";
+    String ID_KEY = "id_key_";
 
-    String DEFAULT="default";
+    String DEFAULT = "default";
 }

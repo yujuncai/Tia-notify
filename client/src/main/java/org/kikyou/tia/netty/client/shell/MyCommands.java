@@ -25,14 +25,15 @@ import java.util.concurrent.Executors;
 public class MyCommands {
 
     private final Socket socket;
+
     @ShellMethod(value = "check")
-    public void check(){
-        log.info("是否连接上 "+socket.connected());
+    public void check() {
+        log.info("是否连接上 " + socket.connected());
 
     }
 
     @ShellMethod(value = "login")
-    public void login(){
+    public void login() {
         log.info("发起login");
         User user = new User();
         user.setName("111");
@@ -43,15 +44,16 @@ public class MyCommands {
         //socket.emit(EventNam.LOGIN, JSONUtil.parseObj(user));
 
 //ack
-       socket.emit(EventNam.LOGIN, new Object[]{JSONUtil.parseObj(user)},(ack)-> {
-            log.info(ack.length+"");
+        socket.emit(EventNam.LOGIN, new Object[]{JSONUtil.parseObj(user)}, (ack) -> {
+            log.info(ack.length + "");
             log.info(String.valueOf(ack));
-            log.info(Arrays.stream(ack).count()+"");
+            log.info(Arrays.stream(ack).count() + "");
         });
 
     }
+
     @ShellMethod(value = "register")
-    public void register(){
+    public void register() {
         log.info("发起register");
         User user = new User();
         user.setName("111");
@@ -64,25 +66,24 @@ public class MyCommands {
     }
 
 
-
-
     ExecutorService newFixedThreadPool = Executors.newFixedThreadPool(60);
+
     @SneakyThrows
     @ShellMethod(value = "register50")
-    public void register50(){
+    public void register50() {
         for (int i = 0; i < 50; i++) {
 
             int finalI = i;
-            Runnable runnable = new Runnable(){
+            Runnable runnable = new Runnable() {
                 @SneakyThrows
                 @Override
                 public void run() {
                     try {
                         IO.Options options = new IO.Options();
                         String signature = MySecureUtil.aesEncrypt("jvZJhHtp3vOVmpool6QlMw==", "/tia-java");
-                        String s="http://localhost".concat("?").concat("appid=987654321").concat("&").concat("signature="+signature);
-                        Manager m=new Manager(new URI(s));
-                        Socket  socket=m.socket("/tia-java");
+                        String s = "http://localhost".concat("?").concat("appid=987654321").concat("&").concat("signature=" + signature);
+                        Manager m = new Manager(new URI(s));
+                        Socket socket = m.socket("/tia-java");
                         Socket connect = socket.connect();
                         log.info("发起register");
                         User user = new User();
@@ -104,6 +105,7 @@ public class MyCommands {
         }
 
     }
+
     //模拟50个用户登陆
     @SneakyThrows
     @ShellMethod(value = "login50")
@@ -112,16 +114,16 @@ public class MyCommands {
         for (int i = 0; i < 50; i++) {
 
             int finalI = i;
-            Runnable runnable = new Runnable(){
+            Runnable runnable = new Runnable() {
                 @SneakyThrows
                 @Override
                 public void run() {
                     try {
                         IO.Options options = new IO.Options();
                         String signature = MySecureUtil.aesEncrypt("jvZJhHtp3vOVmpool6QlMw==", "/tia-java");
-                        String s="http://localhost".concat("?").concat("appid=987654321").concat("&").concat("signature="+signature);
-                        Manager m=new Manager(new URI(s));
-                        Socket  socket=m.socket("/tia-java");
+                        String s = "http://localhost".concat("?").concat("appid=987654321").concat("&").concat("signature=" + signature);
+                        Manager m = new Manager(new URI(s));
+                        Socket socket = m.socket("/tia-java");
                         Socket connect = socket.connect();
                         log.info("发起login");
                         User user = new User();
@@ -144,15 +146,10 @@ public class MyCommands {
     }
 
 
-
-
-
-
-
     @ShellMethod(value = "message2user")
-    public void message2user(String currid){
+    public void message2user(String currid) {
         log.info("发起message to user");
-        if(!StringUtils.hasText(currid)){
+        if (!StringUtils.hasText(currid)) {
             log.info("参数为空!");
         }
         User form = new User();
@@ -174,11 +171,11 @@ public class MyCommands {
         to.setType("user");
         to.setCurrId(currid);
 
-        socket.emit(EventNam.MESSAGE, JSONUtil.parseObj(form),JSONUtil.parseObj(to),"hello ~~~~user","text");
+        socket.emit(EventNam.MESSAGE, JSONUtil.parseObj(form), JSONUtil.parseObj(to), "hello ~~~~user", "text");
     }
 
     @ShellMethod(value = "message2group")
-    public void message2group(){
+    public void message2group() {
         User form = new User();
         form.setName("111");
         form.setPassword("111");
@@ -186,7 +183,7 @@ public class MyCommands {
         form.setTime(1L);
         form.setIp("127.0.0.1");
         form.setType("user");
-      //  to:User(id=group_001, name=群聊天室, password=null, time=null, avatarUrl=static/img/avatar/group-icon.png, ip=null, deviceType=null, roomId=null, type=group) content:1 type:text
+        //  to:User(id=group_001, name=群聊天室, password=null, time=null, avatarUrl=static/img/avatar/group-icon.png, ip=null, deviceType=null, roomId=null, type=group) content:1 type:text
 
         User to = new User();
         to.setId("group_001");
@@ -196,27 +193,27 @@ public class MyCommands {
         to.setIp("127.0.0.1");
         to.setType("group");
 
-        socket.emit(EventNam.MESSAGE, JSONUtil.parseObj(form),JSONUtil.parseObj(to),"hello ~~~~group","text");
+        socket.emit(EventNam.MESSAGE, JSONUtil.parseObj(form), JSONUtil.parseObj(to), "hello ~~~~group", "text");
     }
 
 
     @ShellMethod(value = "logout")
-    public void logout(){
+    public void logout() {
         log.info("发起logout");
         User user = new User();
-        socket.emit(EventNam.LOGOUT,  JSONUtil.parseObj(user));
+        socket.emit(EventNam.LOGOUT, JSONUtil.parseObj(user));
 
     }
 
     @ShellMethod(value = "all")
-    public void all(){
+    public void all() {
         log.info("获取在线所有用户");
-       UserMap.map.forEach((k,v) -> {
-           log.info("用户名:"+k);
-           log.info("用户currid:"+v.getCurrId());
-           log.info("用户:"+v);
-           log.info("______________________________");
-       });
+        UserMap.map.forEach((k, v) -> {
+            log.info("用户名:" + k);
+            log.info("用户currid:" + v.getCurrId());
+            log.info("用户:" + v);
+            log.info("______________________________");
+        });
 
     }
 }

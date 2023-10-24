@@ -6,7 +6,6 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- *
  * @author yujuncai
  */
 @Data

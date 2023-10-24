@@ -8,12 +8,10 @@ import java.io.IOException;
 
 
 @Service
-public class ErrorService
-{
+public class ErrorService {
 
 
-    public String getError(final Model model) throws IOException
-    {
+    public String getError(final Model model) throws IOException {
 
         model.addAttribute("theme", "light");
         return "error/404";
