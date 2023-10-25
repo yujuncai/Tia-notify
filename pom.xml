@@ -25,7 +25,7 @@
 
     <properties>
         <java.version>17</java.version>
-        <socketio.version>2.0.3</socketio.version>
+        <socketio.version>2.0.6</socketio.version>
         <hutool.version>5.8.20</hutool.version>
         <redisson.version>3.19.3</redisson.version>
         <jgroups.version>5.2.2.Final</jgroups.version>

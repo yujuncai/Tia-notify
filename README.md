@@ -10,7 +10,7 @@ A clusterable multi-namespace long connection service based on Netty-socketIO
 | Technology | Version |
 | --- | --- |
 | socket.io-client (Java WebSocket client support) | 1.0.2 |
-| netty-socketio (Socket.IO Java server implementation) | 2.0.3 |
+| netty-socketio (Socket.IO Java server implementation) | 2.0.6 |
 | jdk | >= 17 |
 | springboot | 3.0.0 |
 | redisson | 3.18.1 |
@@ -72,7 +72,7 @@ See more details::<br />[commit-types](https://github.com/pvdlg/conventional-cha
 
 #### H5
 
-Mobile client demo source code:<br />[客户端demo](https://github.com/yujuncai/Tia-web-demo)
+Mobile client demo source code:<br />[web client demo](https://github.com/yujuncai/Tia-web-demo)
 
 ![image.png](https://cdn.nlark.com/yuque/0/2023/png/1608622/1677051430945-a33353ef-2903-458b-b8a6-7b9625822d91.png)
 
