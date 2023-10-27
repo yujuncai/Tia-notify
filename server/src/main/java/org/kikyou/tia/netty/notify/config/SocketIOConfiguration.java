@@ -5,10 +5,12 @@ import cn.hutool.extra.spring.SpringUtil;
 import com.corundumstudio.socketio.*;
 import com.corundumstudio.socketio.annotation.SpringAnnotationScanner;
 import com.corundumstudio.socketio.store.RedissonStoreFactory;
+import com.corundumstudio.socketio.transport.WebSocketTransport;
 import io.netty.channel.epoll.Epoll;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RedissonClient;
+import org.springframework.boot.rsocket.server.RSocketServer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -43,7 +45,7 @@ public class SocketIOConfiguration {
         // 允许最大http content length
         config.setMaxHttpContentLength(1024 * 256);
         config.setAllowCustomRequests(true);
-        config.setTransports(Transport.WEBSOCKET, Transport.POLLING);
+        //config.setTransports(Transport.WEBSOCKET);
         config.setStoreFactory(new RedissonStoreFactory(redissonClient));
         config.setAllowHeaders("*");
         config.setOrigin(appConfiguration.getOrigin());

@@ -2,6 +2,7 @@ package org.kikyou.tia.netty.notify.handler;
 
 import cn.hutool.core.util.StrUtil;
 import com.corundumstudio.socketio.AuthorizationListener;
+import com.corundumstudio.socketio.AuthorizationResult;
 import com.corundumstudio.socketio.HandshakeData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,11 @@ public class AuthorizationHandler implements AuthorizationListener {
     private final MonitorKeyConfiguration monitorKeyConfiguration;
 
     @Override
-    public boolean isAuthorized(HandshakeData handshakeData) {
+    public AuthorizationResult getAuthorizationResult(HandshakeData handshakeData) {
+
+
+
+
         //signature 为通过AppSecret加密的 namespace
         String signature = handshakeData.getSingleUrlParam("signature");
         String appid = handshakeData.getSingleUrlParam("appid");
@@ -31,7 +36,7 @@ public class AuthorizationHandler implements AuthorizationListener {
             if (appid.equals(monitorKeyConfiguration.getAppid())) {
                 String s = MySecureUtil.aesDecrypt(monitorKeyConfiguration.getKey(), signature);
                 if ("/monitor".equals(s)) {
-                    return true;
+                  return   AuthorizationResult.SUCCESSFUL_AUTHORIZATION;
                 }
             }
 
@@ -40,19 +45,19 @@ public class AuthorizationHandler implements AuthorizationListener {
             MainBody body = mainBodyService.getMainBodyByAppId(appid);
             if (body == null) {
                 log.error("MainBody is null");
-                return false;
+                return   AuthorizationResult.FAILED_AUTHORIZATION;
             }
             String s = MySecureUtil.aesDecrypt(body.getAppSecret(), signature);
             if (!body.getNameSpace().equals(s)) {
                 log.error("{}  ----  {}", s, body.getNameSpace());
-                return false;
+                return   AuthorizationResult.FAILED_AUTHORIZATION;
             }
-            return true;
+            return   AuthorizationResult.SUCCESSFUL_AUTHORIZATION;
         } else {
 
 
             log.error("signature err...");
-            return false;
+            return   AuthorizationResult.FAILED_AUTHORIZATION;
         }
     }
 }

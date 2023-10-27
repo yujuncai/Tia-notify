@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import lombok.experimental.UtilityClass;
 
 /**
- * @author xiaowu
+ * @author yujuncai
  */
 @UtilityClass
 public class IpUtils {
