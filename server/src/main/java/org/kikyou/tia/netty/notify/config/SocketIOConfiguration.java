@@ -15,6 +15,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 
 /**
  * SocketIo init
@@ -45,7 +47,8 @@ public class SocketIOConfiguration {
         // 允许最大http content length
         config.setMaxHttpContentLength(1024 * 256);
         config.setAllowCustomRequests(true);
-        //config.setTransports(Transport.WEBSOCKET);
+       //2.0.6后无法设置
+       // config.setTransports(Transport.WEBSOCKET);
         config.setStoreFactory(new RedissonStoreFactory(redissonClient));
         config.setAllowHeaders("*");
         config.setOrigin(appConfiguration.getOrigin());
