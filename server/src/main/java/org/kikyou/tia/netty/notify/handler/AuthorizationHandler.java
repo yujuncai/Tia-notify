@@ -25,8 +25,6 @@ public class AuthorizationHandler implements AuthorizationListener {
     public AuthorizationResult getAuthorizationResult(HandshakeData handshakeData) {
 
 
-
-
         //signature 为通过AppSecret加密的 namespace
         String signature = handshakeData.getSingleUrlParam("signature");
         String appid = handshakeData.getSingleUrlParam("appid");
@@ -36,7 +34,7 @@ public class AuthorizationHandler implements AuthorizationListener {
             if (appid.equals(monitorKeyConfiguration.getAppid())) {
                 String s = MySecureUtil.aesDecrypt(monitorKeyConfiguration.getKey(), signature);
                 if ("/monitor".equals(s)) {
-                  return   AuthorizationResult.SUCCESSFUL_AUTHORIZATION;
+                    return AuthorizationResult.SUCCESSFUL_AUTHORIZATION;
                 }
             }
 
@@ -45,19 +43,19 @@ public class AuthorizationHandler implements AuthorizationListener {
             MainBody body = mainBodyService.getMainBodyByAppId(appid);
             if (body == null) {
                 log.error("MainBody is null");
-                return   AuthorizationResult.FAILED_AUTHORIZATION;
+                return AuthorizationResult.FAILED_AUTHORIZATION;
             }
             String s = MySecureUtil.aesDecrypt(body.getAppSecret(), signature);
             if (!body.getNameSpace().equals(s)) {
                 log.error("{}  ----  {}", s, body.getNameSpace());
-                return   AuthorizationResult.FAILED_AUTHORIZATION;
+                return AuthorizationResult.FAILED_AUTHORIZATION;
             }
-            return   AuthorizationResult.SUCCESSFUL_AUTHORIZATION;
+            return AuthorizationResult.SUCCESSFUL_AUTHORIZATION;
         } else {
 
 
             log.error("signature err...");
-            return   AuthorizationResult.FAILED_AUTHORIZATION;
+            return AuthorizationResult.FAILED_AUTHORIZATION;
         }
     }
 }

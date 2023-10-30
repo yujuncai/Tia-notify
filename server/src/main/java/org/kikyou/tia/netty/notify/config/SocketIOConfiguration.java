@@ -2,20 +2,19 @@ package org.kikyou.tia.netty.notify.config;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import com.corundumstudio.socketio.*;
+import com.corundumstudio.socketio.AckMode;
+import com.corundumstudio.socketio.Configuration;
+import com.corundumstudio.socketio.SocketConfig;
+import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.annotation.SpringAnnotationScanner;
 import com.corundumstudio.socketio.store.RedissonStoreFactory;
-import com.corundumstudio.socketio.transport.WebSocketTransport;
 import io.netty.channel.epoll.Epoll;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RedissonClient;
-import org.springframework.boot.rsocket.server.RSocketServer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 
 /**
@@ -47,8 +46,8 @@ public class SocketIOConfiguration {
         // 允许最大http content length
         config.setMaxHttpContentLength(1024 * 256);
         config.setAllowCustomRequests(true);
-       //2.0.6后无法设置
-       // config.setTransports(Transport.WEBSOCKET);
+        //2.0.6后无法设置
+        // config.setTransports(Transport.WEBSOCKET);
         config.setStoreFactory(new RedissonStoreFactory(redissonClient));
         config.setAllowHeaders("*");
         config.setOrigin(appConfiguration.getOrigin());
