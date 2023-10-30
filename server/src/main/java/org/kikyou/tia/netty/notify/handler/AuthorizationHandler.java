@@ -1,7 +1,6 @@
 package org.kikyou.tia.netty.notify.handler;
 
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.io.unit.DataUnit;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.corundumstudio.socketio.AuthorizationListener;
@@ -25,6 +24,7 @@ public class AuthorizationHandler implements AuthorizationListener {
 
     private final MonitorKeyConfiguration monitorKeyConfiguration;
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public AuthorizationResult getAuthorizationResult(HandshakeData handshakeData) {
 

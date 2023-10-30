@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-@Order(Integer.MAX_VALUE)
+@Order(9999)
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -32,9 +32,7 @@ public class ServerRunner implements CommandLineRunner {
 
             List<MainBody> allMainBody = mainBodyService.getAllMainBody();
             Optional.ofNullable(allMainBody).ifPresent(nss ->
-                    nss.stream().forEach(ns -> {
-                        addNameSpaceHandler(ns.getNameSpace());
-                    }));
+                    nss.forEach(ns -> addNameSpaceHandler(ns.getNameSpace())));
 
             //监控事件
             addMonitorSpaceHandler();
@@ -47,13 +45,14 @@ public class ServerRunner implements CommandLineRunner {
     public void addMonitorSpaceHandler() {
         log.info("  {}  加入namespace--------", MONITORSPACE);
         SocketIONamespace socketIONamespace = socketIOServer.addNamespace(MONITORSPACE);
-        List<String> classNames = Arrays.asList("monitorHandler");
+        List<String> classNames = List.of("monitorHandler");
         try {
-            classNames.stream().forEach(s -> {
+            classNames.forEach(s -> {
                 Object bean = SpringUtil.getBean(s);
                 Optional.ofNullable(bean).ifPresent(socketIONamespace::addListeners);
             });
         } catch (Exception e) {
+            //noinspection PlaceholderCountMatchesArgumentCount
             log.error("获取bean失败! {}", e);
         }
     }
@@ -66,11 +65,12 @@ public class ServerRunner implements CommandLineRunner {
         //获取期待的类名
         List<String> classNames = Arrays.asList("loginHandler", "logoutHandler", "messageHandler", "registerHandler", "historyHandler");
         try {
-            classNames.stream().forEach(s -> {
+            classNames.forEach(s -> {
                 Object bean = SpringUtil.getBean(s);
                 Optional.ofNullable(bean).ifPresent(socketIONamespace::addListeners);
             });
         } catch (Exception e) {
+            //noinspection PlaceholderCountMatchesArgumentCount
             log.error("获取bean失败! {}", e);
         }
 

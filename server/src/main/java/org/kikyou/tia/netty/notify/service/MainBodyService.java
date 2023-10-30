@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@SuppressWarnings("Convert2Diamond")
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -32,7 +33,7 @@ public class MainBodyService {
     public MainBody getMainBodyByAppId(String appId) {
         MapSqlParameterSource param = new MapSqlParameterSource();
         param.addValue("appId", appId);
-        List<MainBody> entries = namedParameterJdbcTemplate.query("select * from db_main_body where appId=:appId and mainStatus=0", param, new BeanPropertyRowMapper<MainBody>(MainBody.class));
+        List<MainBody> entries = namedParameterJdbcTemplate.query("select * from db_main_body where appId=:appId and mainStatus=0", param, new BeanPropertyRowMapper<>(MainBody.class));
         if (CollectionUtil.isEmpty(entries)) {
             return null;
         } else {

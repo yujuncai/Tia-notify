@@ -31,7 +31,7 @@ public class MonitorHandler {
     private final UsageService usageService;
 
     @OnEvent(EventNam.MONITOR)
-    public void onData(SocketIOClient client, String host, AckRequest ackSender) throws Exception {
+    public void onData(SocketIOClient client, String host, AckRequest ackSender)  {
 
 
         log.info("MONITOR host {}", host);
