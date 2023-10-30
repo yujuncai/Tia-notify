@@ -1,13 +1,16 @@
 package org.kikyou.tia.netty.notify.web.controller;
 
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.kikyou.tia.netty.notify.models.User;
 import org.kikyou.tia.netty.notify.utils.MySecureUtil;
+import org.kikyou.tia.netty.notify.vo.SignatureTime;
 import org.kikyou.tia.netty.notify.web.config.AdminConfiguration;
 import org.kikyou.tia.netty.notify.web.config.Auth;
 import org.kikyou.tia.netty.notify.web.utils.CaptchaUtil;
@@ -47,7 +50,12 @@ public class LoginController implements ErrorController {
     public String toLogin(Model model) {
 
         model.addAttribute("isCaptcha", true);
-        String signature = MySecureUtil.aesEncrypt("jvZJhHtp3vOVmpool6QlMw==", "/tia-java");
+
+        SignatureTime vo=new SignatureTime();
+        vo.setSignature("/tia-java");
+        vo.setTimes(DateUtil.current());
+        String json = JSONUtil.toJsonStr(vo);
+        String signature = MySecureUtil.aesEncrypt("jvZJhHtp3vOVmpool6QlMw==", json);
         String s = "webDemo/index.html".concat("?").concat("appid=987654321").concat("&").concat("signature=" + signature).concat("&namespace=tia-java");
         model.addAttribute("url", s);
         return "/login";

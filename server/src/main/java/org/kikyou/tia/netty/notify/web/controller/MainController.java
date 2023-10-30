@@ -1,6 +1,7 @@
 package org.kikyou.tia.netty.notify.web.controller;
 
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.json.JSONUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import org.kikyou.tia.netty.notify.cluster.Keeping;
 import org.kikyou.tia.netty.notify.config.MonitorKeyConfiguration;
 import org.kikyou.tia.netty.notify.models.User;
 import org.kikyou.tia.netty.notify.utils.MySecureUtil;
+import org.kikyou.tia.netty.notify.vo.SignatureTime;
 import org.kikyou.tia.netty.notify.web.config.Auth;
 import org.kikyou.tia.netty.notify.web.enums.MenuTypeEnum;
 import org.kikyou.tia.netty.notify.web.service.WebService;
@@ -65,7 +67,15 @@ public class MainController {
         model.addAttribute("monitor", mos);
 
 
-        String signature = MySecureUtil.aesEncrypt(monitorKeyConfiguration.getKey(), "/monitor");
+
+
+        SignatureTime vo=new SignatureTime();
+        vo.setSignature("/monitor");
+        vo.setTimes(DateUtil.current());
+        String json = JSONUtil.toJsonStr(vo);
+
+        String signature = MySecureUtil.aesEncrypt(monitorKeyConfiguration.getKey(), json);
+
         String s = "&appid=".concat(monitorKeyConfiguration.getAppid()).concat("&").concat("signature=" + signature).concat("&namespace=monitor");
         model.addAttribute("url", s);
 

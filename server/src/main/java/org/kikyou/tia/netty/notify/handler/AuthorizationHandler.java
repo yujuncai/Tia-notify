@@ -1,6 +1,9 @@
 package org.kikyou.tia.netty.notify.handler;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.unit.DataUnit;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.corundumstudio.socketio.AuthorizationListener;
 import com.corundumstudio.socketio.AuthorizationResult;
 import com.corundumstudio.socketio.HandshakeData;
@@ -10,6 +13,7 @@ import org.kikyou.tia.netty.notify.config.MonitorKeyConfiguration;
 import org.kikyou.tia.netty.notify.models.MainBody;
 import org.kikyou.tia.netty.notify.service.MainBodyService;
 import org.kikyou.tia.netty.notify.utils.MySecureUtil;
+import org.kikyou.tia.netty.notify.vo.SignatureTime;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -33,23 +37,38 @@ public class AuthorizationHandler implements AuthorizationListener {
 
             if (appid.equals(monitorKeyConfiguration.getAppid())) {
                 String s = MySecureUtil.aesDecrypt(monitorKeyConfiguration.getKey(), signature);
-                if ("/monitor".equals(s)) {
+                SignatureTime signatureTime = JSONUtil.toBean(s, SignatureTime.class);
+                Long times = signatureTime.getTimes();
+                long current = DateUtil.current();
+                if ("/monitor".equals(signatureTime.getSignature())&&times!=null&&current-times<10000) {
                     return AuthorizationResult.SUCCESSFUL_AUTHORIZATION;
                 }
             }
 
-            //todo 加入时间限制
+
             log.info("appid-{}   signature-{}      url-{}", appid, signature, handshakeData.getUrl());
+
             MainBody body = mainBodyService.getMainBodyByAppId(appid);
             if (body == null) {
                 log.error("MainBody is null");
                 return AuthorizationResult.FAILED_AUTHORIZATION;
             }
             String s = MySecureUtil.aesDecrypt(body.getAppSecret(), signature);
-            if (!body.getNameSpace().equals(s)) {
+
+            SignatureTime signatureTime = JSONUtil.toBean(s, SignatureTime.class);
+
+            if (!body.getNameSpace().equals(signatureTime.getSignature())) {
                 log.error("{}  ----  {}", s, body.getNameSpace());
                 return AuthorizationResult.FAILED_AUTHORIZATION;
             }
+
+            Long times = signatureTime.getTimes();
+            long current = DateUtil.current();
+            if(times==null||current-times>10000){  //大于10秒
+                log.error("{}  ----  {}", s, current-times);
+                return AuthorizationResult.FAILED_AUTHORIZATION;
+            }
+
             return AuthorizationResult.SUCCESSFUL_AUTHORIZATION;
         } else {
 
