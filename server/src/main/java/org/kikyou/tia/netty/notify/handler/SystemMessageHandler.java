@@ -57,6 +57,7 @@ public class SystemMessageHandler {
         if (tiaCluster.isCluster()) {
             tiaCluster.SyncUserMessage(ClusterMessageType.SYNC_USER_MESSAGE.getName(), m);
         }
+        log.info("单机情形,to ID未找到"+m.getTo());
     }
 
 

@@ -25,17 +25,11 @@ public class SocketIOClientConfiguration {
     @Bean
     public Socket socketIOServer() throws URISyntaxException {
         IO.Options options = new IO.Options();
-
-
-     //socket.io/?a=a&b=b&EIO=3&c=c&transport=polling     signature 为通过AppSecret加密的 namespace 和 时间戳
-
-
-
+        //socket.io/?a=a&b=b&EIO=3&c=c&transport=polling     signature 为通过AppSecret加密的 namespace 和 时间戳
         SignatureTime vo=new SignatureTime();
         vo.setSignature("/tia-java");
         vo.setTimes(DateUtil.current());
         String json = JSONUtil.toJsonStr(vo);
-
         String signature = MySecureUtil.aesEncrypt("jvZJhHtp3vOVmpool6QlMw==", json);
         String s = "http://localhost:8080".concat("?").concat("appid=987654321").concat("&").concat("signature=" + signature);
         log.info("完整的路径 {} ", s);

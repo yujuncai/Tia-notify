@@ -1,8 +1,11 @@
 package org.kikyou.tia.netty.notify.utils;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.symmetric.SymmetricAlgorithm;
+import cn.hutool.json.JSONUtil;
 import io.micrometer.common.util.StringUtils;
+import org.kikyou.tia.netty.notify.vo.SignatureTime;
 
 import java.util.Base64;
 
@@ -17,12 +20,21 @@ public class MySecureUtil {
      */
 
     public static void main(String[] args) {
-        String s = generateAesKey();
-        System.out.println(s);
+       // String s = generateAesKey();
+       // System.out.println(s);
 
-        String s1 = aesEncrypt("jvZJhHtp3vOVmpool6QlMw==", "1111111111");
-        String s2 = aesDecrypt("jvZJhHtp3vOVmpool6QlMw==", s1);
-        System.out.println(s2);
+
+        for (int i = 0; i <10000; i++) {
+            SignatureTime vo=new SignatureTime();
+            vo.setSignature("/tia-java");
+            vo.setTimes(DateUtil.current());
+            String json = JSONUtil.toJsonStr(vo);
+            String signature = MySecureUtil.aesEncrypt("jvZJhHtp3vOVmpool6QlMw==", json);
+            System.out.println(signature);
+            String s2 = aesDecrypt("jvZJhHtp3vOVmpool6QlMw==", signature);
+            System.out.println(s2);
+        }
+
     }
 
     public static String generateAesKey() {

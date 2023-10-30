@@ -1,5 +1,6 @@
 package org.kikyou.tia.netty.client.shell;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.json.JSONUtil;
 import io.socket.client.IO;
 import io.socket.client.Manager;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.kikyou.tia.netty.notify.constant.EventNam;
 import org.kikyou.tia.netty.notify.models.User;
 import org.kikyou.tia.netty.notify.utils.MySecureUtil;
+import org.kikyou.tia.netty.notify.vo.SignatureTime;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.util.StringUtils;
@@ -32,7 +34,7 @@ public class MyCommands {
 
     }
 
-    @ShellMethod(value = "login")
+    @ShellMethod(value = "loginUser1")
     public void login() {
         log.info("发起login");
         User user = new User();
@@ -41,17 +43,28 @@ public class MyCommands {
         user.setAvatarUrl("img/20180414165827.jpg");
         user.setTime(1L);
         user.setIp("127.0.0.1");
-        //socket.emit(EventNam.LOGIN, JSONUtil.parseObj(user));
+        socket.emit(EventNam.LOGIN, JSONUtil.parseObj(user));
 
 //ack
-        socket.emit(EventNam.LOGIN, new Object[]{JSONUtil.parseObj(user)}, (ack) -> {
-            log.info(ack.length + "");
-            log.info(String.valueOf(ack));
-            log.info(Arrays.stream(ack).count() + "");
-        });
+//        socket.emit(EventNam.LOGIN, new Object[]{JSONUtil.parseObj(user)}, (ack) -> {
+//            log.info(ack.length + "");
+//            log.info(String.valueOf(ack));
+//            log.info(Arrays.stream(ack).count() + "");
+//        });
 
     }
+    @ShellMethod(value = "loginUser2")
+    public void login2() {
+        log.info("发起login");
+        User user = new User();
+        user.setName("222");
+        user.setPassword("111");
+        user.setAvatarUrl("img/20180414165827.jpg");
+        user.setTime(1L);
+        user.setIp("127.0.0.1");
+        socket.emit(EventNam.LOGIN, JSONUtil.parseObj(user));
 
+    }
     @ShellMethod(value = "register")
     public void register() {
         log.info("发起register");
@@ -61,7 +74,6 @@ public class MyCommands {
         user.setAvatarUrl("img/20180414165827.jpg");
         user.setTime(1L);
         user.setIp("127.0.0.1");
-
         socket.emit(EventNam.REGISTER, JSONUtil.parseObj(user));
     }
 
@@ -80,7 +92,11 @@ public class MyCommands {
                 public void run() {
                     try {
                         IO.Options options = new IO.Options();
-                        String signature = MySecureUtil.aesEncrypt("jvZJhHtp3vOVmpool6QlMw==", "/tia-java");
+                        SignatureTime vo=new SignatureTime();
+                        vo.setSignature("/tia-java");
+                        vo.setTimes(DateUtil.current());
+                        String json = JSONUtil.toJsonStr(vo);
+                        String signature = MySecureUtil.aesEncrypt("jvZJhHtp3vOVmpool6QlMw==", json);
                         String s = "http://localhost".concat("?").concat("appid=987654321").concat("&").concat("signature=" + signature);
                         Manager m = new Manager(new URI(s));
                         Socket socket = m.socket("/tia-java");
@@ -120,7 +136,12 @@ public class MyCommands {
                 public void run() {
                     try {
                         IO.Options options = new IO.Options();
-                        String signature = MySecureUtil.aesEncrypt("jvZJhHtp3vOVmpool6QlMw==", "/tia-java");
+                        SignatureTime vo=new SignatureTime();
+                        vo.setSignature("/tia-java");
+                        vo.setTimes(DateUtil.current());
+                        String json = JSONUtil.toJsonStr(vo);
+
+                        String signature = MySecureUtil.aesEncrypt("jvZJhHtp3vOVmpool6QlMw==", json);
                         String s = "http://localhost".concat("?").concat("appid=987654321").concat("&").concat("signature=" + signature);
                         Manager m = new Manager(new URI(s));
                         Socket socket = m.socket("/tia-java");
