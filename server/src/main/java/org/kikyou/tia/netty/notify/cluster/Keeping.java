@@ -49,16 +49,16 @@ public class Keeping {
 
     @SneakyThrows
     @Scheduled(fixedDelay = 60_000, initialDelay = 5000)
-    public void keeping() throws InterruptedException {
-        List<NameSpaceVo> spacevos = new ArrayList<>();
+    public void keeping() {
+        List<NameSpaceVo> spaceVos = new ArrayList<>();
         Collection<SocketIONamespace> allNamespaces = socketIOServer.getAllNamespaces();
-        allNamespaces.stream().forEach((n) -> {
+        allNamespaces.forEach((n) -> {
             SocketIONamespace namespace = socketIOServer.getNamespace(n.getName());
-            long count = namespace.getAllClients().stream().count();
+            long count = namespace.getAllClients().size();
             NameSpaceVo v = new NameSpaceVo();
             v.setNamespace(n.getName());
             v.setCounts(String.valueOf(count));
-            spacevos.add(v);
+            spaceVos.add(v);
         });
 
         InetAddress address = InetAddress.getLocalHost();
@@ -79,7 +79,7 @@ public class Keeping {
         vo.setHostName(address.getHostName());
 
 
-        stringRedisTemplate.opsForHash().put(NAMESPACE_KEY, HOST, JSONUtil.toJsonStr(spacevos));
+        stringRedisTemplate.opsForHash().put(NAMESPACE_KEY, HOST, JSONUtil.toJsonStr(spaceVos));
         stringRedisTemplate.opsForHash().put(MONITOR_KEY, HOST, JSONUtil.toJsonStr(vo));
 
     }

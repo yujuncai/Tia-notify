@@ -17,6 +17,7 @@ public class SyncNameSpaceUpdateHandler implements BaseHandler {
 
     @Override
     public void doHandler(Object name) {
+        @SuppressWarnings("unchecked")
         Map<String, String> map = (Map<String, String>) name;
         serverRunner.RemoveNameSpaceHandler(map.get("old"));
         serverRunner.addNameSpaceHandler(map.get("new"));

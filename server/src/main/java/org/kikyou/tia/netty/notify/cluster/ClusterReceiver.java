@@ -25,14 +25,13 @@ public class ClusterReceiver implements Receiver {
 
 
     public ClusterReceiver(List<BaseHandler> handlerList) {
-        handlerList.forEach(handler -> {
-            strategy.put(handler.getProviderName(), handler);
-        });
+        handlerList.forEach(handler -> strategy.put(handler.getProviderName(), handler));
         log.info("注入策略完毕");
     }
 
 
     //接收到消息后会调用此函数
+
     public void receive(Message msg) {
         log.info("收到 {} 的消息 {} 目标为 {}", msg.getSrc(), msg.getObject(), msg.getDest());
 
@@ -40,7 +39,7 @@ public class ClusterReceiver implements Receiver {
             log.info("本地消息,丢弃!");
             return;
         }
-
+        @SuppressWarnings("rawtypes")
         ClusterMessageVo vo = msg.getObject();
         BaseHandler h = strategy.get(vo.getMsgType());
         if (h != null) {

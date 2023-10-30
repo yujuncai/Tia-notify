@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@SuppressWarnings("ALL")
 @Component
 @Slf4j
 @ConditionalOnProperty(prefix = "cluster", name = "model", havingValue = "jgroups")
@@ -81,9 +82,7 @@ public class JGroupsCluster implements TiaCluster {
 
     public void allMembers() {
         List<Address> address = channel.getView().getMembers();
-        address.stream().forEach(s -> {
-            log.info("address is {}", s);
-        });
+        address.forEach(s -> log.info("address is {}", s));
     }
 
     @Async("asyncExecutor")
@@ -114,6 +113,7 @@ public class JGroupsCluster implements TiaCluster {
             e.printStackTrace();
         }
     }
+
 
 
     private void sendMessage(String type, Object o) throws Exception {

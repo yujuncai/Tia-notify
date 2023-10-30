@@ -21,7 +21,9 @@ public class SyncSystemMessageHandler implements BaseHandler {
     private final SocketIOServer socketIOServer;
 
     @Override
+
     public void doHandler(Object m) {
+        @SuppressWarnings("unchecked")
         Map<String, Object> map = (Map<String, Object>) m;
         User user = (User) map.get("user");
         String systemType = (String) map.get("systemType");
