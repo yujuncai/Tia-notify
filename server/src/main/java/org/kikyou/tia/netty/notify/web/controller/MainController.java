@@ -5,7 +5,6 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.json.JSONUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kikyou.tia.netty.notify.cluster.Keeping;
@@ -26,8 +25,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
+@SuppressWarnings("OptionalGetWithoutIsPresent")
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -47,20 +48,18 @@ public class MainController {
         Set<Object> monitorKey = stringRedisTemplate.opsForHash().keys(Keeping.MONITOR_KEY);
 
 
-        List<List<NameSpaceVo>> sos = new ArrayList<>();
-        namespaceKey.stream().forEach(s -> {
+
+        List<List<NameSpaceVo>> sos =  namespaceKey.stream().map(s -> {
             String value = (String) stringRedisTemplate.opsForHash().get(Keeping.NAMESPACE_KEY, s);
-            List<NameSpaceVo> list = JSONUtil.toList(value, NameSpaceVo.class);
-            sos.add(list);
-        });
+            return JSONUtil.toList(value, NameSpaceVo.class);
+        }).collect(Collectors.toList());
 
 
-        List<SystemVo> mos = new ArrayList<>();
-        monitorKey.stream().forEach(s -> {
+
+        List<SystemVo> mos =   monitorKey.stream().map(s -> {
             String value = (String) stringRedisTemplate.opsForHash().get(Keeping.MONITOR_KEY, s);
-            SystemVo vo = (JSONUtil.toBean(value, SystemVo.class));
-            mos.add(vo);
-        });
+            return (JSONUtil.toBean(value, SystemVo.class));
+        }).collect(Collectors.toList());
 
 
         model.addAttribute("namespace", sos);
@@ -84,7 +83,7 @@ public class MainController {
 
     @Auth
     @GetMapping("/main")
-    public String main(HttpServletRequest request, HttpServletResponse response, Model model) {
+    public String main(HttpServletRequest request, Model model) {
         Optional<Cookie> code_cookie = Arrays.stream(request.getCookies()).filter(p -> p.getName().equals("online_token")).findFirst();
         String vale = code_cookie.get().getValue();
         User u = (User) redisTemplate.opsForValue().get("WEB_ONLINE_".concat(vale));
