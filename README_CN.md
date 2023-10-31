@@ -11,8 +11,8 @@
 | netty-socketio(socket.io的java语言服务端实现) | 2.0.6 |
 | jdk | >= 17 |
 | springboot | 3.0.0 |
-| redisson | 3.18.1 |
-| Jgroups | 5.2.2.Final |
+| redisson | 3.24.3 |
+| Jgroups | 5.3.0.Final |
 
 
 ### 前端(待补充)

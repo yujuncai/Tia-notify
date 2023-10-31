@@ -13,8 +13,8 @@ A clusterable multi-namespace long connection service based on Netty-socketIO
 | netty-socketio (Socket.IO Java server implementation) | 2.0.6 |
 | jdk | >= 17 |
 | springboot | 3.0.0 |
-| redisson | 3.18.1 |
-| Jgroups | 5.2.2.Final |
+| redisson | 3.24.3 |
+| Jgroups | 5.3.0.Final |
 
 
 ### Frontend (TBD)
