@@ -3,7 +3,8 @@
       xmlns:mo="https://gitee.com/aun/Timo"
 >
 <head th:replace="~{/common/template :: header(~{::title},~{::link},~{::style})}">
-    <link rel="stylesheet" th:href="@{/lib/zTree_v3/css/zTreeStyle/zTreeStyle.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{https://cdn.bootcdn.net/ajax/libs/zTree.v3/3.5.41/css/zTreeStyle/zTreeStyle.css}" type="text/css">
+
 </head>
 <body class="timo-layout-page">
 <div class="layui-card">
@@ -77,8 +78,8 @@
     </div>
 </div>
 <script th:replace="~{/common/template :: script}"></script>
-<script type="text/javascript" th:src="@{/js/plugins/jquery-2.2.4.min.js}"></script>
-<script type="text/javascript" th:src="@{/lib/zTree_v3/js/jquery.ztree.core.min.js}"></script>
+<script type="text/javascript" th:src="@{https://cdn.bootcdn.net/ajax/libs/jquery/2.2.4/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{https://cdn.bootcdn.net/ajax/libs/zTree.v3/3.5.41/js/jquery.ztree.core.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/timoTree.js}"></script>
 <script type="text/javascript">
     var local = window.localStorage;

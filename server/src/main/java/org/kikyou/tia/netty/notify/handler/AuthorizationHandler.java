@@ -39,14 +39,14 @@ public class AuthorizationHandler implements AuthorizationListener {
                 String s = MySecureUtil.aesDecrypt(monitorKeyConfiguration.getKey(), signature);
                 SignatureTime signatureTime = JSONUtil.toBean(s, SignatureTime.class);
                 Long times = signatureTime.getTimes();
-                long current = DateUtil.current();
-                if ("/monitor".equals(signatureTime.getSignature())&&times!=null&&current-times<10000) {
+               // long current = DateUtil.current();
+                if ("/monitor".equals(signatureTime.getSignature())&&times!=null) {
                     return AuthorizationResult.SUCCESSFUL_AUTHORIZATION;
                 }
             }
 
 
-            log.info("appid-{}   signature-{}      url-{}", appid, signature, handshakeData.getUrl());
+            log.info("appid-> {}   signature-> {}      url-> {}", appid, signature, handshakeData.getUrl());
 
             MainBody body = mainBodyService.getMainBodyByAppId(appid);
             if (body == null) {

@@ -16,8 +16,10 @@
     <meta name="keywords" content="TIA, TIA后台管理系统" />
 
     <link rel="shortcut icon" th:href="@{/mo-favicon.ico}" type="image/x-icon">
-    <link rel="stylesheet" th:href="@{/css/plugins/font-awesome-4.7.0/css/font-awesome.min.css}"  media="all">
-    <link rel="stylesheet" th:href="@{/lib/layui-v2.3.0/css/layui.css}"  media="all">
+   <!-- <link rel="stylesheet" th:href="@{/css/plugins/font-awesome-4.7.0/css/font-awesome.min.css}"  media="all">-->
+    <link rel="stylesheet" th:href="@{ https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}"  media="all">
+   <!-- <link rel="stylesheet" th:href="@{/lib/layui-v2.3.0/css/layui.css}"  media="all">-->
+    <link rel="stylesheet" th:href="@{https://www.layuicdn.com/layui-v2.3.0/css/layui.css}"  media="all">
     <link rel="stylesheet" th:href="@{/css/main.css}"  media="all">
     <th:block th:if="${link != null}">
         <th:block th:replace="${link}"></th:block>
@@ -29,7 +31,8 @@
 </head>
 <body>
     <th:block th:fragment="script">
-        <script th:src="@{/lib/layui-v2.3.0/layui.js}" charset="utf-8"></script>
+       <!-- <script th:src="@{/lib/layui-v2.3.0/layui.js}" charset="utf-8"></script>-->
+        <script th:src="@{https://www.layuicdn.com/layui-v2.3.0/layui.js}"></script>
         <script th:src="@{/js/main.js}" charset="utf-8"></script>
     </th:block>
 </body>
