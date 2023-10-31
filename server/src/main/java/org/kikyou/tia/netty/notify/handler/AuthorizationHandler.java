@@ -39,8 +39,9 @@ public class AuthorizationHandler implements AuthorizationListener {
                 String s = MySecureUtil.aesDecrypt(monitorKeyConfiguration.getKey(), signature);
                 SignatureTime signatureTime = JSONUtil.toBean(s, SignatureTime.class);
                 Long times = signatureTime.getTimes();
-               // long current = DateUtil.current();
-                if ("/monitor".equals(signatureTime.getSignature())&&times!=null) {
+                long current = DateUtil.current();
+                //monitor namespace下只需要检查大小即可
+                if ("/monitor".equals(signatureTime.getSignature())&&times!=null&&current>times) {
                     return AuthorizationResult.SUCCESSFUL_AUTHORIZATION;
                 }
             }
@@ -64,6 +65,7 @@ public class AuthorizationHandler implements AuthorizationListener {
 
             Long times = signatureTime.getTimes();
             long current = DateUtil.current();
+            //其他namespace,需要时间在10秒内的token,可防止一些暴力的连接
             if(times==null||current-times>10000){  //大于10秒
                 log.error("{}  ----  {}", s, current-times);
                 return AuthorizationResult.FAILED_AUTHORIZATION;
