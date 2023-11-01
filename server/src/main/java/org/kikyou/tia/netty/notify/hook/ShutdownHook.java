@@ -45,7 +45,7 @@ public class ShutdownHook {
             stringRedisTemplate.opsForHash().delete(Keeping.NAMESPACE_KEY, Keeping.HOST);
             stringRedisTemplate.opsForHash().delete(Keeping.MONITOR_KEY, Keeping.HOST);
         }
-
+        socketIOServer.stop();
         log.info("shutdown hook, GG");
     }
 }

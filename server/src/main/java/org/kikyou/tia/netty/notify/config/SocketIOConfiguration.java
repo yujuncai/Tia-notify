@@ -2,12 +2,11 @@ package org.kikyou.tia.netty.notify.config;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import com.corundumstudio.socketio.AckMode;
-import com.corundumstudio.socketio.Configuration;
-import com.corundumstudio.socketio.SocketConfig;
-import com.corundumstudio.socketio.SocketIOServer;
+import com.corundumstudio.socketio.*;
 import com.corundumstudio.socketio.annotation.SpringAnnotationScanner;
+import com.corundumstudio.socketio.listener.ExceptionListener;
 import com.corundumstudio.socketio.store.RedissonStoreFactory;
+import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.epoll.Epoll;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +14,8 @@ import org.redisson.api.RedissonClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 
 /**
@@ -69,12 +70,34 @@ public class SocketIOConfiguration {
         sockConfig.setTcpKeepAlive(true);
 
         config.setSocketConfig(sockConfig);
-
-
+        //异常处理
+        config.setExceptionListener(new ExceptionListener() {
+            @Override
+            public void onPongException(Exception e, SocketIOClient client) {
+                        log.error("onPongException {}",client.getSessionId());
+            }
+            @Override
+            public void onEventException(Exception e, List<Object> args, SocketIOClient client) {
+                log.error("onEventException {}",client.getSessionId());
+            }
+            @Override
+            public void onDisconnectException(Exception e, SocketIOClient client) {
+                log.error("onDisconnectException {}",client.getSessionId());
+            }
+            @Override
+            public void onConnectException(Exception e, SocketIOClient client) {
+                log.error("onConnectException {}",client.getSessionId());
+            }
+            @Override
+            public void onPingException(Exception e, SocketIOClient client) {
+                log.error("onPingException {}",client.getSessionId());
+            }
+            @Override
+            public boolean exceptionCaught(ChannelHandlerContext ctx, Throwable e) throws Exception {
+                return false;
+            }
+        });
         SocketIOServer s = new SocketIOServer(config);
-        s.addPingListener(client -> log.debug("ping--------" + client.getSessionId()));
-
-
         return s;
     }
 
