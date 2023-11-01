@@ -93,12 +93,11 @@ public class SocketIOConfiguration {
                 log.error("onPingException {}",client.getSessionId());
             }
             @Override
-            public boolean exceptionCaught(ChannelHandlerContext ctx, Throwable e) throws Exception {
+            public boolean exceptionCaught(ChannelHandlerContext ctx, Throwable e)  {
                 return false;
             }
         });
-        SocketIOServer s = new SocketIOServer(config);
-        return s;
+        return new SocketIOServer(config);
     }
 
     /**
