@@ -87,6 +87,7 @@
             <artifactId>aliyun-sdk-oss</artifactId>
             <version>${alipay.sdk.oss.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.baidu</groupId>
             <artifactId>jprotobuf</artifactId>
