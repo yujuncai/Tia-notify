@@ -6,12 +6,15 @@ import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kikyou.tia.netty.notify.cluster.Keeping;
+import org.kikyou.tia.netty.notify.constant.Common;
 import org.kikyou.tia.netty.notify.models.User;
 import org.kikyou.tia.netty.notify.service.StoreService;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import static org.kikyou.tia.netty.notify.constant.Common.USER_KEY;
 
@@ -35,8 +38,19 @@ public class ShutdownHook {
                 .forEach(socketIOClient -> {
                     User user = socketIOClient.get(USER_KEY);
                     if (!Objects.isNull(user)) {
-                        socketIOClient.del(USER_KEY);
-                        storeService.delIdKeyV(user.getId(), user.getNameSpace());
+                        log.info("清理user {}  {}" ,user.getNameSpace(),user.getId());
+                        CompletableFuture<Void> voidCompletableFuture = CompletableFuture.runAsync(() -> {
+                                socketIOClient.del(USER_KEY);
+                                storeService.delIdKeyV(user.getId(), user.getNameSpace());
+                        });
+                        try {
+                            voidCompletableFuture.get();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 });
 
@@ -45,6 +59,11 @@ public class ShutdownHook {
             stringRedisTemplate.opsForHash().delete(Keeping.NAMESPACE_KEY, Keeping.HOST);
             stringRedisTemplate.opsForHash().delete(Keeping.MONITOR_KEY, Keeping.HOST);
         }
+
+
+
+
+
         socketIOServer.stop();
         log.info("shutdown hook, GG");
     }

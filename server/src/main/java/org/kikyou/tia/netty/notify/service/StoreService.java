@@ -104,7 +104,7 @@ public class StoreService {
         );
     }
 
-    @Async("asyncExecutor")
+  //  @Async("asyncExecutor")
     public void delIdKeyV(String id, String namespace) {
         if (StrUtil.isBlank(namespace)) {
             namespace = Common.DEFAULT;
