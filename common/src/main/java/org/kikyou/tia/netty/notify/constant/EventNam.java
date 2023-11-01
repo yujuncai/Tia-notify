@@ -39,4 +39,7 @@ public interface EventNam {
 
 
     String MONITOR = "monitor";
+
+
+    String PROTOBUF = "protobuf";
 }

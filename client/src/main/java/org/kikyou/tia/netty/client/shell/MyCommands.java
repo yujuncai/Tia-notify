@@ -2,6 +2,8 @@ package org.kikyou.tia.netty.client.shell;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.json.JSONUtil;
+import com.baidu.bjf.remoting.protobuf.Codec;
+import com.baidu.bjf.remoting.protobuf.ProtobufProxy;
 import io.socket.client.IO;
 import io.socket.client.Manager;
 import io.socket.client.Socket;
@@ -10,12 +12,14 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.kikyou.tia.netty.notify.constant.EventNam;
 import org.kikyou.tia.netty.notify.models.User;
+import org.kikyou.tia.netty.notify.models.protobuf.ProtobufMessage;
 import org.kikyou.tia.netty.notify.utils.MySecureUtil;
 import org.kikyou.tia.netty.notify.vo.SignatureTime;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.util.StringUtils;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
@@ -225,6 +229,22 @@ public class MyCommands {
         socket.emit(EventNam.LOGOUT, JSONUtil.parseObj(user));
 
     }
+
+    @ShellMethod(value = "protobuf")
+    public void protobuf() throws IOException {
+        log.info("发起protobuf");
+        Codec<ProtobufMessage> simpleTypeCodec = ProtobufProxy.create(ProtobufMessage.class);
+
+        ProtobufMessage m=new ProtobufMessage();
+        m.setId(1L);
+        m.setName("Kikyou");
+
+        socket.emit(EventNam.PROTOBUF, simpleTypeCodec.encode(m));
+
+    }
+
+
+
 
     @ShellMethod(value = "all")
     public void all() {

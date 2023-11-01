@@ -30,6 +30,8 @@
         <redisson.version>3.24.3</redisson.version>
         <jgroups.version>5.3.0.Final</jgroups.version>
         <alipay.sdk.oss.version>3.16.0</alipay.sdk.oss.version>
+        <jprotobuf.version>2.4.20</jprotobuf.version>
+        <jprotobuf-precompile-plugin.version>2.2.9</jprotobuf-precompile-plugin.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
@@ -84,6 +86,16 @@
             <groupId>com.aliyun.oss</groupId>
             <artifactId>aliyun-sdk-oss</artifactId>
             <version>${alipay.sdk.oss.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baidu</groupId>
+            <artifactId>jprotobuf</artifactId>
+            <version>${jprotobuf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baidu</groupId>
+            <artifactId>jprotobuf-precompile-plugin</artifactId>
+            <version>${jprotobuf-precompile-plugin.version}</version>
         </dependency>
 
     </dependencies>
