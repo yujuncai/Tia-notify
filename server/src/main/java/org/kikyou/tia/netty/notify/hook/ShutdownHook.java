@@ -41,7 +41,7 @@ public class ShutdownHook {
                     .forEach(socketIOClient -> {
                         User user = socketIOClient.get(USER_KEY);
                         if (!Objects.isNull(user)) {
-                            log.info("清理user {}  {}" ,user.getNameSpace(),user.getId());
+                            log.info("清理redis 中 本机的user关系 {}  {}" ,user.getNameSpace(),user.getId());
                             socketIOClient.del(USER_KEY);
                             storeService.delIdKeyV(user.getId(), user.getNameSpace());
                         }
