@@ -33,26 +33,21 @@ public class ShutdownHook {
     @PreDestroy
     public void preDestroy() {
         log.info("shutdown hook, del token");
-        socketIOServer.getAllClients()
-                .stream().parallel()
-                .forEach(socketIOClient -> {
-                    User user = socketIOClient.get(USER_KEY);
-                    if (!Objects.isNull(user)) {
-                        log.info("清理user {}  {}" ,user.getNameSpace(),user.getId());
-                        CompletableFuture<Void> voidCompletableFuture = CompletableFuture.runAsync(() -> {
-                                socketIOClient.del(USER_KEY);
-                                storeService.delIdKeyV(user.getId(), user.getNameSpace());
-                        });
-                        try {
-                            voidCompletableFuture.get();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        }
 
-                    }
-                });
+        CompletableFuture<Void> voidCompletableFuture = CompletableFuture.runAsync(() -> {
+
+            socketIOServer.getAllClients()
+                    .stream().parallel()
+                    .forEach(socketIOClient -> {
+                        User user = socketIOClient.get(USER_KEY);
+                        if (!Objects.isNull(user)) {
+                            log.info("清理user {}  {}" ,user.getNameSpace(),user.getId());
+                            socketIOClient.del(USER_KEY);
+                            storeService.delIdKeyV(user.getId(), user.getNameSpace());
+                        }
+                    });
+        });
+
 
         if (!StringUtils.isNullOrEmpty(Keeping.HOST)) {
             log.info("shutdown hook, del host info");
@@ -61,9 +56,13 @@ public class ShutdownHook {
         }
 
 
-
-
-
+        try {
+            voidCompletableFuture.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
         socketIOServer.stop();
         log.info("shutdown hook, GG");
     }
