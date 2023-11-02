@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@SuppressWarnings("ALL")
 @Component
 @Slf4j
 @ConditionalOnProperty(prefix = "cluster", name = "model", havingValue = "jgroups")
@@ -117,7 +116,7 @@ public class JGroupsCluster implements TiaCluster {
 
 
     private void sendMessage(String type, Object o) throws Exception {
-        ClusterMessageVo v = new ClusterMessageVo();
+        ClusterMessageVo<Object> v = new ClusterMessageVo<>();
         v.setMsgType(type);
         v.setData(o);
         Message msg = new ObjectMessage(null, v);
