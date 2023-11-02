@@ -63,6 +63,14 @@ public class Result<T> implements Serializable {
         return this;
     }
 
+    public static Result errorMsg(String msg) {
+        Result result = new Result().error(msg);
+        return result;
+    }
 
+    public static Result okMsg(String msg) {
+        Result result = new Result().ok(msg);
+        return result;
+    }
 }
 

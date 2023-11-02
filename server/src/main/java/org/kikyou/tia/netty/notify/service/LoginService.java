@@ -52,7 +52,7 @@ public class LoginService {
         userService.organizeUser(dbUser, user, client);
         if (!Objects.isNull(dbUser) && userService.exitActiveUser(dbUser)) {
 
-            client.sendEvent(EventNam.LOGIN_FAIL,  new Result().error("重复登录,请先退出!"));
+            client.sendEvent(EventNam.LOGIN_FAIL,  Result.errorMsg("重复登录,请先退出!"));
             return null;
         }
         // 是否需要重新登录
@@ -60,11 +60,11 @@ public class LoginService {
             // 判断用户是否存在
             if (Objects.isNull(dbUser)) {
                 log.error("登录失败,账户'{}'不存在", user.getName());
-                client.sendEvent(EventNam.LOGIN_FAIL, new Result().error("登录失败,账户不存在!"));
+                client.sendEvent(EventNam.LOGIN_FAIL,Result.errorMsg("登录失败,账户不存在!"));
                 return null;
             } else if (!dbUser.getPassword().equals(DigestUtil.md5Hex(user.getPassword().concat(Common.SALT)))) {
                 log.error("登录失败,账户'{}'密码不正确", user.getName());
-                client.sendEvent(EventNam.LOGIN_FAIL, new Result().error("登录失败,用户名/密码不正确!"));
+                client.sendEvent(EventNam.LOGIN_FAIL, Result.errorMsg("登录失败,用户名/密码不正确!"));
                 return null;
             }
             // saveOrUpdate user

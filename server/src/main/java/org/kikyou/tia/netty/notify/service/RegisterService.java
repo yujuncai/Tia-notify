@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kikyou.tia.netty.notify.constant.EventNam;
 import org.kikyou.tia.netty.notify.constant.StatusType;
+import org.kikyou.tia.netty.notify.models.Result;
 import org.kikyou.tia.netty.notify.models.User;
 import org.springframework.stereotype.Service;
 
@@ -31,10 +32,10 @@ public class RegisterService {
         if (Objects.isNull(dbUser)) {
             // register user
             dbstoreService.saveOrUpdateUser(null, user, StatusType.REGISTER);
-            client.sendEvent(EventNam.REGISTER_SUCCESS, "注册成功,请登录!");
+            client.sendEvent(EventNam.REGISTER_SUCCESS, Result.okMsg("注册成功,请登录!"));
         } else {
             log.warn("注册失败,昵称'{}'已存在", user.getName());
-            client.sendEvent(EventNam.REGISTER_FAIL, "注册失败,昵称已存在!");
+            client.sendEvent(EventNam.REGISTER_FAIL, Result.errorMsg("注册失败,昵称已存在!"));
         }
     }
 }

@@ -61,7 +61,7 @@ public class ConnectHandler {
             } catch (ValidateException e) {
                 // token失效, 需要用户回到登录页面重新登录
                 log.error("token失效, 重新认证...");
-                client.sendEvent(EventNam.SERVER_ERR, new Result().error("请重新认证"));
+                client.sendEvent(EventNam.SERVER_ERR, Result.errorMsg("请重新认证"));
                 return;
             }
         }
