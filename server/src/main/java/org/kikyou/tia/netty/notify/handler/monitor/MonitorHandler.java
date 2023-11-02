@@ -1,6 +1,8 @@
 package org.kikyou.tia.netty.notify.handler.monitor;
 
 import cn.hutool.json.JSONUtil;
+import com.baidu.bjf.remoting.protobuf.Codec;
+import com.baidu.bjf.remoting.protobuf.ProtobufProxy;
 import com.corundumstudio.socketio.AckRequest;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.annotation.OnEvent;
@@ -8,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kikyou.tia.netty.notify.constant.EventNam;
 import org.kikyou.tia.netty.notify.constant.SystemType;
+import org.kikyou.tia.netty.notify.models.Result;
 import org.kikyou.tia.netty.notify.web.dto.InfoDto;
 import org.kikyou.tia.netty.notify.web.dto.UptimeDto;
 import org.kikyou.tia.netty.notify.web.dto.UsageDto;
@@ -44,6 +47,12 @@ public class MonitorHandler {
             client.sendEvent(EventNam.SYSTEM, JSONUtil.toJsonStr(info), SystemType.MONITOR_INFO.getName());
             client.sendEvent(EventNam.SYSTEM, JSONUtil.toJsonStr(uptime), SystemType.MONITOR_UPTIME.getName());
             client.sendEvent(EventNam.SYSTEM, JSONUtil.toJsonStr(usage), SystemType.MONITOR_USAGE.getName());
+
+
+         /*   Codec<Result> Codec = ProtobufProxy.create(Result.class);
+            client.sendEvent(EventNam.SYSTEM, Codec.encode(new Result().okData(info)), SystemType.MONITOR_INFO.getName());
+            client.sendEvent(EventNam.SYSTEM, Codec.encode(new Result().okData(uptime)), SystemType.MONITOR_UPTIME.getName());
+            client.sendEvent(EventNam.SYSTEM, Codec.encode(new Result().okData(usage)), SystemType.MONITOR_USAGE.getName());*/
         }
 
     }

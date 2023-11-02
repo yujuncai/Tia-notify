@@ -1,6 +1,7 @@
 package org.kikyou.tia.netty.notify.models;
 
 
+import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
 import lombok.Data;
 
 import java.io.Serial;
@@ -9,6 +10,7 @@ import java.io.Serializable;
 
 @SuppressWarnings("rawtypes")
 @Data
+@ProtobufClass
 public class Result<T> implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;

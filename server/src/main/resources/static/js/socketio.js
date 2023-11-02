@@ -42,7 +42,7 @@ function initSocket() {
   });
 
    setInterval(function(){
-    console.log("每5秒执行一次");
+    console.log("每3秒执行一次");
     monitor(host);
   },3000);
 }

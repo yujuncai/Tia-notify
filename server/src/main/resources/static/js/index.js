@@ -95,6 +95,7 @@ function sendRequest(data,type)
 {
     console.log("------sendRequest------- "+type);
 
+
         if (type=='monitor_usage')
         {
             let response = JSON.parse(data);

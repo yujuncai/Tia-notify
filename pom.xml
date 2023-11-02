@@ -147,5 +147,39 @@
         </pluginRepository>
     </pluginRepositories>
 
+
+
+    <build>
+        <plugins>
+
+
+
+            <plugin>
+                <groupId>com.baidu</groupId>
+                <artifactId>jprotobuf-precompile-plugin</artifactId>
+                <version>${jprotobuf-precompile-plugin.version}</version>
+                <configuration>
+                    <filterClassPackage>org.kikyou.tia.netty.notify.models.*</filterClassPackage>
+                    <generateProtoFile>true</generateProtoFile>
+                    <compileDependencies>true</compileDependencies>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>precompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+
+
+        </plugins>
+    </build>
+
+
+
 </project>
 

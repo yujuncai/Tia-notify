@@ -13,9 +13,12 @@
         <link rel = "stylesheet" type = "text/css" th:href = "@{/css/layout.css}" />
         <link rel = "stylesheet" type = "text/css" th:href = "@{/css/shadows.css}" />
         <link rel = "stylesheet" type = "text/css" th:href = "@{/css/themes.css}" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.5.0/socket.io.js"></script>
-        <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.5.0/socket.io.js}"></script>
+        <script th:src="@{https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js}"></script>
         <script type = "text/javascript" th:src = "@{/js/socketio.js}"></script>
+
+
+        <script th:src="@{https://cdn.bootcdn.net/ajax/libs/protobufjs/7.2.5/light/protobuf.min.js}"></script>
 
         <script type = "text/javascript" th:src = "@{/js/assets/chart.min.js}"></script>
         <script type = "text/javascript" th:src = "@{/js/assets/three.min.js}"></script>

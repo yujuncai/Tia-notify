@@ -1,0 +1,12 @@
+syntax="proto3";
+
+option java_outer_classname = "Result$$ByJProtobuf";
+//
+message Result {  
+ int64 serialVersionUID=1;
+ int32 code=2;
+ string msg=3;
+ Object data=4;
+}
+message Object {  
+}
