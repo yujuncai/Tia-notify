@@ -1,21 +1,16 @@
 package org.kikyou.tia.netty.notify.models;
 
-/**
- * Copyright (c) 2018 人人开源 All rights reserved.
- *
- * https://www.renren.io
- *
- * 版权所有，侵权必究！
- */
-
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 
+@SuppressWarnings("rawtypes")
 @Data
 public class Result<T> implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
     /**
      * 编码：0表示成功，其他值表示失败
@@ -30,10 +25,16 @@ public class Result<T> implements Serializable {
      */
     private T data;
 
-    public Result<T> ok(T data) {
+    public Result<T> okData(T data) {
         this.setData(data);
         return this;
     }
+
+    public Result<T> ok(String msg) {
+        this.setMsg(msg);
+        return this;
+    }
+
 
     public boolean success(){
         return code == 0;
@@ -64,13 +65,11 @@ public class Result<T> implements Serializable {
     }
 
     public static Result errorMsg(String msg) {
-        Result result = new Result().error(msg);
-        return result;
+        return new Result().error(msg);
     }
 
     public static Result okMsg(String msg) {
-        Result result = new Result().ok(msg);
-        return result;
+        return new Result().ok(msg);
     }
 }
 
