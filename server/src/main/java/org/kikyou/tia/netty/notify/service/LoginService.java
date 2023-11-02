@@ -13,6 +13,7 @@ import org.kikyou.tia.netty.notify.constant.Common;
 import org.kikyou.tia.netty.notify.constant.EventNam;
 import org.kikyou.tia.netty.notify.constant.StatusType;
 import org.kikyou.tia.netty.notify.models.LoginSuccessData;
+import org.kikyou.tia.netty.notify.models.Result;
 import org.kikyou.tia.netty.notify.models.User;
 import org.kikyou.tia.netty.notify.utils.MyBeanUtils;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,8 @@ public class LoginService {
         User dbUser = userService.getUserByName(user.getName());
         userService.organizeUser(dbUser, user, client);
         if (!Objects.isNull(dbUser) && userService.exitActiveUser(dbUser)) {
-            client.sendEvent(EventNam.LOGIN_FAIL, "重复登录,请先退出!");
+
+            client.sendEvent(EventNam.LOGIN_FAIL,  new Result().error("重复登录,请先退出!"));
             return null;
         }
         // 是否需要重新登录
@@ -58,11 +60,11 @@ public class LoginService {
             // 判断用户是否存在
             if (Objects.isNull(dbUser)) {
                 log.error("登录失败,账户'{}'不存在", user.getName());
-                client.sendEvent(EventNam.LOGIN_FAIL, "登录失败,账户不存在!");
+                client.sendEvent(EventNam.LOGIN_FAIL, new Result().error("登录失败,账户不存在!"));
                 return null;
             } else if (!dbUser.getPassword().equals(DigestUtil.md5Hex(user.getPassword().concat(Common.SALT)))) {
                 log.error("登录失败,账户'{}'密码不正确", user.getName());
-                client.sendEvent(EventNam.LOGIN_FAIL, "登录失败,用户名/密码不正确!");
+                client.sendEvent(EventNam.LOGIN_FAIL, new Result().error("登录失败,用户名/密码不正确!"));
                 return null;
             }
             // saveOrUpdate user

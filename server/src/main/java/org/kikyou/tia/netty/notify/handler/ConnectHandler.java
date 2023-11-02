@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kikyou.tia.netty.notify.config.AppConfiguration;
 import org.kikyou.tia.netty.notify.constant.EventNam;
+import org.kikyou.tia.netty.notify.models.Result;
 import org.kikyou.tia.netty.notify.models.User;
 import org.kikyou.tia.netty.notify.service.LoginService;
 import org.springframework.stereotype.Component;
@@ -60,7 +61,7 @@ public class ConnectHandler {
             } catch (ValidateException e) {
                 // token失效, 需要用户回到登录页面重新登录
                 log.error("token失效, 重新认证...");
-                client.sendEvent(EventNam.SERVER_ERR, "请重新认证");
+                client.sendEvent(EventNam.SERVER_ERR, new Result().error("请重新认证"));
                 return;
             }
         }
