@@ -40,12 +40,12 @@
 {
     font-family: roboto;
     font-weight: 400;
-    src: url(/fonts/roboto/regular.woff2) format('woff2');
+   /* src: url(/fonts/roboto/regular.woff2) format('woff2');*/
 }
 
 @font-face
 {
     font-family: roboto;
     font-weight: 700;
-    src: url(/fonts/roboto/bold.woff2) format('woff2');
+   /* src: url(/fonts/roboto/bold.woff2) format('woff2');*/
 }
