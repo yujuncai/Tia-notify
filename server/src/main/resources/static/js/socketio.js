@@ -36,10 +36,12 @@ function initSocket() {
 
   socket.on('system', function (var1,var2) {
 
-    //console.log("------system------- "+var1+" "+var2.name+" ");
     sendRequest(var1,var2)
 
   });
+
+
+
 
    setInterval(function(){
     console.log("每5秒执行一次");

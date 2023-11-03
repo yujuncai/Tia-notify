@@ -37,8 +37,7 @@ public class SystemMessageHandler {
                     if (!Objects.isNull(u)) {
                         log.info(u.getName());
                         user.setPassword(null);
-                        user.setType( systemType.getName());
-                        s.sendEvent(EventNam.SYSTEM, user);
+                        s.sendEvent(EventNam.SYSTEM, user,systemType.getName());
                     }
 
                 }

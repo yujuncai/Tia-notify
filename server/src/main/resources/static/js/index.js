@@ -88,6 +88,11 @@ function getRandomSequenceArray()
     return buffer;
 }
 
+
+
+
+
+
 /**
  * Sending ajax request to receive usage info
  */
