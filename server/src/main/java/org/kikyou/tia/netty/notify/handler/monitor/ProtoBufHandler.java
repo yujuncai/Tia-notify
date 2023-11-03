@@ -41,7 +41,6 @@ public class ProtoBufHandler {
         Codec<Result> resultCodec = ProtobufProxy.create(Result.class);
 
 
-
       /*  Result result = new Result().okData(decode);
         byte[] encode = resultCodec.encode(result);
         client.sendEvent(EventNam.PROTOBUF, encode, SystemType.MONITOR_USAGE.getName());*/
