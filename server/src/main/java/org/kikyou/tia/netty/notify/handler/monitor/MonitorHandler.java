@@ -44,9 +44,9 @@ public class MonitorHandler {
             UptimeDto uptime = uptimeService.getUptime();
             UsageDto usage = usageService.getUsage();
 
-            client.sendEvent(EventNam.SYSTEM, JSONUtil.toJsonStr(info), SystemType.MONITOR_INFO.getName());
-            client.sendEvent(EventNam.SYSTEM, JSONUtil.toJsonStr(uptime), SystemType.MONITOR_UPTIME.getName());
-            client.sendEvent(EventNam.SYSTEM, JSONUtil.toJsonStr(usage), SystemType.MONITOR_USAGE.getName());
+            client.sendEvent(EventNam.SYSTEM, info, SystemType.MONITOR_INFO.getName());
+            client.sendEvent(EventNam.SYSTEM, uptime, SystemType.MONITOR_UPTIME.getName());
+            client.sendEvent(EventNam.SYSTEM, usage, SystemType.MONITOR_USAGE.getName());
 
 
          /*   Codec<Result> Codec = ProtobufProxy.create(Result.class);

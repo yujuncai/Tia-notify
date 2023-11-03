@@ -103,8 +103,8 @@ function sendRequest(data,type)
 
         if (type=='monitor_usage')
         {
-            let response = JSON.parse(data);
-            console.log("------monitor_usage------- "+response);
+            let response = data;
+            console.log("------monitor_usage------- ");
             labelsTick(response);
             chartTick(response);
 
@@ -113,8 +113,8 @@ function sendRequest(data,type)
 
         if (type=='monitor_info')
     {
-        let response = JSON.parse(data);
-        console.log("------monitor_info------- "+response);
+        let response = data;
+        console.log("------monitor_info------- ");
         currentClockSpeed.innerHTML = response.processor.clockSpeed;
         currentProcCount.innerHTML = response.machine.procCount;
         currentTotalStorage.innerHTML = response.storage.total;
@@ -127,8 +127,8 @@ function sendRequest(data,type)
 
     if (type=='monitor_uptime')
     {
-        let response = JSON.parse(data);
-        console.log("------monitor_uptime------- "+response);
+        let response = data;
+        console.log("------monitor_uptime------- ");
         days.innerHTML = response.days;
         hours.innerHTML = response.hours;
         minutes.innerHTML = response.minutes;
