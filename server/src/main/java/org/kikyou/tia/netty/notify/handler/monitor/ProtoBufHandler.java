@@ -8,8 +8,11 @@ import com.corundumstudio.socketio.annotation.OnEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kikyou.tia.netty.notify.constant.EventNam;
+import org.kikyou.tia.netty.notify.constant.SystemType;
+import org.kikyou.tia.netty.notify.models.Result;
 import org.kikyou.tia.netty.notify.models.protobuf.ProtobufMessage;
 import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 
 /**
@@ -34,6 +37,14 @@ public class ProtoBufHandler {
         log.info("PROTOBUF decode {}", decode.toString());
 
 
+
+        Codec<Result> resultCodec = ProtobufProxy.create(Result.class);
+
+
+
+      /*  Result result = new Result().okData(decode);
+        byte[] encode = resultCodec.encode(result);
+        client.sendEvent(EventNam.PROTOBUF, encode, SystemType.MONITOR_USAGE.getName());*/
     }
 
 

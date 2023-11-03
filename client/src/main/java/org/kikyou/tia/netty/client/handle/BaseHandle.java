@@ -3,14 +3,18 @@ package org.kikyou.tia.netty.client.handle;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.baidu.bjf.remoting.protobuf.Codec;
+import com.baidu.bjf.remoting.protobuf.ProtobufProxy;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.kikyou.tia.netty.client.shell.UserMap;
 import org.kikyou.tia.netty.notify.constant.EventNam;
+import org.kikyou.tia.netty.notify.models.Result;
 import org.kikyou.tia.netty.notify.models.User;
 import org.springframework.stereotype.Component;
 
@@ -124,6 +128,21 @@ public class BaseHandle {
             }
         });
 
+        socket.on(EventNam.PROTOBUF, new Emitter.Listener() {
+            @SneakyThrows
+            @Override
+            public void call(Object... args) {
 
+                log.info(EventNam.PROTOBUF + " : " + args[0]);
+                log.info(EventNam.PROTOBUF + " : " + args[1]);
+                byte[] b= (byte[]) args[0];
+
+                Codec<Result> resultCodec = ProtobufProxy.create(Result.class);
+                Result decode = resultCodec.decode(b);
+
+                log.info(EventNam.PROTOBUF + " : " + decode);
+                log.info(EventNam.PROTOBUF + " : " + JSONUtil.toJsonStr(decode));
+            }
+        });
     }
 }

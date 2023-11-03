@@ -99,6 +99,7 @@
             <version>${jprotobuf-precompile-plugin.version}</version>
         </dependency>
 
+
     </dependencies>
 
 

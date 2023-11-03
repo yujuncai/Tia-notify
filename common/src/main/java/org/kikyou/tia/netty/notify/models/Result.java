@@ -1,6 +1,8 @@
 package org.kikyou.tia.netty.notify.models;
 
 
+import com.baidu.bjf.remoting.protobuf.FieldType;
+import com.baidu.bjf.remoting.protobuf.annotation.Protobuf;
 import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
 import lombok.Data;
 
@@ -17,20 +19,18 @@ public class Result<T> implements Serializable {
     /**
      * 编码：0表示成功，其他值表示失败
      */
+    @Protobuf(order = 1, fieldType = FieldType.INT32)
     private int code = 0;
     /**
      * 消息内容
      */
+    @Protobuf(order = 2, fieldType = FieldType.STRING)
     private String msg = "success";
     /**
      * 响应数据
      */
-    private T data;
 
-    public Result<T> okData(T data) {
-        this.setData(data);
-        return this;
-    }
+
 
     public Result<T> ok(String msg) {
         this.setMsg(msg);
