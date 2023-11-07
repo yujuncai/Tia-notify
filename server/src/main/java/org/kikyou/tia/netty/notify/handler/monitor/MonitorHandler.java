@@ -49,10 +49,7 @@ public class MonitorHandler {
             client.sendEvent(EventNam.SYSTEM, usage, SystemType.MONITOR_USAGE.getName());
 
 
-         /*   Codec<Result> Codec = ProtobufProxy.create(Result.class);
-            client.sendEvent(EventNam.SYSTEM, Codec.encode(new Result().okData(info)), SystemType.MONITOR_INFO.getName());
-            client.sendEvent(EventNam.SYSTEM, Codec.encode(new Result().okData(uptime)), SystemType.MONITOR_UPTIME.getName());
-            client.sendEvent(EventNam.SYSTEM, Codec.encode(new Result().okData(usage)), SystemType.MONITOR_USAGE.getName());*/
+
         }
 
     }
