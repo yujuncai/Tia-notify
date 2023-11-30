@@ -20,7 +20,7 @@ public class ShutdownHook {
         log.info(" shutdown hook");
         socket.disconnect();
         socket.close();
-        Thread.sleep(100L);
+        Thread.sleep(300L);
     }
 }
 
