@@ -65,7 +65,7 @@ public class AuthorizationHandler implements AuthorizationListener {
 
             Long times = signatureTime.getTimes();
             long current = DateUtil.current();
-            //其他namespace,需要时间在10秒内的token,可防止一些暴力的连接,断线重连回收影响
+            //其他namespace,需要时间在10秒内的token,可防止一些暴力的连接,断线重连会受影响
             if(times==null||current-times>10000){  //大于10秒
                 log.error("{}  ----  {}", s, current-times);
                 return AuthorizationResult.FAILED_AUTHORIZATION;
