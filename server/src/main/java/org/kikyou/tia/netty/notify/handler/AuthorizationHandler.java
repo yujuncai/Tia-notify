@@ -51,7 +51,7 @@ public class AuthorizationHandler implements AuthorizationListener {
 
             MainBody body = mainBodyService.getMainBodyByAppId(appid);
             if (body == null) {
-                log.error("MainBody is null");
+                log.error("NameSpace is null");
                 return AuthorizationResult.FAILED_AUTHORIZATION;
             }
             String s = MySecureUtil.aesDecrypt(body.getAppSecret(), signature);
