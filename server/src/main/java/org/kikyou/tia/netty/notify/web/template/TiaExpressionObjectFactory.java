@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class TimoExpressionObjectFactory implements IExpressionObjectFactory {
+public class TiaExpressionObjectFactory implements IExpressionObjectFactory {
 
     public static final String PAGE_UTIL_NAME = "pageUtil";
     public static final PageUtil PAGE_UTIL_OBJECT = new PageUtil();

@@ -31,7 +31,7 @@ public class TiaDialect extends AbstractProcessorDialect implements IExpressionO
     @Override
     public IExpressionObjectFactory getExpressionObjectFactory() {
         if (this.expressionObjectFactory == null) {
-            this.expressionObjectFactory = new TimoExpressionObjectFactory();
+            this.expressionObjectFactory = new TiaExpressionObjectFactory();
         }
         return this.expressionObjectFactory;
     }
