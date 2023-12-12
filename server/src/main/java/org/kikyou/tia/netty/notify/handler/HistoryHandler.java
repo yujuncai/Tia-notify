@@ -28,7 +28,7 @@ public class HistoryHandler {
 
     @OnEvent(EventNam.HISTORY)
     public void onData(SocketIOClient client, User user, AckRequest ackSender) {
-        log.info("history----" + user.getId());
+        log.info("history----{}" , user.getId());
         // 群group1消息
         List<Message> messages = storeService.getGroupMessages();
 

@@ -34,7 +34,7 @@ public class RegisterService {
             dbstoreService.saveOrUpdateUser(null, user, StatusType.REGISTER);
             client.sendEvent(EventNam.REGISTER_SUCCESS, Result.okMsg("注册成功,请登录!"));
         } else {
-            log.warn("注册失败,昵称'{}'已存在", user.getName());
+            log.error("注册失败,昵称'{}'已存在", user.getName());
             client.sendEvent(EventNam.REGISTER_FAIL, Result.errorMsg("注册失败,昵称已存在!"));
         }
     }
