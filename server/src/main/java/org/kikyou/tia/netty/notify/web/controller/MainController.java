@@ -66,8 +66,6 @@ public class MainController {
         model.addAttribute("monitor", mos);
 
 
-
-
         SignatureTime vo=new SignatureTime();
         vo.setSignature("/monitor");
         vo.setTimes(DateUtil.current());
