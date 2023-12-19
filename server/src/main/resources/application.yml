@@ -37,11 +37,11 @@ spring:
           # 连接池最大连接数（使用负值表示没有限制）
           maxactive: 64
           # 连接池中的最大空闲连接
-          maxidle: 64
+          maxidle: 32
           # 连接池最大阻塞等待时间（使用负值表示没有限制）
-          maxwait: -1
+          maxwait: 1000
           # 连接池中的最小空闲连接
-          minidle: 1
+          minidle: 8
   datasource:
     #通用配置
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -51,7 +51,7 @@ spring:
     #数据源连接池配置
     hikari:
       minimum-idle: 10
-      maximum-pool-size: 20
+      maximum-pool-size: 30
       idle-timeout: 500000
       max-lifetime: 540000
       connection-timeout: 60000
