@@ -26,7 +26,7 @@ public class ClusterReceiver implements Receiver {
 
     public ClusterReceiver(List<BaseHandler> handlerList) {
         handlerList.forEach(handler -> {
-
+            log.info("注入handler -- {}",handler.getProviderName());
             strategy.put(handler.getProviderName(), handler);
         });
         log.info("注入策略完毕");
