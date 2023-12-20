@@ -97,7 +97,7 @@ public class Keeping {
     }*/
 
 
-    @Scheduled(fixedDelay = 5_000, initialDelay = 1000)
+    @Scheduled(fixedDelay = 10_000, initialDelay = 1000)
     public void monitor() throws Exception {
         InetAddress address = InetAddress.getLocalHost();
         HOST = address.getHostAddress();
