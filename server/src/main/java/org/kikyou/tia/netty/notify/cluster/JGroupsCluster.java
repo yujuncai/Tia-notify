@@ -66,6 +66,7 @@ public class JGroupsCluster implements TiaCluster {
 
     public boolean isLeader() {
         boolean isLeader = false;
+        //jgroups 第一个就是leader
         Address address = channel.getView().getMembers().get(0);
         String state = channel.getState();
 
