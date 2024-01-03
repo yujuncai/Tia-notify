@@ -75,7 +75,7 @@ spring:
         await-termination-period: 20000 # 等待任务完成的最大时长，单位为秒。默认为 0 ，根据自己应用来设置
 
 cluster:
-  model: jgroups #jgroups  standone
+  model: standone #jgroups  standone
 jgroups:
   clustername: ${JGROUPS_CLUSTER_NAME:tia-cluster}
   config: ${JGROUPS_CONFIG:jgroups-config-udp.xml}
