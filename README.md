@@ -108,7 +108,7 @@ https://github.com/nguyencse/HeyU      (Client UI)
 
 3.Configure Redis and MySQL, import SQL
 
-4.Start server
+4.Start server 
 
 5.Admin portal http://localhost/web/login default port 80, Netty default 8080 To try client demo, 
 put https://github.com/yujuncai/Tia-web-demo code into resources/static/webDemo folder
