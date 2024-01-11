@@ -90,3 +90,14 @@ monitor:
 
 
 
+management:
+  endpoints:
+    enabled-by-default : false
+    web:
+      exposure:
+        include: "*"
+  #配置可远程使用    Actuator 关闭服务
+  endpoint:
+    shutdown:  #关闭服务
+      enabled: false
+
