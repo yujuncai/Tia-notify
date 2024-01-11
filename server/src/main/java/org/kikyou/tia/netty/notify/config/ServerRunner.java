@@ -45,11 +45,12 @@ public class ServerRunner implements CommandLineRunner {
 
 
     public void addMonitorSpaceHandler() {
-        log.info("  {}  加入namespace--------", MONITORSPACE);
+        log.info(" 监控 {}  加入namespace--------", MONITORSPACE);
         SocketIONamespace socketIONamespace = socketIOServer.addNamespace(MONITORSPACE);
         List<String> classNames = List.of("monitorHandler");
         try {
             classNames.forEach(s -> {
+                log.info("bean {} 加入到 {} 命名空间下",s,MONITORSPACE);
                 Object bean = SpringUtil.getBean(s);
                 Optional.ofNullable(bean).ifPresent(socketIONamespace::addListeners);
             });
@@ -77,7 +78,7 @@ public class ServerRunner implements CommandLineRunner {
 
         try {
             beans.forEach((s,o) -> {
-                log.info("获取到RegisterToListener注解的beans {} ",s);
+                log.info("bean {} 加入到 {} 命名空间下",s,namesp);
                 Optional.ofNullable(o).ifPresent(socketIONamespace::addListeners);
             });
         } catch (Exception e) {

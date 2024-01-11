@@ -7,6 +7,7 @@ import com.corundumstudio.socketio.annotation.OnEvent;
 import io.netty.handler.codec.http.HttpHeaders;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.kikyou.tia.netty.notify.annotation.RegisterToListener;
 import org.kikyou.tia.netty.notify.constant.EventNam;
 import org.kikyou.tia.netty.notify.constant.SystemType;
 import org.kikyou.tia.netty.notify.models.User;
@@ -23,6 +24,7 @@ import static org.kikyou.tia.netty.notify.constant.Common.TOKEN;
 @Slf4j
 @Component
 @RequiredArgsConstructor
+@RegisterToListener
 public class LoginHandler {
 
     private final LoginService loginService;

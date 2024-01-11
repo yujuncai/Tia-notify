@@ -7,6 +7,7 @@ import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.annotation.OnEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.kikyou.tia.netty.notify.annotation.RegisterToListener;
 import org.kikyou.tia.netty.notify.constant.Common;
 import org.kikyou.tia.netty.notify.constant.EventNam;
 import org.kikyou.tia.netty.notify.constant.SystemType;
@@ -22,6 +23,7 @@ import java.util.Objects;
 @Slf4j
 @Component
 @RequiredArgsConstructor
+@RegisterToListener
 public class LogoutHandler {
 
     private final SocketIOServer socketIOServer;
