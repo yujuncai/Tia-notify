@@ -5,6 +5,7 @@ import com.corundumstudio.socketio.SocketIONamespace;
 import com.corundumstudio.socketio.SocketIOServer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.kikyou.tia.netty.notify.annotation.RegisterToListener;
 import org.kikyou.tia.netty.notify.models.MainBody;
 import org.kikyou.tia.netty.notify.service.MainBodyService;
 import org.springframework.boot.CommandLineRunner;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Order(9999)
@@ -58,17 +60,25 @@ public class ServerRunner implements CommandLineRunner {
     }
 
 
+
+
+
+
     public void addNameSpaceHandler(String namesp) {
 
         log.info("  {}  加入namespace--------", namesp);
         SocketIONamespace socketIONamespace = socketIOServer.addNamespace(namesp);
         //获取期待的类名
-        //todo 用注解得到className
-        List<String> classNames = Arrays.asList("loginHandler", "logoutHandler", "messageHandler", "registerHandler", "historyHandler","protoBufHandler");
+
+      //  List<String> classNames = Arrays.asList("loginHandler", "logoutHandler", "messageHandler", "registerHandler", "historyHandler","protoBufHandler");
+
+        Map<String, Object> beans =  SpringUtil.getApplicationContext().getBeansWithAnnotation(RegisterToListener.class);
+
+
         try {
-            classNames.forEach(s -> {
-                Object bean = SpringUtil.getBean(s);
-                Optional.ofNullable(bean).ifPresent(socketIONamespace::addListeners);
+            beans.forEach((s,o) -> {
+                log.info("获取到RegisterToListener注解的beans {} ",s);
+                Optional.ofNullable(o).ifPresent(socketIONamespace::addListeners);
             });
         } catch (Exception e) {
             //noinspection PlaceholderCountMatchesArgumentCount
