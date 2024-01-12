@@ -26,7 +26,7 @@
     <properties>
         <java.version>17</java.version>
         <socketio.version>2.0.6</socketio.version>
-        <hutool.version>5.8.22</hutool.version>
+        <hutool.version>5.8.24</hutool.version>
         <redisson.version>3.24.3</redisson.version>
         <jgroups.version>5.3.0.Final</jgroups.version>
         <alipay.sdk.oss.version>3.17.2</alipay.sdk.oss.version>
