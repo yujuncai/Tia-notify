@@ -70,12 +70,7 @@ public class ServerRunner implements CommandLineRunner {
         log.info("  {}  加入namespace--------", namesp);
         SocketIONamespace socketIONamespace = socketIOServer.addNamespace(namesp);
         //获取期待的类名
-
-      //  List<String> classNames = Arrays.asList("loginHandler", "logoutHandler", "messageHandler", "registerHandler", "historyHandler","protoBufHandler");
-
         Map<String, Object> beans =  SpringUtil.getApplicationContext().getBeansWithAnnotation(RegisterToListener.class);
-
-
         try {
             beans.forEach((s,o) -> {
                 log.info("bean {} 加入到 {} 命名空间下",s,namesp);
