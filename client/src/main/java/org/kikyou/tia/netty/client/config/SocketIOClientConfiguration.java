@@ -33,7 +33,7 @@ public class SocketIOClientConfiguration {
         String signature = MySecureUtil.aesEncrypt("jvZJhHtp3vOVmpool6QlMw==", json);
 
         log.info("signature {} ", signature);
-
+        //可以查看表里的appid和key
         String s = "http://localhost:8080".concat("?").concat("appid=987654321").concat("&").concat("signature=" + signature);
         log.info("完整的路径 {} ", s);
         Manager m = new Manager(new URI(s));
