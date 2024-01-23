@@ -14,6 +14,7 @@
 | redisson | 3.24.3 |
 | Jgroups | 5.3.0.Final |
 | jprotobuf | 2.4.20 |
+| hutool       | 5.8.25 |
 
 ### 前端(待补充)
 | 技术栈 | 版本 |
