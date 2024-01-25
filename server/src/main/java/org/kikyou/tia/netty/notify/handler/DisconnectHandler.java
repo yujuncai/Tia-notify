@@ -41,6 +41,7 @@ public class DisconnectHandler {
         User user = client.get(Common.USER_KEY);
 
         if (!Objects.isNull(user)) {
+            //清除redis的数据
             client.del(Common.USER_KEY);
             storeService.delIdKeyV(user.getId(), user.getNameSpace());
             systemMessageHandler.bocastSystemMessage(user, socketIOServer, SystemType.LOGOUT);
