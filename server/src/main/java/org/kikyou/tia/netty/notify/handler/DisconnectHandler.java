@@ -1,5 +1,6 @@
 package org.kikyou.tia.netty.notify.handler;
 
+import cn.hutool.core.util.StrUtil;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.annotation.OnDisconnect;
@@ -44,7 +45,9 @@ public class DisconnectHandler {
             //清除redis的数据
             client.del(Common.USER_KEY);
             storeService.delIdKeyV(user.getId(), user.getNameSpace());
-            systemMessageHandler.bocastSystemMessage(user, socketIOServer, SystemType.LOGOUT);
+            if (StrUtil.isNotBlank(user.getId())) {
+                systemMessageHandler.bocastSystemMessage(user, socketIOServer, SystemType.LOGOUT);
+            }
         }
     }
 
