@@ -5,6 +5,7 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import org.kikyou.tia.netty.notify.config.ServerRunner;
 import org.kikyou.tia.netty.notify.constant.ClusterMessageType;
+import org.kikyou.tia.netty.notify.constant.StaticConstant;
 
 import java.util.Map;
 
@@ -30,8 +31,8 @@ public interface TiaCluster {
         sr.RemoveNameSpaceHandler(oldnamespace);
         sr.addNameSpaceHandler(namespace);
         Map<String, String> map = MapUtil.newHashMap();
-        map.put("old", oldnamespace);
-        map.put("new", namespace);
+        map.put(StaticConstant.OLD_PARAM, oldnamespace);
+        map.put(StaticConstant.NEW_PARAM, namespace);
         SyncNameSpaceMessage(ClusterMessageType.SYNC_NAMESPACE_UPDATE.getName(), map);
     }
 
