@@ -67,7 +67,6 @@
             <version>1.9.19</version>
         </dependency>
 
-
         <dependency>
             <groupId>com.github.oshi</groupId>
             <artifactId>oshi-core</artifactId>

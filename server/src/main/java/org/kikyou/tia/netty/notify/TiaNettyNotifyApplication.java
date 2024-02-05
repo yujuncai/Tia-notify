@@ -7,7 +7,10 @@ import org.kikyou.tia.netty.notify.config.AppConfiguration;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.embedded.netty.NettyWebServer;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -37,4 +40,8 @@ public class TiaNettyNotifyApplication implements CommandLineRunner {
 
         socketIOServer.startAsync().addListener(future -> log.info("EIO server port start on {}", appConfiguration.getPort()));
     }
+
+
+
+
 }
