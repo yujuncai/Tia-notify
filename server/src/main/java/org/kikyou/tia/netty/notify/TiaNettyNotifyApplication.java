@@ -35,6 +35,7 @@ public class TiaNettyNotifyApplication implements CommandLineRunner {
         ConfigurableApplicationContext run = SpringApplication.run(TiaNettyNotifyApplication.class, args);
     }
 
+
     @Override
     public void run(String... args) {
 
