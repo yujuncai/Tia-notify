@@ -40,7 +40,9 @@ public class AuthorizationHandler implements AuthorizationListener {
                 SignatureTime signatureTime = JSONUtil.toBean(s, SignatureTime.class);
                 Long times = signatureTime.getTimes();
                 long current = DateUtil.current();
+
                 //monitor namespace下只需要检查大小即可
+
                 if ("/monitor".equals(signatureTime.getSignature())&&times!=null&&current>times) {
                     return AuthorizationResult.SUCCESSFUL_AUTHORIZATION;
                 }
