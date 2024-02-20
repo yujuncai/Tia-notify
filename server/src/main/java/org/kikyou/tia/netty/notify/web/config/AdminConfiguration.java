@@ -17,4 +17,5 @@ public class AdminConfiguration {
     private String password;
 
 
+
 }
