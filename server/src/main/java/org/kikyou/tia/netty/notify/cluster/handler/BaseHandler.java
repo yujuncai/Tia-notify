@@ -4,5 +4,6 @@ public interface BaseHandler {
 
     void doHandler(Object name);
 
+    //获取操作
     String getProviderName();
 }
