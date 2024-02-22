@@ -48,7 +48,7 @@ public class ClusterReceiver implements Receiver {
         if (h != null) {
             h.doHandler(vo.getData());
         } else {
-            log.error("没有对应的策略");
+            log.error("没有对应的handler");
         }
 
     }
