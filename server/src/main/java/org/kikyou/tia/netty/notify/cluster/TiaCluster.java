@@ -26,6 +26,10 @@ public interface TiaCluster {
     }
 
 
+
+    /*
+     * 更新namespace
+     * */
     default void UpdateNamespace(String oldnamespace, String namespace) {
         ServerRunner sr = SpringUtil.getBean("serverRunner");
         sr.RemoveNameSpaceHandler(oldnamespace);
