@@ -77,7 +77,7 @@ public class DBStoreService {
 
 
     @Async("asyncExecutor")
-    public void saveMessage(Message m) {
+    public void saveMessage(Message m,Integer readFlag) {
         MapSqlParameterSource param = new MapSqlParameterSource();
 
         param.addValue("id", m.getId());
@@ -85,7 +85,7 @@ public class DBStoreService {
         param.addValue("to_user", m.getTo().getId());
         param.addValue("contents", m.getContent());
         param.addValue("message_type", m.getType());
-        param.addValue("read_flag", 0);
+        param.addValue("read_flag", readFlag);
         param.addValue("times", DateUtil.date());
 
         namedParameterJdbcTemplate.update("insert into db_message(id,from_user, to_user,contents,message_type,read_flag,times) " +

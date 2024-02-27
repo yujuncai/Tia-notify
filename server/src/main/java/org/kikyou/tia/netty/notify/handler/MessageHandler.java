@@ -52,8 +52,9 @@ public class MessageHandler {
         storeMsg.setTime(System.currentTimeMillis());
         storeMsg.setContent(content);
         storeMsg.setId(IdUtil.fastSimpleUUID());
-
+        Integer flag=0;//未读
         if (UserType.USER.getName().equals(to.getType())) {
+
             // 向所属用户发消息
             SocketIOClient receiverClient = socketIOServer.getNamespace(user.getNameSpace()).getClient(UUID.fromString(to.getCurrId()));
             if (receiverClient != null && receiverClient.isChannelOpen()) {//本机在线
@@ -62,11 +63,13 @@ public class MessageHandler {
                         to,
                         content,
                         type);
+                 flag=1;//已读
             } else {//离线或者不在本机,发送到集群
                 systemMessageHandler.sendMessageToCluster(storeMsg);
             }
             //存到数据库
-            dbstoreService.saveMessage(storeMsg);
+
+            dbstoreService.saveMessage(storeMsg,flag);
         }
         if (UserType.GROUP.getName().equals(to.getType())) {
             CompletableFuture<Message> future = storeService.saveGroupMessage(from, to, content, MessageType.getTypeByName(type));//群消息到redis,异步,有IO操作
