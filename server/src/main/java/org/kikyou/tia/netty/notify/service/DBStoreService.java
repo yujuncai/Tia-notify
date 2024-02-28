@@ -98,7 +98,7 @@ public class DBStoreService {
     public void updateMessage(Message m) {
         MapSqlParameterSource param = new MapSqlParameterSource();
         param.addValue("id", m.getId());
-        param.addValue("read_flag", 1);
+        param.addValue("read_flag", 1);//标记为已读
         namedParameterJdbcTemplate.update("Update db_message Set read_flag=:read_flag Where id = :id", param);
 
     }
