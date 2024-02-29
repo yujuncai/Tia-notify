@@ -32,7 +32,7 @@ public class ProtoBufHandler {
     @OnEvent(EventNam.PROTOBUF)
     public void onData(SocketIOClient client, byte[] data, AckRequest ackSender) throws IOException {
 
-
+    //测试 handler
         log.info("PROTOBUF data {}", data);
         Codec<ProtobufMessage> simpleTypeCodec = ProtobufProxy.create(ProtobufMessage.class);
         ProtobufMessage decode = simpleTypeCodec.decode(data);
