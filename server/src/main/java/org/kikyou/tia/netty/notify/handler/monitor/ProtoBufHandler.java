@@ -32,7 +32,7 @@ public class ProtoBufHandler {
     @OnEvent(EventNam.PROTOBUF)
     public void onData(SocketIOClient client, byte[] data, AckRequest ackSender) throws IOException {
 
-    //测试 Proto handler
+    //测试 Proto handler jprotobuf 在遇到泛型参数是 any 应该怎么用?
         log.info("PROTOBUF data {}", data);
         Codec<ProtobufMessage> simpleTypeCodec = ProtobufProxy.create(ProtobufMessage.class);
         ProtobufMessage decode = simpleTypeCodec.decode(data);
