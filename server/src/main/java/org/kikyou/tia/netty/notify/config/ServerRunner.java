@@ -60,11 +60,6 @@ public class ServerRunner implements CommandLineRunner {
         }
     }
 
-
-
-
-
-
     public void addNameSpaceHandler(String namesp) {
 
         log.info("  {}  加入namespace--------", namesp);
