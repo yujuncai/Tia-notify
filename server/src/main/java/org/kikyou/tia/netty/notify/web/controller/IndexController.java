@@ -19,9 +19,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class IndexController {
 
-
     private final MonitorIndexService indexService;
-
 
     @GetMapping
     @Auth
