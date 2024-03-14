@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @RequiredArgsConstructor
 public class SyncNameSpaceAddHandler implements BaseHandler {
-
+    //新的命名空间加入集群
     private final ServerRunner serverRunner;
 
     @Override
