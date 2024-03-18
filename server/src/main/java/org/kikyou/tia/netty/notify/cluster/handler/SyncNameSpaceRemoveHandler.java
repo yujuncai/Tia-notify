@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @RequiredArgsConstructor
 public class SyncNameSpaceRemoveHandler implements BaseHandler {
-
+    //命名空间从集群移除
     private final ServerRunner serverRunner;
 
     @Override
