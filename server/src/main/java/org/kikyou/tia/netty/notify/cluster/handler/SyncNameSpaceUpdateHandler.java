@@ -13,7 +13,7 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 public class SyncNameSpaceUpdateHandler implements BaseHandler {
-
+    //集群中命名空间更新
     private final ServerRunner serverRunner;
 
     @Override
