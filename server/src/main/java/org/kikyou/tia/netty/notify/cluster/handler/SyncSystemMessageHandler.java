@@ -17,7 +17,7 @@ import static org.kikyou.tia.netty.notify.constant.Common.USER_KEY;
 @Slf4j
 @RequiredArgsConstructor
 public class SyncSystemMessageHandler implements BaseHandler {
-
+    //系统消息同步
     private final SocketIOServer socketIOServer;
 
     @Override
