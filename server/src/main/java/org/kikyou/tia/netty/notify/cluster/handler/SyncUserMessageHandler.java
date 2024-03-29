@@ -19,7 +19,7 @@ public class SyncUserMessageHandler implements BaseHandler {
 
     private final DBStoreService dbstoreService;
     private final SocketIOServer socketIOServer;
-
+//用户消息同步
     @Override
     public void doHandler(Object m) {
 
