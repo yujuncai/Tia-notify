@@ -39,7 +39,7 @@ public class JGroupsCluster implements TiaCluster {
     public void init() {
         log.info("init");
         try {
-            //当有多张网卡的时候,启动会很慢,所以这里需要等待一下
+            //当有多张网卡的时候,启动会很慢,所以这里需要等待一下，PS：云主机不允许广播
             log.info("加载配置文件 {} 开始 {}", jGroupsConfig, DateUtil.date());
             channel = new JChannel(jGroupsConfig);
             log.info("加载配置文件 {} 结束 {}", jGroupsConfig, DateUtil.date());
