@@ -45,6 +45,7 @@ public class JGroupsCluster implements TiaCluster {
             channel = new JChannel(jGroupsConfig);
             log.info("加载配置文件 {} 结束 {}", jGroupsConfig, DateUtil.date());
             channel.receiver(SpringUtil.getBean("clusterReceiver"));
+
             channel.connect(clusterName);
             localAddress = channel.getAddress();
         } catch (Exception ex) {
