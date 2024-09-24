@@ -92,7 +92,8 @@ public class JGroupsCluster implements TiaCluster {
         try {
             sendMessage(type, o);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("sendMessage Exception {}",e.getMessage());
+           // e.printStackTrace();
         }
     }
 
@@ -102,7 +103,8 @@ public class JGroupsCluster implements TiaCluster {
         try {
             sendMessage(type, o);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("sendMessage Exception {}",e.getMessage());
+           // e.printStackTrace();
         }
     }
 
@@ -112,7 +114,8 @@ public class JGroupsCluster implements TiaCluster {
         try {
             sendMessage(type, o);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("sendMessage Exception {}",e.getMessage());
+           // e.printStackTrace();
         }
     }
 
