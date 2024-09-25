@@ -7,7 +7,7 @@ import com.corundumstudio.socketio.annotation.SpringAnnotationScanner;
 import com.corundumstudio.socketio.listener.ExceptionListener;
 import com.corundumstudio.socketio.store.RedissonStoreFactory;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.epoll.Epoll;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RedissonClient;
@@ -47,14 +47,14 @@ public class SocketIOConfiguration {
         // 允许最大http content length
         config.setMaxHttpContentLength(1024 * 256);
         config.setAllowCustomRequests(true);
-        //2.0.6后无法设置
-        // config.setTransports(Transport.WEBSOCKET);
+
+        config.setTransports(Transport.WEBSOCKET);
         config.setStoreFactory(new RedissonStoreFactory(redissonClient));
         config.setAllowHeaders("*");
         config.setOrigin(appConfiguration.getOrigin());
         config.setBossThreads(appConfiguration.getBoss());
         config.setWorkerThreads(appConfiguration.getWorker());
-        if (Epoll.isAvailable()) {//开启epoll
+        if (config.isUseLinuxNativeEpoll()) {//开启epoll
             config.setUseLinuxNativeEpoll(true);
         }
        /* 在给定的时间间隔（ pingInterval握手中发送的值），服务器发送一个 PING 数据包，客户端有几秒钟（该pingTimeout值）发送一个 PONG 数据包。
@@ -95,6 +95,11 @@ public class SocketIOConfiguration {
             @Override
             public boolean exceptionCaught(ChannelHandlerContext ctx, Throwable e)  {
                 return false;
+            }
+
+            @Override
+            public void onAuthException(Throwable throwable, SocketIOClient client) {
+                log.error("onAuthException {}",client.getSessionId());
             }
         });
         return new SocketIOServer(config);
