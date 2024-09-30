@@ -7,16 +7,16 @@ A clusterable multi-namespace long connection service based on Netty-socketIO
 ## Technology Stack
 
 ### Backend
-| Technology                                            | Version |
-|-------------------------------------------------------| --- |
-| socket.io-client (Java WebSocket client support)      | 1.0.2 |
-| netty-socketio (Socket.IO Java server implementation) | 2.0.6 |
-| jdk                                                   | >= 17 |
-| springboot                                            | 3.0.0 |
-| redisson                                              | 3.24.3 |
+| Technology                                            | Version     |
+|-------------------------------------------------------|-------------|
+| socket.io-client (Java WebSocket client support)      | 1.0.2       |
+| netty-socketio (Socket.IO Java server implementation) | 2.0.11      |
+| jdk                                                   | >= 17       |
+| springboot                                            | 3.0.0       |
+| redisson                                              | 3.24.3      |
 | Jgroups                                               | 5.3.0.Final |
-| jprotobuf                                             | 2.4.20 |
-| hutool                                                | 5.8.25 |
+| jprotobuf                                             | 2.4.20      |
+| hutool                                                | 5.8.25      |
 
 ### Frontend (TBD)
 | Technology | Version |

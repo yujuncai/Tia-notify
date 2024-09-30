@@ -5,16 +5,16 @@
 ## 技术栈说明
 
 ### 后端
-| 技术栈 | 版本 |
-| --- | --- |
-| socket.io-client(java-websocket客户端支持) | 1.0.2 |
-| netty-socketio(socket.io的java语言服务端实现) | 2.0.6 |
-| jdk | >= 17 |
-| springboot | 3.0.0 |
-| redisson | 3.24.3 |
+| 技术栈 | 版本          |
+| --- |-------------|
+| socket.io-client(java-websocket客户端支持) | 1.0.2       |
+| netty-socketio(socket.io的java语言服务端实现) | 2.0.11      |
+| jdk | >= 17       |
+| springboot | 3.0.0       |
+| redisson | 3.24.3      |
 | Jgroups | 5.3.0.Final |
-| jprotobuf | 2.4.20 |
-| hutool       | 5.8.25 |
+| jprotobuf | 2.4.20      |
+| hutool       | 5.8.25      |
 
 ### 前端(待补充)
 | 技术栈 | 版本 |
