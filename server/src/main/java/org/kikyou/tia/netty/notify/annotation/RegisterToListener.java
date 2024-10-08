@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 @Target({ ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RegisterToListener {
-
+    //暂时没用
     Boolean opened = true;
 
 }
