@@ -33,6 +33,7 @@ public class ClusterReceiver implements Receiver {
     }
 
 
+
     //接收到消息后会调用此函数
 
     public void receive(Message msg) {
